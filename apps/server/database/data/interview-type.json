@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Screening Interview (Phone/Video)",
+        "description": "A brief initial interview, typically conducted by an HR recruiter over the phone or video, to quickly assess basic qualifications, salary expectations, and overall fit before moving to more in-depth rounds."
+    },
+    {
+        "name": "One-on-One / Traditional Interview",
+        "description": "A standard, in-person or virtual interview between the candidate and a single interviewer (often the hiring manager). Focuses on general background, experience, and cultural fit."
+    },
+    {
+        "name": "Behavioral Interview",
+        "description": "Questions focus on past experiences to predict future performance. Uses the STAR method (Situation, Task, Action, Result) format, with questions like: 'Tell me about a time when you had a conflict with a co-worker.'"
+    },
+    {
+        "name": "Situational Interview",
+        "description": "Presents hypothetical 'what-if' scenarios to gauge problem-solving and decision-making skills in a forward-looking context. Questions often start with: 'How would you handle a situation where...?'"
+    },
+    {
+        "name": "Technical / Skills-Based Interview",
+        "description": "Used primarily for technical roles (e.g., software engineering, data science). Focuses on specific domain knowledge, coding ability, and problem-solving through live exercises or tests."
+    },
+    {
+        "name": "Panel Interview",
+        "description": "The candidate is interviewed by multiple interviewers (a 'panel') simultaneously. This format saves time and allows the candidate to be assessed by several stakeholders at once."
+    },
+    {
+        "name": "Group Interview",
+        "description": "Multiple candidates are interviewed together, often participating in a collaborative task or discussion. Used to assess teamwork, communication, and leadership skills under pressure."
+    },
+    {
+        "name": "Case Interview",
+        "description": "The candidate is presented with a business problem or scenario (a 'case') and asked to analyze it and propose a solution. Common in consulting and strategy roles to test analytical thinking."
+    },
+    {
+        "name": "Stress Interview",
+        "description": "The interviewer intentionally creates a challenging or high-pressure atmosphere (e.g., challenging answers, long silences) to assess the candidate's composure, resilience, and response to stress."
+    },
+    {
+        "name": "Final / Executive Interview",
+        "description": "The last stage of the process, often with a senior leader or executive. It typically confirms cultural fit, long-term goals, and alignment with the company's high-level vision."
+    }
+]

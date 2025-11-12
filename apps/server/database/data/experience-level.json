@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Intern/Fresher",
+        "description": "Internships and fresher jobs are both great options for those new to the workforce. The main difference between an internship and a fresher job is that internships are usually temporary, part-time positions that provide hands-on experience in a particular field. Internships are often unpaid or low-paying, and the duration of the position is usually shorter than that of a fresher job. On the other hand, fresher jobs are usually full-time, paid positions with more responsibility and a longer duration."
+    },
+    {
+        "name": "Junior",
+        "description": "As a junior or trainee at a company, also known as an entry level employee, you usually start out with supervision from a more experienced team member. Your main objective as a junior is to learn more about your field and gain experience in working with clients, colleagues and deadlines."
+    },
+    {
+        "name": "Intermediate",
+        "description": "An intermediate job is a position that requires more experience than an entry-level job but doesn't require the seniority or leadership skills of a manager or director position."
+    },
+    {
+        "name": "Senior/Leader",
+        "description": "Also known as executive-level, senior-level seniority requires a high level of experience, knowledge and responsibility within a company. Senior-level employees have the most decision-making power at a company and are meant to provide leadership and guidance to employees with less seniority."
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "name": "High school diploma or equivalent",
+        "description": "You have a high school diploma or General Equivalency Diploma (GED)."
+    },
+    {
+        "name": "Technical or occupational certificate",
+        "description": "You’ve received training and have specialized skills that can be used in a trade (i.e., mechanical, electrical, carpentry, etc."
+    },
+    {
+        "name": "Associate degree",
+        "description": "You’ve completed undergraduate studies and earned a 2-year degree at an accredited institution."
+    },
+    {
+        "name": "Bachelor’s degree",
+        "description": "You’ve got an undergraduate degree from a college or university."
+    },
+    {
+        "name": "Master’s degree",
+        "description": "You have earned an MBA (graduate degree) from a college or university"
+    },
+    {
+        "name": "Not required",
+        "description": "Not required"
+    }
+]

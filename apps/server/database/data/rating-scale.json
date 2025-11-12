@@ -1,0 +1,34 @@
+[
+    {
+        "name": "5-Point BARS Scale",
+        "description": "A 5-point scale is a rating system, most commonly a Likert scale or a Behaviorally Anchored Rating Scale (BARS), used to measure opinions, satisfaction, performance, or behavior. It provides five distinct options ranging from one extreme to another, often including a neutral midpoint. ",
+        "is_active": true,
+        "points": [
+            {
+                "rank": 5,
+                "label": "Far Exceeds Expectations",
+                "definition": "Candidate's answer was outstanding, demonstrating mastery, experience, and innovative thinking. Observable behavior: Provided a highly detailed, insightful example that went above and beyond the required scope."
+            },
+            {
+                "rank": 4,
+                "label": "Exceeds Expectations",
+                "definition": "Candidate's answer was strong and relevant, clearly meeting the requirements of the role. Observable behavior: Provided a detailed, relevant example using the STAR method that fully answered the question."
+            },
+            {
+                "rank": 3,
+                "label": "Meets Expectations",
+                "definition": "Candidate's answer was adequate and acceptable, showing the basic competency required. Observable behavior: Answered the question correctly but lacked depth, detail, or required some probing/follow-up."
+            },
+            {
+                "rank": 2,
+                "label": "Partially Meets Expectations",
+                "definition": "Candidate’s answer was weak or incomplete, showing a limited understanding of the concept. Observable behavior: The example was vague, missing key context, or the answer did not fully address the core competency."
+            },
+            {
+                "rank": 1,
+                "label": "Does Not Meet Expectations",
+                "definition": "Candidate failed to answer the question or demonstrated a clear lack of the required skill/knowledge. Observable behavior: Could not provide an example, was completely off-topic, or gave an answer that disqualifies them for the role."
+            }
+        ]
+    }
+]

@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Full-Time (Permanent)",
+        "description": "An indefinite contract where the employee is expected to work a standard number of hours (e.g., 40 hours per week). Includes standard benefits, holidays, and comprehensive employment rights."
+    },
+    {
+        "name": "Part-Time",
+        "description": "An indefinite contract where the employee works fewer than the standard full-time hours. Benefits and entitlements are often prorated based on the hours worked."
+    },
+    {
+        "name": "Fixed-Term Contract",
+        "description": "A contract of employment valid only for a specific period of time or until the completion of a specific project. It includes employee benefits but has a defined end date."
+    },
+    {
+        "name": "Consultant / Independent Contractor (1099)",
+        "description": "A contract for services provided by an independent business or individual. The contractor is not an employee, manages their own tax and benefits, and usually has greater control over their working methods."
+    },
+    {
+        "name": "Temporary / Casual",
+        "description": "Employment used to cover short-term needs, such as seasonal peaks, sickness, or immediate project demands. The duration of employment is usually short and variable."
+    },
+    {
+        "name": "Internship / Trainee",
+        "description": "A fixed-term position primarily focused on educational training and skill development for students or new graduates, often with a reduced wage or stipend."
+    },
+    {
+        "name": "Apprenticeship",
+        "description": "A structured employment and training program combining paid work with academic study, typically leading to a recognized qualification in a skilled trade or profession."
+    }
+]

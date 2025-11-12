@@ -1,0 +1,256 @@
+[
+    {
+        "department": "Engineering & Development",
+        "description": "Designs, develops, tests, and maintains the core software, services, and infrastructure.",
+        "positions": [
+            {
+                "title": "Software Engineer (Frontend)",
+                "description": "Designs and implements user-facing features and user interface components using web technologies (HTML, CSS, JavaScript/React)."
+            },
+            {
+                "title": "Software Engineer (Backend)",
+                "description": "Develops and manages the server-side logic, databases, and APIs that power the application."
+            },
+            {
+                "title": "Full-Stack Developer",
+                "description": "Works across the entire technology stack, handling both frontend UI and backend infrastructure and services."
+            },
+            {
+                "title": "DevOps Engineer",
+                "description": "Manages the automated build, deployment, and infrastructure processes (CI/CD) and maintains cloud resources."
+            },
+            {
+                "title": "Site Reliability Engineer (SRE)",
+                "description": "Ensures the reliability, performance, and uptime of production systems, often through automation and tooling."
+            },
+            {
+                "title": "Data Engineer",
+                "description": "Builds and maintains robust data pipelines, data warehouses, and ETL processes for data scientists and analysts."
+            },
+            {
+                "title": "Security Engineer",
+                "description": "Protects systems and data from threats by implementing security protocols, monitoring, and penetration testing."
+            },
+            {
+                "title": "Engineering Manager",
+                "description": "Leads a team of engineers, focusing on technical project delivery, strategic planning, and career development."
+            },
+            {
+                "title": "VP of Engineering",
+                "description": "Oversees multiple engineering teams, sets organizational technical vision, and manages high-level staffing and budget."
+            }
+        ]
+    },
+    {
+        "department": "Product Management",
+        "description": "Sets the strategy, roadmap, and requirements for a product or product line.",
+        "positions": [
+            {
+                "title": "Product Manager",
+                "description": "Defines product vision, strategy, and detailed requirements based on market needs, customer feedback, and business goals."
+            },
+            {
+                "title": "Senior Product Manager",
+                "description": "Manages complex product areas or a portfolio of products, often mentoring junior PMs and driving significant P&L."
+            },
+            {
+                "title": "Technical Product Manager",
+                "description": "Focuses on technical products or platform features, bridging the gap between engineering, product, and business stakeholders."
+            },
+            {
+                "title": "Product Owner",
+                "description": "Manages the product backlog and prioritizes development work in Agile methodologies, acting as the voice of the customer."
+            },
+            {
+                "title": "VP of Product",
+                "description": "Head of the entire product organization, responsible for overall product strategy, portfolio success, and market leadership."
+            }
+        ]
+    },
+    {
+        "department": "Design & UX",
+        "description": "Focuses on the user experience and visual interface of the product.",
+        "positions": [
+            {
+                "title": "UX Designer",
+                "description": "Focuses on optimizing the user experience by defining user flows, information architecture, wireframes, and prototypes."
+            },
+            {
+                "title": "UI Designer",
+                "description": "Specializes in the visual and interactive elements of the product interface, ensuring aesthetic quality and brand consistency."
+            },
+            {
+                "title": "Product Designer",
+                "description": "Handles both UX and UI, focusing on the end-to-end design process of a product or major feature."
+            },
+            {
+                "title": "UX Researcher",
+                "description": "Conducts studies, interviews, and usability tests to gather data on user behavior and needs to inform design decisions."
+            },
+            {
+                "title": "Design System Specialist",
+                "description": "Maintains and evolves the standardized library of reusable UI components, patterns, and guidelines for the organization."
+            },
+            {
+                "title": "Head of Design",
+                "description": "Leads the design team, sets the design vision, and ensures consistent quality and experience across all products."
+            }
+        ]
+    },
+    {
+        "department": "Data Science & Analytics",
+        "description": "Analyzes large datasets to drive business decisions, improve products, and build predictive models.",
+        "positions": [
+            {
+                "title": "Data Scientist (ML/AI)",
+                "description": "Builds predictive models, develops machine learning algorithms, and derives complex insights from data to solve business problems."
+            },
+            {
+                "title": "Business Intelligence (BI) Analyst",
+                "description": "Creates reports, dashboards, and visualizations to help business teams monitor performance, identify trends, and track KPIs."
+            },
+            {
+                "title": "Quantitative Analyst",
+                "description": "Applies advanced mathematical and statistical methods to financial, risk, or optimization problems."
+            },
+            {
+                "title": "Machine Learning Engineer",
+                "description": "Productionizes and maintains ML models, optimizing them for performance, scalability, and deployment in production systems."
+            },
+            {
+                "title": "Analytics Manager",
+                "description": "Leads a team of analysts, manages data projects, and communicates complex insights and recommendations to executive leadership."
+            }
+        ]
+    },
+    {
+        "department": "Sales & Business Development",
+        "description": "Manages client relationships, drives revenue growth, and forms strategic partnerships.",
+        "positions": [
+            {
+                "title": "Account Executive (AE)",
+                "description": "Responsible for closing sales deals, managing the full sales cycle, and achieving quarterly revenue targets."
+            },
+            {
+                "title": "Sales Development Representative (SDR)",
+                "description": "Generates qualified leads through outbound efforts (cold calls, emails) and schedules meetings for the Account Executive team."
+            },
+            {
+                "title": "Solutions Architect (Pre-Sales)",
+                "description": "Provides technical expertise, designs custom solutions, and demonstrates product capability to prospective customers to win sales."
+            },
+            {
+                "title": "Partnerships Manager",
+                "description": "Identifies, negotiates, and manages strategic relationships and alliances with external companies to drive growth and integration."
+            },
+            {
+                "title": "VP of Sales",
+                "description": "Leads the entire sales organization, setting global sales strategy, managing regional teams, and overseeing revenue operations."
+            }
+        ]
+    },
+    {
+        "department": "Marketing & Communications",
+        "description": "Handles branding, content creation, campaigns, and public relations.",
+        "positions": [
+            {
+                "title": "Product Marketing Manager (PMM)",
+                "description": "Drives product adoption by defining market positioning, messaging, and executing the product's go-to-market strategy."
+            },
+            {
+                "title": "Content Strategist",
+                "description": "Plans, creates, and manages written and visual content (blogs, whitepapers, guides) to attract and engage target audiences."
+            },
+            {
+                "title": "SEO/SEM Specialist",
+                "description": "Optimizes web content for search engines (SEO) and manages paid search campaigns (SEM) to drive qualified traffic."
+            },
+            {
+                "title": "Social Media Manager",
+                "description": "Manages the company's presence across social platforms, engaging the community, and running organic and paid campaigns."
+            },
+            {
+                "title": "Public Relations Specialist",
+                "description": "Manages the company's public image, handles media inquiries, and secures positive coverage in major publications."
+            },
+            {
+                "title": "Head of Marketing",
+                "description": "Oversees all marketing functions, branding, budgets, and team performance, reporting directly to the C-suite."
+            }
+        ]
+    },
+    {
+        "department": "Customer Success & Support",
+        "description": "Ensures customer satisfaction, provides technical support, and manages customer retention.",
+        "positions": [
+            {
+                "title": "Customer Success Manager (CSM)",
+                "description": "Manages a portfolio of accounts, ensuring customers achieve value from the product to drive retention and expansion revenue."
+            },
+            {
+                "title": "Technical Support Specialist (L1/L2)",
+                "description": "Provides first and second-line technical troubleshooting, resolving product issues, and assisting users with queries."
+            },
+            {
+                "title": "Technical Account Manager (TAM)",
+                "description": "Acts as a dedicated technical liaison for high-value enterprise clients, proactively ensuring long-term technical success and integration."
+            },
+            {
+                "title": "Training & Documentation Specialist",
+                "description": "Develops tutorials, user manuals, and knowledge base articles for customers and internal teams to facilitate product usage."
+            }
+        ]
+    },
+    {
+        "department": "Human Resources & Operations",
+        "description": "Manages talent acquisition, employee relations, office administration, and facilities.",
+        "positions": [
+            {
+                "title": "Recruiter / Talent Acquisition Specialist",
+                "description": "Sources, screens, and hires candidates for open roles, managing the end-to-end recruitment process."
+            },
+            {
+                "title": "HR Business Partner (HRBP)",
+                "description": "Works directly with department leaders to manage employee relations, performance management, and organizational development."
+            },
+            {
+                "title": "Compensation & Benefits Analyst",
+                "description": "Researches, designs, and administers competitive employee compensation, equity, and benefits programs."
+            },
+            {
+                "title": "Workplace Operations Manager",
+                "description": "Oversees office facilities, vendor management, and ensures a smooth, safe, and productive daily work environment."
+            },
+            {
+                "title": "Chief People Officer",
+                "description": "Executive-level role defining the company's overall talent strategy, culture, inclusion, and HR policy."
+            }
+        ]
+    },
+    {
+        "department": "Finance & Legal",
+        "description": "Manages company finances, accounting, compliance, and legal matters.",
+        "positions": [
+            {
+                "title": "Financial Analyst",
+                "description": "Performs budgeting, forecasting, and financial modeling to support business planning and strategic decision-making."
+            },
+            {
+                "title": "Accountant",
+                "description": "Manages the general ledger, payroll, accounts payable/receivable, and prepares official financial statements."
+            },
+            {
+                "title": "Internal Auditor",
+                "description": "Evaluates the effectiveness of internal controls and processes to ensure compliance with financial regulations and company policy."
+            },
+            {
+                "title": "Corporate Counsel / Legal Counsel",
+                "description": "Provides legal advice on business operations, contracts, intellectual property, and manages litigation risk."
+            },
+            {
+                "title": "VP of Finance",
+                "description": "Manages financial planning, analysis (FP&A), treasury functions, and reports financial performance to the executive team."
+            }
+        ]
+    }
+]
