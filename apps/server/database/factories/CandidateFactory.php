@@ -2,21 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Enums\CandidateStatus;
-use App\Models\Candidate;
-use Carbon\Carbon;
+use App\Modules\Candidate\Enums\CandidateStatus;
+use App\Modules\Candidate\Models\Candidate;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Carbon\Carbon;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class CandidateFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
-     */
     protected $model = Candidate::class;
     public function definition(): array
     {

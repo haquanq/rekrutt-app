@@ -2,19 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Enums\UserRole;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Modules\Auth\Models\User;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
     protected static ?string $password = "123456";
 
+    protected $model = User::class;
     public function definition(): array
     {
         return [

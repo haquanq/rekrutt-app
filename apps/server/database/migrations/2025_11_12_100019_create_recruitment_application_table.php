@@ -1,8 +1,7 @@
 <?php
 
-use App\Enums\RecruitmentApplicationStatus;
-use App\Enums\RecruitmentApplicationPriority;
-
+use App\Modules\Recruitment\Enums\RecruitmentApplicationPriority;
+use App\Modules\Recruitment\Enums\RecruitmentApplicationStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -34,7 +33,6 @@ return new class extends Migration {
                     table: "candidate",
                     indexName: "fk_recruitment_application__candidate",
                 );
-
 
             $table->unique(
                 columns: ["recruitment_id", "candidate_id"],

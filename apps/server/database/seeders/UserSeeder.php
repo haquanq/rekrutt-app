@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UserRole;
+use App\Modules\Auth\Enums\UserRole;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -31,7 +30,7 @@ class UserSeeder extends Seeder
             $newUser = UserFactory::new()
                 ->create([
                     "position_id" => $id,
-                    "role" => UserRole::RECRUITER,
+                    "role" => UserRole::MANAGER,
                 ])
                 ->toArray();
             array_push($users, $newUser);
@@ -43,7 +42,7 @@ class UserSeeder extends Seeder
             $newUser = UserFactory::new()
                 ->create([
                     "position_id" => $id,
-                    "role" => UserRole::RECRUITER,
+                    "role" => UserRole::EXECUTIVE,
                 ])
                 ->toArray();
             array_push($users, $newUser);

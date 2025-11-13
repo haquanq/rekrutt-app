@@ -1,7 +1,7 @@
 <?php
 
-use App\Enums\UserRole;
-use App\Enums\UserStatus;
+use App\Modules\Auth\Enums\UserRole;
+use App\Modules\Auth\Enums\UserStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->enum("role", UserRole::cases());
+
             $table
                 ->enum("status", UserStatus::cases())
                 ->default(UserStatus::ACTIVE);
