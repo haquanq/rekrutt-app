@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string("name", 100);
             $table->string("description", 500)->nullable();
             $table->boolean("is_active")->default(0);
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table->unique(columns: ["name"], name: "uq_rating_scale__name");
         });

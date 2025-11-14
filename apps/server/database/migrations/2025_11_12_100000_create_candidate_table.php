@@ -19,7 +19,7 @@ return new class extends Migration {
             $table
                 ->enum("status", CandidateStatus::cases())
                 ->default(CandidateStatus::NEW);
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table
                 ->foreignId("hiring_source_id")

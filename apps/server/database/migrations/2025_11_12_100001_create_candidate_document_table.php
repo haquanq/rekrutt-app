@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->string("file_url")->nullable();
             $table->string("mime_type", 300);
             $table->string("comment", 300)->nullable();
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table
                 ->foreignId("candidate_id")
@@ -23,7 +23,6 @@ return new class extends Migration {
                     indexName: "fk_candidate_document__candidate",
                 )
                 ->onDelete("cascade");
-
 
             $table->unique(
                 columns: ["file_id", "candidate_id"],

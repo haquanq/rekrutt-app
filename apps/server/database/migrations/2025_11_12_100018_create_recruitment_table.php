@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->timestampTZ("published_at")->nullable();
             $table->timestampTZ("closed_at")->nullable();
             $table->timestampTZ("completed_at")->nullable();
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table
                 ->enum("status", RecruitmentStatus::cases())

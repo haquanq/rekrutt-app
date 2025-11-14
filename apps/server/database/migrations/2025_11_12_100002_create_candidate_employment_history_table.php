@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string("position_title", 100);
             $table->string("position_duty", 300);
             $table->string("comment", 300)->nullable();
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table
                 ->foreignId("candidate_id")
@@ -29,8 +29,6 @@ return new class extends Migration {
                     table: "candidate",
                     indexName: "fk_candidate_employment_history__candidate",
                 );
-
-
         });
 
         DB::statement(

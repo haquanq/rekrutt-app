@@ -12,7 +12,7 @@ return new class extends Migration {
         Schema::create("recruitment_application", function (Blueprint $table) {
             $table->bigInteger("id")->generatedAs()->always();
             $table->timestampTZ("completed_at")->nullable();
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table
                 ->enum("status", RecruitmentApplicationStatus::cases())

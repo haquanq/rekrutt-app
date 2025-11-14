@@ -18,7 +18,7 @@ return new class extends Migration {
                 ->foreignId("user_id")
                 ->constrained("user")
                 ->onDelete("cascade");
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table
                 ->foreignId("rating_scale_point_id")

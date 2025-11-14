@@ -21,7 +21,7 @@ return new class extends Migration {
             $table
                 ->enum("status", InterviewStatus::cases())
                 ->default(InterviewStatus::DRAFT);
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table
                 ->foreignId("recruitment_application_id")

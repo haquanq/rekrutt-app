@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->bigInteger("id")->generatedAs()->always();
             $table->string("name", 100);
             $table->string("description", 500);
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table->unique(
                 columns: ["name"],

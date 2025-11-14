@@ -19,9 +19,9 @@ return new class extends Migration {
             $table->string("username", 40);
             $table->string("password", 30);
             $table->timestampTz("suspended_at")->nullable();
-            $table->string("suspension_note", 500);
+            $table->string("suspension_note", 500)->nullable();
             $table->timestampTz("retired_at")->nullable();
-            $table->timestamps();
+            $table->timestampsTz();
 
             $table->enum("role", UserRole::cases());
 

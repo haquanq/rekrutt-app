@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->integer("hired_count")->nullable();
             $table->integer("min_salary");
             $table->integer("max_salary");
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table
                 ->enum("status", ProposalStatus::cases())

@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->integer("rank");
             $table->string("label", 100);
             $table->string("definition", 300);
-            $table->timestamps();
+            $table->timestampsTZ();
 
             $table
                 ->foreignId("rating_scale_id")
