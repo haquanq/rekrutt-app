@@ -12,8 +12,8 @@ return new class extends Migration {
             $table->bigInteger("id")->generatedAs()->always();
             $table->string("title", 200);
             $table->string("description", 500);
-            $table->integer("hire_goal");
-            $table->integer("hired_count")->nullable();
+            $table->integer("target_hires");
+            $table->integer("total_hired")->nullable();
             $table->integer("min_salary");
             $table->integer("max_salary");
             $table->timestampTz("reviewed_at")->nullable();
