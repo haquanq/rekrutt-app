@@ -5,42 +5,34 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create("candidate_employment_history", function (
-            Blueprint $table,
-        ) {
+        Schema::create("candidate_experience", function (Blueprint $table) {
             $table->bigInteger("id")->generatedAs()->always();
             $table->date("from_date");
             $table->date("to_date");
             $table->string("employer_name", 100);
             $table->string("employer_description", 300)->nullable();
             $table->string("position_title", 100);
-            $table->string("position_duty", 300);
-            $table->string("comment", 300)->nullable();
+            $table->string("position_duty", 500);
+            $table->string("note", 500)->nullable();
             $table->timestampsTZ();
 
             $table
                 ->foreignId("candidate_id")
                 ->constrained(
                     table: "candidate",
-                    indexName: "fk_candidate_employment_history__candidate",
+                    indexName: "fk_candidate_experience__candidate",
                 );
         });
 
         DB::statement(
-            "ALTER TABLE public.candidate_employment_history ADD CONSTRAINT pk_candidate_employment_history PRIMARY KEY (id)",
+            "ALTER TABLE public.candidate_experience ADD CONSTRAINT pk_candidate_experience PRIMARY KEY (id)",
         );
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists("candidate_employment_history");
+        Schema::dropIfExists("candidate_experience");
     }
 };
