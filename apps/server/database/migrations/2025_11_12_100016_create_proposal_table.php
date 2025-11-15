@@ -16,15 +16,22 @@ return new class extends Migration {
             $table->integer("hired_count")->nullable();
             $table->integer("min_salary");
             $table->integer("max_salary");
-            $table->timestampsTZ();
-
+            $table->timestampTz("reviewed_at")->nullable();
             $table
                 ->enum("status", ProposalStatus::cases())
                 ->default(ProposalStatus::DRAFT);
+            $table->timestampsTZ();
 
             $table
-                ->foreignId("user_id")
-                ->constrained(table: "user", indexName: "fk_proposal__user");
+                ->foreignId("created_by_user_id")
+                ->constrained(table: "user", indexName: "fk_proposal__creator");
+            $table
+                ->foreignId("reviewed_by_user_id")
+                ->constrained(
+                    table: "user",
+                    indexName: "fk_proposal__reviewer",
+                );
+
             $table
                 ->foreignId("contract_type_id")
                 ->constrained(
