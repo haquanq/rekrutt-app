@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration {
     public function up(): void
@@ -18,21 +19,13 @@ return new class extends Migration {
 
             $table
                 ->foreignId("proposal_id")
-                ->constrained(
-                    table: "proposal",
-                    indexName: "fk_proposal_document__proposal",
-                )
+                ->constrained(table: "proposal", indexName: "fk_proposal_document__proposal")
                 ->onDelete("cascade");
 
-            $table->unique(
-                columns: ["file_id", "proposal_id"],
-                name: "uq_proposal_document__file_id_proposal_id",
-            );
+            $table->unique(columns: ["file_id", "proposal_id"], name: "uq_proposal_document__file_id_proposal_id");
         });
 
-        DB::statement(
-            "ALTER TABLE public.proposal_document ADD CONSTRAINT pk_proposal_document PRIMARY KEY (id)",
-        );
+        DB::statement("ALTER TABLE public.proposal_document ADD CONSTRAINT pk_proposal_document PRIMARY KEY (id)");
     }
 
     public function down(): void

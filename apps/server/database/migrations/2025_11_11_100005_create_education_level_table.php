@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration {
     public function up(): void
@@ -16,9 +17,7 @@ return new class extends Migration {
             $table->unique(columns: ["name"], name: "uq_education_level__name");
         });
 
-        DB::statement(
-            "ALTER TABLE public.education_level ADD CONSTRAINT pk_education_level PRIMARY KEY (id)",
-        );
+        DB::statement("ALTER TABLE public.education_level ADD CONSTRAINT pk_education_level PRIMARY KEY (id)");
     }
 
     public function down(): void

@@ -5,6 +5,7 @@ use App\Modules\Recruitment\Enums\RecruitmentApplicationStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration {
     public function up(): void
@@ -23,16 +24,10 @@ return new class extends Migration {
 
             $table
                 ->foreignId("recruitment_id")
-                ->constrained(
-                    table: "recruitment",
-                    indexName: "fk_recruitment_application__recruitment",
-                );
+                ->constrained(table: "recruitment", indexName: "fk_recruitment_application__recruitment");
             $table
                 ->foreignId("candidate_id")
-                ->constrained(
-                    table: "candidate",
-                    indexName: "fk_recruitment_application__candidate",
-                );
+                ->constrained(table: "candidate", indexName: "fk_recruitment_application__candidate");
 
             $table->unique(
                 columns: ["recruitment_id", "candidate_id"],

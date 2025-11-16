@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration {
     public function up(): void
@@ -13,15 +14,10 @@ return new class extends Migration {
             $table->string("description", 500);
             $table->timestampsTZ();
 
-            $table->unique(
-                columns: ["name"],
-                name: "uq_experience_level__name",
-            );
+            $table->unique(columns: ["name"], name: "uq_experience_level__name");
         });
 
-        DB::statement(
-            "ALTER TABLE public.experience_level ADD CONSTRAINT pk_experience_level PRIMARY KEY (id)",
-        );
+        DB::statement("ALTER TABLE public.experience_level ADD CONSTRAINT pk_experience_level PRIMARY KEY (id)");
     }
 
     public function down(): void

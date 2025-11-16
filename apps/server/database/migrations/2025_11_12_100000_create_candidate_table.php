@@ -4,6 +4,7 @@ use App\Modules\Candidate\Enums\CandidateStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration {
     public function up(): void
@@ -16,28 +17,18 @@ return new class extends Migration {
             $table->string("address", 256);
             $table->string("email", 256);
             $table->string("phone_number", 15);
-            $table
-                ->enum("status", CandidateStatus::cases())
-                ->default(CandidateStatus::NEW);
+            $table->enum("status", CandidateStatus::cases())->default(CandidateStatus::NEW);
             $table->timestampsTZ();
 
             $table
                 ->foreignId("hiring_source_id")
-                ->constrained(
-                    table: "hiring_source",
-                    indexName: "fk_candidate__hiring_source",
-                );
+                ->constrained(table: "hiring_source", indexName: "fk_candidate__hiring_source");
 
             $table->unique(columns: ["email"], name: "uq_candidate__email");
-            $table->unique(
-                columns: ["phone_number"],
-                name: "uq_candidate__phone_number",
-            );
+            $table->unique(columns: ["phone_number"], name: "uq_candidate__phone_number");
         });
 
-        DB::statement(
-            "ALTER TABLE public.candidate ADD CONSTRAINT pk_candidate PRIMARY KEY (id)",
-        );
+        DB::statement("ALTER TABLE public.candidate ADD CONSTRAINT pk_candidate PRIMARY KEY (id)");
     }
 
     public function down(): void
