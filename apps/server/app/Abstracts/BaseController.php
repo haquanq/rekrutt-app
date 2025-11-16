@@ -19,7 +19,7 @@ abstract class BaseController
 
     public function createdResponse(array|object $data): JsonResponse
     {
-        return response()->json($data, Response::HTTP_NOT_FOUND);
+        return response()->json($data, Response::HTTP_CREATED);
     }
 
     public function noContentResponse(): JsonResponse
