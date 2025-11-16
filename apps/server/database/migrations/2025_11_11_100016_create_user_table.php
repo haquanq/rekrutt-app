@@ -14,39 +14,26 @@ return new class extends Migration {
             $table->bigInteger("id")->generatedAs()->always();
             $table->string("first_name", 100);
             $table->string("last_name", 100);
-            $table->string("email", 300);
             $table->string("phone_number", 15);
+            $table->string("email", 300);
             $table->string("username", 40);
             $table->string("password", 30);
-            $table->timestampTz("suspended_at")->nullable();
+            $table->timestampTz("suspension_started_at")->nullable();
+            $table->timestampTz("suspension_ended_at")->nullable();
             $table->string("suspension_note", 500)->nullable();
             $table->timestampTz("retired_at")->nullable();
             $table->timestampsTz();
-
             $table->enum("role", UserRole::cases());
+            $table->enum("status", UserStatus::cases())->default(UserStatus::ACTIVE);
 
-            $table
-                ->enum("status", UserStatus::cases())
-                ->default(UserStatus::ACTIVE);
-
-            $table
-                ->foreignId("position_id")
-                ->constrained(
-                    table: "position",
-                    indexName: "fk_user__position",
-                );
+            $table->foreignId("position_id")->constrained(table: "position", indexName: "fk_user__position");
 
             $table->unique(columns: ["email"], name: "uq_user__email");
-            $table->unique(
-                columns: ["phone_number"],
-                name: "uq_user__phone_number",
-            );
+            $table->unique(columns: ["phone_number"], name: "uq_user__phone_number");
             $table->unique(columns: ["username"], name: "uq_user__username");
         });
 
-        DB::statement(
-            "ALTER TABLE public.user ADD CONSTRAINT pk_user PRIMARY KEY (id)",
-        );
+        DB::statement("ALTER TABLE public.user ADD CONSTRAINT pk_user PRIMARY KEY (id)");
     }
 
     public function down(): void
