@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string("phone_number", 15);
             $table->string("email", 300);
             $table->string("username", 40);
-            $table->string("password", 30);
+            $table->string("password", 100);
             $table->timestampTz("suspension_started_at")->nullable();
             $table->timestampTz("suspension_ended_at")->nullable();
             $table->string("suspension_note", 500)->nullable();
