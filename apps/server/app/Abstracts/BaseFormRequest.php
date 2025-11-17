@@ -2,9 +2,11 @@
 
 namespace App\Abstracts;
 
+use App\Traits\ArrayHelper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Str;
 
 class BaseFormRequest extends FormRequest
 {
@@ -19,5 +21,10 @@ class BaseFormRequest extends FormRequest
                 422,
             ),
         );
+    }
+    protected function prepareForValidation(): void
+    {
+        $convertedData = ArrayHelper::convertKeys($this->all(), fn($value) => Str::snake($value));
+        $this->replace($convertedData);
     }
 }
