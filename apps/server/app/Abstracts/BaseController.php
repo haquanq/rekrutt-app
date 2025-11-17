@@ -11,7 +11,7 @@ abstract class BaseController
     /*                              SUCCESSFUL RESPONSE                           */
     /* -------------------------------------------------------------------------- */
 
-    public function okResponse(array|object $data): JsonResponse
+    public function okResponse(array|object|null $data = null): JsonResponse
     {
         return response()->json($data, Response::HTTP_OK);
     }
