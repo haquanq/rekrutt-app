@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Middlewares;
+
+use App\Helpers\ArrayHelper;
+use Carbon\Carbon;
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
+
+class GlobalResponseWrapperMiddleware
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $response = $next($request);
+
+        if ($response instanceof JsonResponse) {
+            $payload = (array) $response->getData();
+
+            $wrappedData = [
+                "success" => $response->isSuccessful(),
+                "status_code" => $response->getStatusCode(),
+                "timestamp" => Carbon::now(),
+                "request_id" => Str::uuid(),
+            ];
+
+            $isError = $response->status() >= 400;
+
+            if ($isError) {
+                $wrappedData["error"] = $payload;
+            } elseif ($payload) {
+                $wrappedData["data"] = $payload;
+            }
+
+            $response->setData(ArrayHelper::convertKeys($wrappedData, fn($value) => Str::camel($value)));
+        }
+
+        return $response;
+    }
+}
