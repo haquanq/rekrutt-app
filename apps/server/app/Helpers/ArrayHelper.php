@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ArrayHelper
 {
@@ -20,5 +21,15 @@ class ArrayHelper
         }
         Log::info(json_encode($newArray));
         return $newArray;
+    }
+
+    public static function convertKeysToCamelCase(array $data): array
+    {
+        return static::convertKeys($data, fn($value) => Str::camel($value));
+    }
+
+    public static function convertKeysToSnakeCase(array $data): array
+    {
+        return static::convertKeys($data, fn($value) => Str::snake($value));
     }
 }
