@@ -19,7 +19,6 @@ class ArrayHelper
 
             $newArray[$converter(\strval($key))] = $newValue;
         }
-        Log::info(json_encode($newArray));
         return $newArray;
     }
 
