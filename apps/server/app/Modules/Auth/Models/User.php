@@ -25,7 +25,14 @@ class User extends Authenticatable implements JWTSubject
         "password" => "hashed",
     ];
 
-    protected $guarded = ["id", "createdAt", "updatedAt", "retiredAt", "suspensionStartAt"];
+    protected $guarded = [
+        "id",
+        "created_at",
+        "updated_at",
+        "suspension_started_at",
+        "suspension_ended_at",
+        "suspension_note",
+    ];
 
     public function position(): BelongsTo
     {
