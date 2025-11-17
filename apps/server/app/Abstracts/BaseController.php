@@ -30,22 +30,22 @@ abstract class BaseController
     /*                               CLIENT ERROR RESPONSE                        */
     /* -------------------------------------------------------------------------- */
 
-    public function badRequestResponse(string $message = "Bad request."): JsonResponse
+    public function badRequestResponse(string $message = "Bad request"): JsonResponse
     {
         return response()->json(["message" => $message], Response::HTTP_BAD_REQUEST);
     }
 
-    public function unauthorizedResponse(string $message = "Unauthorized."): JsonResponse
+    public function unauthorizedResponse(string $message = "Unauthorized"): JsonResponse
     {
         return response()->json(["message" => $message], Response::HTTP_UNAUTHORIZED);
     }
 
-    public function forbiddenResponse(string $message = "Forbidden."): JsonResponse
+    public function forbiddenResponse(string $message = "Forbidden"): JsonResponse
     {
         return response()->json(["message" => $message], Response::HTTP_FORBIDDEN);
     }
 
-    public function notFoundResponse(string $message = "Resource not found."): JsonResponse
+    public function notFoundResponse(string $message = "Resource not found"): JsonResponse
     {
         return response()->json(["message" => $message], Response::HTTP_NOT_FOUND);
     }
