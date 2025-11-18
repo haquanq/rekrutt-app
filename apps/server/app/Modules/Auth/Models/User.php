@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -33,6 +34,14 @@ class User extends Authenticatable implements JWTSubject
         "suspension_ended_at",
         "suspension_note",
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        if (!isset($this->attributes["password"])) {
+            $this->attributes["password"] = Hash::make("12345678");
+        }
+    }
 
     public function position(): BelongsTo
     {
