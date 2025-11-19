@@ -4,6 +4,7 @@ use App\Middlewares\GlobalResponseWrapperMiddleware;
 use App\Middlewares\ProtectedRouteMiddleware;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -33,6 +34,20 @@ return Application::configure(basePath: dirname(__DIR__))
                     Response::HTTP_NOT_FOUND,
                 );
             }
+            if ($exception->getPrevious() instanceof QueryException) {
+                return response()->json(
+                    [
+                        "message" => "Cant perform this query.",
+                    ],
+                    Response::HTTP_NOT_FOUND,
+                );
+            }
+            return response()->json(
+                [
+                    "message" => "Oops, something wrong happened!",
+                ],
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+            );
         });
     })
     ->create();
