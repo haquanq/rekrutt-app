@@ -1,4 +1,4 @@
 {
-  "plugins": ["@prettier/plugin-php", "prettier-plugin-organize-imports"],
+  "plugins": ["@prettier/plugin-php"],
   "printWidth": 120
 }
