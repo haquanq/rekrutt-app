@@ -25,6 +25,7 @@ abstract class BaseUserRequest extends BaseFormRequest
             "last_name" => ["required", "string", "max:100"],
             "email" => ["required", "email", Rule::unique("user", "email")->ignore($id)],
             "username" => ["required", "string", "max:40"],
+            "password" => ["required", PasswordRule::default(), "max:30"],
             "role" => ["required", new EnumRule(UserRole::class)],
             "phone_number" => ["required", new PhoneNumberRule(), "unique:user,phone_number,$id", "max:15"],
             "position_id" => ["required"],
