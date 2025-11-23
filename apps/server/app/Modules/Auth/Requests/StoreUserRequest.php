@@ -10,4 +10,12 @@ class StoreUserRequest extends BaseUserRequest
     {
         return array_merge(parent::rules(), []);
     }
+
+    public function prepareForValidation(): void
+    {
+        parent::prepareForValidation();
+        $this->mergeIfMissing([
+            "password" => "12345678",
+        ]);
+    }
 }
