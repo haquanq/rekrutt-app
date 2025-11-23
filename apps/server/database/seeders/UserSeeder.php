@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
         UserFactory::new()->create([
             "first_name" => "Ha",
             "last_name" => "Quang",
-            "email" => "hquang@gmail.com",
+            "email" => "admin@gmail.com",
             "phone_number" => "0123456789",
             "username" => "haquanq",
             "role" => UserRole::ADMIN,
