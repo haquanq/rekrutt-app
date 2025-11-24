@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 import Dashboardview from "./pages/Home/Dashboard/Dashboardview.vue";
 import HomeView from "./pages/Home/HomeView.vue";
-import UserView from "./pages/Home/User/UserView.vue";
 import LoginView from "./pages/Login/LoginView.vue";
 import { useAuthStore } from "./stores/authStore";
 
@@ -20,7 +19,6 @@ const routes = [
                     protected: true,
                 },
             },
-            { path: "/users", component: UserView, name: "users", meta: { protected: true } },
         ],
     },
     { path: "/login", component: LoginView, name: "Login" },
@@ -31,7 +29,7 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to) => {
     const authStore = useAuthStore();
 
     if (!authStore.isAuthenticated()) {
