@@ -4,6 +4,9 @@ use App\Modules\Auth\Controllers\AuthController;
 use App\Modules\Auth\Controllers\UserController;
 use App\Modules\ContractType\Controllers\ContractTypeController;
 use App\Modules\Department\Controllers\DepartmentController;
+use App\Modules\EducationLevel\Controllers\EducationLevelController;
+use App\Modules\ExperienceLevel\Controllers\ExperienceLevelController;
+use App\Modules\HiringSource\Controllers\HiringSourceController;
 use App\Modules\Position\Controllers\PositionController;
 use App\Modules\RatingScale\Controllers\RatingScaleController;
 use App\Modules\RatingScale\Controllers\RatingScalePointController;
@@ -84,7 +87,7 @@ Route::middleware("protected")->group(function () {
             Route::delete("/{id}", "destroy");
         });
 
-    Route::controller(ContractTypeController::class)
+    Route::controller(EducationLevelController::class)
         ->prefix("education-levels")
         ->group(function () {
             Route::get("/", "index");
@@ -94,8 +97,18 @@ Route::middleware("protected")->group(function () {
             Route::delete("/{id}", "destroy");
         });
 
-    Route::controller(ContractTypeController::class)
+    Route::controller(ExperienceLevelController::class)
         ->prefix("experience-levels")
+        ->group(function () {
+            Route::get("/", "index");
+            Route::get("/{id}", "show");
+            Route::post("/", "store");
+            Route::put("/{id}", "update");
+            Route::delete("/{id}", "destroy");
+        });
+
+    Route::controller(HiringSourceController::class)
+        ->prefix("hiring-sources")
         ->group(function () {
             Route::get("/", "index");
             Route::get("/{id}", "show");
