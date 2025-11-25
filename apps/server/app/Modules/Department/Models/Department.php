@@ -11,7 +11,8 @@ class Department extends BaseModel
 {
     use HasFactory;
 
-    protected $fillable = ["name", "description"];
+    protected $guarded = ["id", "created_at", "updated_at"];
+
     public function positions(): HasMany
     {
         return $this->hasMany(Position::class);
