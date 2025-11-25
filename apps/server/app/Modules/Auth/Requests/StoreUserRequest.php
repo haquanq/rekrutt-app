@@ -8,7 +8,9 @@ class StoreUserRequest extends BaseUserRequest
 {
     public function rules(): array
     {
-        return array_merge(parent::rules(), []);
+        $rules = parent::rules();
+        unset($rules["status"]);
+        return $rules;
     }
 
     public function prepareForValidation(): void
