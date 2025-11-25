@@ -4,7 +4,7 @@ namespace App\Modules\Auth\Requests;
 
 use App\Abstracts\BaseFormRequest;
 
-class LoginRequest extends BaseFormRequest
+class LoginUserRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {

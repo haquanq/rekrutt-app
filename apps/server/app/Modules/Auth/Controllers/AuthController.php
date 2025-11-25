@@ -3,14 +3,14 @@
 namespace App\Modules\Auth\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\Auth\Requests\LoginRequest;
+use App\Modules\Auth\Requests\LoginUserRequest;
 use App\Modules\Auth\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends BaseController
 {
-    public function login(LoginRequest $request)
+    public function login(LoginUserRequest $request)
     {
         $credentials = $request->validated();
         if (!($token = Auth::attempt($credentials))) {
