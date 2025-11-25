@@ -8,13 +8,19 @@ use App\Modules\EducationLevel\Requests\UpdateEducationLevelRequest;
 use App\Modules\EducationLevel\Models\EducationLevel;
 use App\Modules\EducationLevel\Resources\EducationLevelResource;
 use Illuminate\Support\Facades\Gate;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class EducationLevelController extends BaseController
 {
     public function index()
     {
         Gate::authorize("findAll", EducationLevel::class);
-        $educationlevels = EducationLevel::all();
+
+        $educationlevels = QueryBuilder::for(EducationLevel::class)
+            ->allowedFilters([AllowedFilter::partial("name")])
+            ->get();
+
         return $this->okResponse(EducationLevelResource::collection($educationlevels));
     }
 
