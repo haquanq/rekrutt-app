@@ -8,20 +8,31 @@ use App\Modules\Department\Requests\UpdateDepartmentRequest;
 use App\Modules\Department\Models\Department;
 use App\Modules\Department\Resources\DepartmentResource;
 use Illuminate\Support\Facades\Gate;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class DepartmentController extends BaseController
 {
     public function index()
     {
         Gate::authorize("findAll", Department::class);
-        $departments = Department::all();
+
+        $departments = QueryBuilder::for(Department::class)
+            ->allowedIncludes(["positions"])
+            ->allowedFilters([AllowedFilter::partial("name")])
+            ->get();
+
         return $this->okResponse(DepartmentResource::collection($departments));
     }
 
     public function show(int $id)
     {
         Gate::authorize("findById", Department::class);
-        $department = Department::findOrFail($id);
+
+        $department = QueryBuilder::for(Department::class)
+            ->allowedIncludes(["positions"])
+            ->findOrFail($id);
+
         return $this->okResponse(new DepartmentResource($department));
     }
 
