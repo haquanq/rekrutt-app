@@ -4,7 +4,7 @@ namespace App\Modules\Auth\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
 use App\Modules\Auth\Enums\UserRole;
-use App\Modules\Auth\Models\User;
+use App\Modules\Auth\Enums\UserStatus;
 use App\Rules\PhoneNumberRule;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum as EnumRule;
@@ -27,6 +27,7 @@ abstract class BaseUserRequest extends BaseFormRequest
             "username" => ["required", "string", "max:40"],
             "password" => ["required", PasswordRule::default(), "max:30"],
             "role" => ["required", new EnumRule(UserRole::class)],
+            "status" => ["required", new EnumRule(UserStatus::class)],
             "phone_number" => ["required", new PhoneNumberRule(), "unique:user,phone_number,$id", "max:15"],
             "position_id" => ["required"],
         ];
