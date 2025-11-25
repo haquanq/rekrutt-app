@@ -4,6 +4,8 @@ use App\Modules\Auth\Controllers\AuthController;
 use App\Modules\Auth\Controllers\UserController;
 use App\Modules\Department\Controllers\DepartmentController;
 use App\Modules\Position\Controllers\PositionController;
+use App\Modules\RatingScale\Controllers\RatingScaleController;
+use App\Modules\RatingScale\Controllers\RatingScalePointController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => "auth", "middleware" => "protected"], function () {
@@ -31,6 +33,23 @@ Route::middleware("protected")->group(function () {
             Route::patch("/{id}/status", "updateStatus");
         });
 
-    Route::apiResource("departments", DepartmentController::class);
-    Route::apiResource("positions", PositionController::class);
+    Route::controller(DepartmentController::class)
+        ->prefix("departments")
+        ->group(function () {
+            Route::get("/", "index");
+            Route::get("/{id}", "show");
+            Route::post("/", "store");
+            Route::put("/{id}", "update");
+            Route::delete("/{id}", "destroy");
+        });
+
+    Route::controller(PositionController::class)
+        ->prefix("positions")
+        ->group(function () {
+            Route::get("/", "index");
+            Route::get("/{id}", "show");
+            Route::post("/", "store");
+            Route::put("/{id}", "update");
+            Route::delete("/{id}", "destroy");
+        });
 });
