@@ -3,6 +3,7 @@
 use App\Modules\Auth\Controllers\AuthController;
 use App\Modules\Auth\Controllers\UserController;
 use App\Modules\Department\Controllers\DepartmentController;
+use App\Modules\Position\Controllers\PositionController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => "auth", "middleware" => "protected"], function () {
@@ -31,4 +32,5 @@ Route::middleware("protected")->group(function () {
         });
 
     Route::apiResource("departments", DepartmentController::class);
+    Route::apiResource("positions", PositionController::class);
 });
