@@ -2,6 +2,7 @@
 
 use App\Modules\Auth\Controllers\AuthController;
 use App\Modules\Auth\Controllers\UserController;
+use App\Modules\Department\Controllers\DepartmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => "auth", "middleware" => "protected"], function () {
@@ -17,14 +18,17 @@ Route::group(["prefix" => "auth", "middleware" => "protected"], function () {
     Route::post("me", [AuthController::class, "me"]);
 });
 
-Route::controller(UserController::class)
-    ->middleware("protected")
-    ->prefix("users")
-    ->group(function () {
-        Route::get("/", "index");
-        Route::get("/{id}", "show");
-        Route::post("/", "store");
-        Route::put("/{id}", "update");
-        Route::delete("/{id}", "destroy");
-        Route::patch("/{id}/status", "updateStatus");
-    });
+Route::middleware("protected")->group(function () {
+    Route::controller(UserController::class)
+        ->prefix("users")
+        ->group(function () {
+            Route::get("/", "index");
+            Route::get("/{id}", "show");
+            Route::post("/", "store");
+            Route::put("/{id}", "update");
+            Route::delete("/{id}", "destroy");
+            Route::patch("/{id}/status", "updateStatus");
+        });
+
+    Route::apiResource("departments", DepartmentController::class);
+});
