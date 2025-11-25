@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     Response::HTTP_FORBIDDEN,
                 );
             }
+
             if ($exception->getPrevious() instanceof ModelNotFoundException) {
                 return response()->json(
                     [
@@ -36,14 +37,16 @@ return Application::configure(basePath: dirname(__DIR__))
                     Response::HTTP_NOT_FOUND,
                 );
             }
-            if ($exception->getPrevious() instanceof QueryException) {
+
+            if ($exception instanceof QueryException) {
                 return response()->json(
                     [
-                        "message" => "Cant perform this query.",
+                        "message" => $exception->getMessage(),
                     ],
-                    Response::HTTP_NOT_FOUND,
+                    Response::HTTP_BAD_REQUEST,
                 );
             }
+
             // return response()->json(
             //     [
             //         "message" => "Oops, something wrong happened!",
