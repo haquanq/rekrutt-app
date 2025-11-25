@@ -93,4 +93,14 @@ Route::middleware("protected")->group(function () {
             Route::put("/{id}", "update");
             Route::delete("/{id}", "destroy");
         });
+
+    Route::controller(ContractTypeController::class)
+        ->prefix("experience-levels")
+        ->group(function () {
+            Route::get("/", "index");
+            Route::get("/{id}", "show");
+            Route::post("/", "store");
+            Route::put("/{id}", "update");
+            Route::delete("/{id}", "destroy");
+        });
 });
