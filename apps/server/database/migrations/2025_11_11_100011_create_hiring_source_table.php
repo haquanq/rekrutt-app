@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->bigInteger("id")->generatedAs()->always();
             $table->string("name", 100);
             $table->string("description", 500);
-            $table->string("site_url")->nullable();
+            $table->text("site_url")->nullable();
             $table->timestampsTZ();
 
             $table->unique(columns: ["name"], name: "uq_hiring_source__name");
