@@ -8,13 +8,19 @@ use App\Modules\HiringSource\Requests\UpdateHiringSourceRequest;
 use App\Modules\HiringSource\Models\HiringSource;
 use App\Modules\HiringSource\Resources\HiringSourceResource;
 use Illuminate\Support\Facades\Gate;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class HiringSourceController extends BaseController
 {
     public function index()
     {
         Gate::authorize("findAll", HiringSource::class);
-        $hiringSources = HiringSource::all();
+
+        $hiringSources = QueryBuilder::for(HiringSource::class)
+            ->allowedFilters([AllowedFilter::partial("name")])
+            ->get();
+
         return $this->okResponse(HiringSourceResource::collection($hiringSources));
     }
 
