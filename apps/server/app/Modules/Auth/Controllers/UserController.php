@@ -7,8 +7,10 @@ use App\Modules\Auth\Enums\UserRole;
 use App\Modules\Auth\Requests\StoreUserRequest;
 use App\Modules\Auth\Requests\UpdateUserRequest;
 use App\Modules\Auth\Models\User;
+use App\Modules\Auth\Requests\UpdateUserStatusRequest;
 use App\Modules\Auth\Resources\UserResource;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends BaseController
@@ -36,6 +38,13 @@ class UserController extends BaseController
     public function update(UpdateUserRequest $request, int $id)
     {
         Gate::authorize("update", User::class);
+        User::findOrFail($id)->update($request->validated());
+        return $this->noContentResponse();
+    }
+
+    public function updateStatus(UpdateUserStatusRequest $request, int $id)
+    {
+        echo json_encode($request->validated());
         User::findOrFail($id)->update($request->validated());
         return $this->noContentResponse();
     }
