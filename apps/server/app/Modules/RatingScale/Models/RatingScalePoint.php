@@ -18,4 +18,11 @@ class RatingScalePoint extends BaseModel
     {
         return $this->hasMany(InterviewEvaluation::class);
     }
+
+    protected static function booted()
+    {
+        static::addGlobalScope("orderByRank", function ($query) {
+            $query->orderBy("rank");
+        });
+    }
 }
