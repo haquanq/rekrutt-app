@@ -19,12 +19,12 @@ class Candidate extends BaseModel
 
     public function experiences(): HasMany
     {
-        return $this->hasMany(CandidateExperience::class, "candidate_experience_id", "id");
+        return $this->hasMany(CandidateExperience::class);
     }
 
     public function documents(): HasMany
     {
-        return $this->hasMany(CandidateDocument::class, "candidate_document_id", "id");
+        return $this->hasMany(CandidateDocument::class);
     }
 
     public function applications(): HasMany
