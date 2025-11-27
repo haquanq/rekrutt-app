@@ -11,6 +11,8 @@ use App\Modules\EducationLevel\Controllers\EducationLevelController;
 use App\Modules\ExperienceLevel\Controllers\ExperienceLevelController;
 use App\Modules\HiringSource\Controllers\HiringSourceController;
 use App\Modules\Position\Controllers\PositionController;
+use App\Modules\Proposal\Controllers\ProposalController;
+use App\Modules\Proposal\Controllers\ProposalDocumentController;
 use App\Modules\RatingScale\Controllers\RatingScaleController;
 use App\Modules\RatingScale\Controllers\RatingScalePointController;
 use Illuminate\Support\Facades\Route;
@@ -50,5 +52,10 @@ Route::middleware("protected")->group(function () {
     ]);
     Route::apiResource("candidate-experiences", CandidateExperienceController::class)->parameters([
         "candidate-experiences" => "id",
+    ]);
+
+    Route::apiResource("proposals", ProposalController::class)->parameters(["proposals" => "id"]);
+    Route::apiResource("proposal-documents", ProposalDocumentController::class)->parameters([
+        "proposal-documents" => "id",
     ]);
 });
