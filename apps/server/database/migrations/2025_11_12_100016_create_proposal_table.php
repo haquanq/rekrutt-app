@@ -22,7 +22,10 @@ return new class extends Migration {
             $table->timestampsTZ();
 
             $table->foreignId("created_by_user_id")->constrained(table: "user", indexName: "fk_proposal__creator");
-            $table->foreignId("reviewed_by_user_id")->constrained(table: "user", indexName: "fk_proposal__reviewer");
+            $table
+                ->foreignId("reviewed_by_user_id")
+                ->nullable()
+                ->constrained(table: "user", indexName: "fk_proposal__reviewer");
 
             $table
                 ->foreignId("contract_type_id")
