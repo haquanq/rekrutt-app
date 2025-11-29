@@ -30,8 +30,8 @@ class ProposalResource extends JsonResource
             "education_level" => new EducationLevelResource($this->whenLoaded("educationLevel")),
             "experience_level" => new ExperienceLevelResource($this->whenLoaded("experienceLevel")),
             "position" => new PositionResource($this->whenLoaded("experienceLevel")),
-            "creator" => new UserResource($this->whenLoaded("creator")),
-            "reviewer" => new UserResource($this->whenLoaded("reviewer")),
+            "createdBy" => new UserResource($this->whenLoaded("createdBy")),
+            "reviewedBy" => new UserResource($this->whenLoaded("reviewedBy")),
         ];
     }
 }
