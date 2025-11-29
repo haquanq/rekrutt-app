@@ -19,7 +19,7 @@ class PositionController extends BaseController
 
         $positions = QueryBuilder::for(Position::class)
             ->allowedIncludes(["department"])
-            ->allowedFilters([AllowedFilter::partial("title")])
+            ->allowedFilters([AllowedFilter::partial("title"), AllowedFilter::exact("departmentId", "department_id")])
             ->get();
 
         return $this->okResponse(PositionResource::collection(PositionResource::collection($positions)));
@@ -31,7 +31,7 @@ class PositionController extends BaseController
 
         $position = QueryBuilder::for(Position::class)
             ->allowedIncludes(["department"])
-            ->get();
+            ->findOrFail($id);
 
         return $this->okResponse(new PositionResource($position));
     }
