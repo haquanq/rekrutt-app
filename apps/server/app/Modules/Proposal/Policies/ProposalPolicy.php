@@ -20,7 +20,6 @@ class ProposalPolicy
 
     public function create(User $user): bool
     {
-        echo "adawdawd";
         $role = UserRole::tryFrom($user["role"]);
         $isManagers = \in_array($role, [UserRole::MANAGER, UserRole::HIRING_MANAGER]);
         return $isManagers;
