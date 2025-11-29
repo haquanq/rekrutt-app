@@ -43,7 +43,7 @@ class ProposalController extends BaseController
 
     public function store(StoreProposalRequest $request)
     {
-        Gate::authorize("create", Department::class);
+        Gate::authorize("create", Proposal::class);
 
         $createdProposal = Proposal::create($request->validated());
         return $this->createdResponse(new ProposalResource($createdProposal));
