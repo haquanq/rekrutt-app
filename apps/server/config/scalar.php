@@ -73,19 +73,19 @@ return [
     */
     "configuration" => [
         /** A string to use one of the color presets */
-        "theme" =>
-            // 'alternate',
-            // 'bluePlanet',
-            // 'deepSpace',
-            // 'default',
-            // 'kepler',
-            "laravel",
-        // 'mars',
-        // 'moon',
-        // 'purple',
-        // 'saturn',
-        // 'solarized',
-        // 'none',
+        // "theme" =>
+        //     // 'alternate',
+        //     // 'bluePlanet',
+        //     // 'deepSpace',
+        //     // 'default',
+        //     // 'kepler',
+        //     "laravel",
+        // // 'mars',
+        // // 'moon',
+        // // 'purple',
+        // // 'saturn',
+        // // 'solarized',
+        // // 'none',
 
         /** The layout to use for the references */
         "layout" => "modern",
