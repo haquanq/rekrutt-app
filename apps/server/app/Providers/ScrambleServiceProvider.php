@@ -41,8 +41,16 @@ class ScrambleServiceProvider extends ServiceProvider
 
             if (isset($schema->type->properties)) {
                 $newProperties = [];
-                foreach ($schema->type->properties as $propertyName => $propertyMetadata) {
-                    $newProperties[Str::camel($propertyName)] = $propertyMetadata;
+                foreach ($schema->type->properties as $propertyName => $propertySchema) {
+                    if ($propertySchema instanceof Reference) {
+                        $propertySchema->fullName = $this->createDtoName($propertySchema->fullName);
+
+                        Log::info(json_encode($propertySchema));
+                    } elseif ($propertySchema->type === "array") {
+                        $propertySchema->items->fullName = $this->createDtoName($propertySchema->items->fullName);
+                    }
+
+                    $newProperties[Str::camel($propertyName)] = $propertySchema;
                 }
                 $schema->type->properties = $newProperties;
             }
