@@ -4,7 +4,7 @@ namespace App\Modules\RatingScale\Requests;
 
 use App\Modules\RatingScale\Abstracts\BaseRatingScaleRequest;
 
-class UpdateRatingScaleRequest extends BaseRatingScaleRequest
+class RatingScalePointStoreRequest extends BaseRatingScaleRequest
 {
     public function rules(): array
     {

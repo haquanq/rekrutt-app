@@ -3,8 +3,8 @@
 namespace App\Modules\EducationLevel\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\EducationLevel\Requests\StoreEducationLevelRequest;
-use App\Modules\EducationLevel\Requests\UpdateEducationLevelRequest;
+use App\Modules\EducationLevel\Requests\EducationLevelStoreRequest;
+use App\Modules\EducationLevel\Requests\EducationLevelUpdateRequest;
 use App\Modules\EducationLevel\Models\EducationLevel;
 use App\Modules\EducationLevel\Resources\EducationLevelResource;
 use Illuminate\Support\Facades\Gate;
@@ -31,14 +31,14 @@ class EducationLevelController extends BaseController
         return $this->okResponse(new EducationLevelResource($educationLevel));
     }
 
-    public function store(StoreEducationLevelRequest $request)
+    public function store(EducationLevelStoreRequest $request)
     {
         Gate::authorize("create", EducationLevel::class);
         $createdEducationlevel = EducationLevel::create($request->validated());
         return $this->createdResponse(new EducationLevelResource($createdEducationlevel));
     }
 
-    public function update(UpdateEducationLevelRequest $request, int $id)
+    public function update(EducationLevelUpdateRequest $request, int $id)
     {
         Gate::authorize("update", EducationLevel::class);
         EducationLevel::findOrFail($id)->update($request->validated());

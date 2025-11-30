@@ -3,8 +3,8 @@
 namespace App\Modules\HiringSource\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\HiringSource\Requests\StoreHiringSourceRequest;
-use App\Modules\HiringSource\Requests\UpdateHiringSourceRequest;
+use App\Modules\HiringSource\Requests\HiringSourceStoreRequest;
+use App\Modules\HiringSource\Requests\HiringSourceUpdateRequest;
 use App\Modules\HiringSource\Models\HiringSource;
 use App\Modules\HiringSource\Resources\HiringSourceResource;
 use Illuminate\Support\Facades\Gate;
@@ -31,14 +31,14 @@ class HiringSourceController extends BaseController
         return $this->okResponse(new HiringSourceResource($hiringSource));
     }
 
-    public function store(StoreHiringSourceRequest $request)
+    public function store(HiringSourceStoreRequest $request)
     {
         Gate::authorize("create", HiringSource::class);
         $createdHiringSource = HiringSource::create($request->validated());
         return $this->createdResponse(new HiringSourceResource($createdHiringSource));
     }
 
-    public function update(UpdateHiringSourceRequest $request, int $id)
+    public function update(HiringSourceUpdateRequest $request, int $id)
     {
         Gate::authorize("update", HiringSource::class);
         HiringSource::findOrFail($id)->update($request->validated());

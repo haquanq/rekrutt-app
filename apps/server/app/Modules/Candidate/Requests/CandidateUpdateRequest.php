@@ -4,7 +4,7 @@ namespace App\Modules\Candidate\Requests;
 
 use App\Modules\Candidate\Abstracts\BaseCandidateRequest;
 
-class UpdateCandidateRequest extends BaseCandidateRequest
+class CandidateUpdateRequest extends BaseCandidateRequest
 {
     public function rules(): array
     {

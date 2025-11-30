@@ -4,8 +4,8 @@ namespace App\Modules\Proposal\Controllers;
 
 use App\Abstracts\BaseController;
 use App\Modules\Proposal\Models\ProposalDocument;
-use App\Modules\Proposal\Requests\StoreProposalDocumentRequest;
-use App\Modules\Proposal\Requests\UpdateProposalDocumentRequest;
+use App\Modules\Proposal\Requests\ProposalDocumentStoreRequest;
+use App\Modules\Proposal\Requests\ProposalDocumentUpdateRequest;
 use App\Modules\Proposal\Resources\ProposalDocumentResource;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -38,7 +38,7 @@ class ProposalDocumentController extends BaseController
         return new ProposalDocumentResource($candidateDocument);
     }
 
-    public function store(StoreProposalDocumentRequest $request)
+    public function store(ProposalDocumentStoreRequest $request)
     {
         Gate::authorize("create", ProposalDocument::class);
 
@@ -63,7 +63,7 @@ class ProposalDocumentController extends BaseController
         return $this->createdResponse(new ProposalDocumentResource($createdProposalDocument));
     }
 
-    public function update(UpdateProposalDocumentRequest $request, int $id)
+    public function update(ProposalDocumentUpdateRequest $request, int $id)
     {
         $proposalDocument = ProposalDocument::findOrFail($id)->load("proposal");
         Gate::authorize("update", $proposalDocument);

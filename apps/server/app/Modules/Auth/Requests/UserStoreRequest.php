@@ -4,7 +4,7 @@ namespace App\Modules\Auth\Requests;
 
 use App\Modules\Auth\Abstracts\BaseUserRequest;
 
-class StoreUserRequest extends BaseUserRequest
+class UserStoreRequest extends BaseUserRequest
 {
     public function rules(): array
     {

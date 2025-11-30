@@ -4,7 +4,7 @@ namespace App\Modules\EducationLevel\Requests;
 
 use App\Modules\EducationLevel\Abstracts\BaseEducationLevelRequest;
 
-class UpdateEducationLevelRequest extends BaseEducationLevelRequest
+class EducationLevelUpdateRequest extends BaseEducationLevelRequest
 {
     public function rules(): array
     {

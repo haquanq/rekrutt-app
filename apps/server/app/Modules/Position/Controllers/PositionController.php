@@ -3,8 +3,8 @@
 namespace App\Modules\Position\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\Position\Requests\StorePositionRequest;
-use App\Modules\Position\Requests\UpdatePositionRequest;
+use App\Modules\Position\Requests\PositionStoreReqeust;
+use App\Modules\Position\Requests\PositionUpdateRequest;
 use App\Modules\Position\Models\Position;
 use App\Modules\Position\Resources\PositionResource;
 use Illuminate\Support\Facades\Gate;
@@ -36,14 +36,14 @@ class PositionController extends BaseController
         return $this->okResponse(new PositionResource($position));
     }
 
-    public function store(StorePositionRequest $request)
+    public function store(PositionStoreReqeust $request)
     {
         Gate::authorize("create", Position::class);
         $createdPosition = Position::create($request->validated());
         return $this->createdResponse(new PositionResource($createdPosition));
     }
 
-    public function update(UpdatePositionRequest $request, int $id)
+    public function update(PositionUpdateRequest $request, int $id)
     {
         Gate::authorize("update", Position::class);
         Position::findOrFail($id)->update($request->validated());

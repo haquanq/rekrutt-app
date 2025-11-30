@@ -4,7 +4,7 @@ namespace App\Modules\Position\Requests;
 
 use App\Modules\Position\Abstracts\BasePositionRequest;
 
-class StorePositionRequest extends BasePositionRequest
+class PositionUpdateRequest extends BasePositionRequest
 {
     public function rules(): array
     {

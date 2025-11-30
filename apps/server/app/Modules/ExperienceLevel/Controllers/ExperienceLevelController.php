@@ -4,8 +4,8 @@ namespace App\Modules\ExperienceLevel\Controllers;
 
 use App\Abstracts\BaseController;
 use App\Modules\ExperienceLevel\Models\ExperienceLevel;
-use App\Modules\ExperienceLevel\Requests\StoreExperienceLevelRequest;
-use App\Modules\ExperienceLevel\Requests\UpdateExperienceLevelRequest;
+use App\Modules\ExperienceLevel\Requests\ExperienceLevelStoreRequest;
+use App\Modules\ExperienceLevel\Requests\ExperienceLevelUpdateRequest;
 use App\Modules\ExperienceLevel\Resources\ExperienceLevelResource;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -30,14 +30,14 @@ class ExperienceLevelController extends BaseController
         return $this->okResponse(new ExperienceLevelResource($experienceLevel));
     }
 
-    public function store(StoreExperienceLevelRequest $request)
+    public function store(ExperienceLevelStoreRequest $request)
     {
         Gate::authorize("create", ExperienceLevel::class);
         $createdExperienceLevel = ExperienceLevel::create($request->validated());
         return response()->json($createdExperienceLevel);
     }
 
-    public function update(UpdateExperienceLevelRequest $request, int $id)
+    public function update(ExperienceLevelUpdateRequest $request, int $id)
     {
         Gate::authorize("update", ExperienceLevel::class);
         ExperienceLevel::findOrFail($id)->update($request->validated());

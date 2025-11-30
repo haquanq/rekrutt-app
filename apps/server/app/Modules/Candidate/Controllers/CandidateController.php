@@ -3,8 +3,8 @@
 namespace App\Modules\Candidate\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\Candidate\Requests\StoreCandidateRequest;
-use App\Modules\Candidate\Requests\UpdateCandidateRequest;
+use App\Modules\Candidate\Requests\CandidateStoreRequest;
+use App\Modules\Candidate\Requests\CandidateUpdateRequest;
 use App\Modules\Candidate\Models\Candidate;
 use App\Modules\Candidate\Resources\CandidateResource;
 use Illuminate\Support\Facades\Gate;
@@ -40,14 +40,14 @@ class CandidateController extends BaseController
         return $this->okResponse(new CandidateResource($candidate));
     }
 
-    public function store(StoreCandidateRequest $request)
+    public function store(CandidateStoreRequest $request)
     {
         Gate::authorize("create", Candidate::class);
         $createdCandidate = Candidate::create($request->validated());
         return $this->createdResponse(new CandidateResource($createdCandidate));
     }
 
-    public function update(UpdateCandidateRequest $request, int $id)
+    public function update(CandidateUpdateRequest $request, int $id)
     {
         Gate::authorize("update", Candidate::class);
         Candidate::findOrFail($id)->update($request->validated());

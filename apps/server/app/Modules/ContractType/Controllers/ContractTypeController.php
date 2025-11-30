@@ -3,8 +3,8 @@
 namespace App\Modules\ContractType\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\ContractType\Requests\StoreContractTypeRequest;
-use App\Modules\ContractType\Requests\UpdateContractTypeRequest;
+use App\Modules\ContractType\Requests\ContractTypeStoreRequest;
+use App\Modules\ContractType\Requests\ContractTypeUpdateRequest;
 use App\Modules\ContractType\Models\ContractType;
 use App\Modules\ContractType\Resources\ContractTypeResource;
 use Illuminate\Support\Facades\Gate;
@@ -31,14 +31,14 @@ class ContractTypeController extends BaseController
         return $this->okResponse(new ContractTypeResource($contractType));
     }
 
-    public function store(StoreContractTypeRequest $request)
+    public function store(ContractTypeStoreRequest $request)
     {
         Gate::authorize("create", ContractType::class);
         $createdContractType = ContractType::create($request->validated());
         return $this->okResponse(new ContractTypeResource($createdContractType));
     }
 
-    public function update(UpdateContractTypeRequest $request, int $id)
+    public function update(ContractTypeUpdateRequest $request, int $id)
     {
         Gate::authorize("update", ContractType::class);
         ContractType::findOrFail($id)->update($request->validated());

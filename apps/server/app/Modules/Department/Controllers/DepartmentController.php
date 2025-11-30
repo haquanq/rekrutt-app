@@ -3,8 +3,8 @@
 namespace App\Modules\Department\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\Department\Requests\StoreDepartmentRequest;
-use App\Modules\Department\Requests\UpdateDepartmentRequest;
+use App\Modules\Department\Requests\DepartmentStoreRequest;
+use App\Modules\Department\Requests\DepartmentUpdateRequest;
 use App\Modules\Department\Models\Department;
 use App\Modules\Department\Resources\DepartmentResource;
 use Illuminate\Support\Facades\Gate;
@@ -36,14 +36,14 @@ class DepartmentController extends BaseController
         return $this->okResponse(new DepartmentResource($department));
     }
 
-    public function store(StoreDepartmentRequest $request)
+    public function store(DepartmentStoreRequest $request)
     {
         Gate::authorize("create", Department::class);
         $department = Department::create($request->validated());
         return $this->createdResponse(new DepartmentResource($department));
     }
 
-    public function update(UpdateDepartmentRequest $request, int $id)
+    public function update(DepartmentUpdateRequest $request, int $id)
     {
         Gate::authorize("update", Department::class);
         Department::findOrFail($id)->update($request->validated());

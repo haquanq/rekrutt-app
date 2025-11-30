@@ -4,7 +4,7 @@ namespace App\Modules\Proposal\Requests;
 
 use App\Modules\Proposal\Abstracts\BaseProposalRequest;
 
-class UpdateProposalRequest extends BaseProposalRequest
+class ProposalUpdateRequest extends BaseProposalRequest
 {
     public function rules(): array
     {

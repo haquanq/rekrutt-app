@@ -3,8 +3,8 @@
 namespace App\Modules\RatingScale\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\RatingScale\Requests\StoreRatingScaleRequest;
-use App\Modules\RatingScale\Requests\UpdateRatingScaleRequest;
+use App\Modules\RatingScale\Requests\RatingScaleStoreRequest;
+use App\Modules\RatingScale\Requests\RatingScaleUpdateRequest;
 use App\Modules\RatingScale\Models\RatingScale;
 use App\Modules\RatingScale\Resources\RatingScaleResource;
 use Illuminate\Support\Facades\Gate;
@@ -36,14 +36,14 @@ class RatingScaleController extends BaseController
         return $this->okResponse(new RatingScaleResource($ratingScale));
     }
 
-    public function store(StoreRatingScaleRequest $request)
+    public function store(RatingScaleStoreRequest $request)
     {
         Gate::authorize("create", RatingScale::class);
         $createdRatingScale = RatingScale::create($request->validated());
         return $this->createdResponse(new RatingScaleResource($createdRatingScale));
     }
 
-    public function update(UpdateRatingScaleRequest $request, int $id)
+    public function update(RatingScaleUpdateRequest $request, int $id)
     {
         Gate::authorize("update", RatingScale::class);
         RatingScale::findOrFail($id)->update($request->validated());

@@ -4,7 +4,7 @@ namespace App\Modules\Candidate\Requests;
 
 use App\Modules\Candidate\Abstracts\BaseCandidateExperienceRequest;
 
-class UpdateCandidateExperienceRequest extends BaseCandidateExperienceRequest
+class CandidateExperienceUpdateRequest extends BaseCandidateExperienceRequest
 {
     public function rules(): array
     {

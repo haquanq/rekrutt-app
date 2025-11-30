@@ -4,8 +4,8 @@ namespace App\Modules\Candidate\Controllers;
 
 use App\Abstracts\BaseController;
 use App\Modules\Candidate\Models\CandidateDocument;
-use App\Modules\Candidate\Requests\StoreCandidateDocumentRequest;
-use App\Modules\Candidate\Requests\UpdateCandidateDocumentRequest;
+use App\Modules\Candidate\Requests\CandidateDocumentStoreRequest;
+use App\Modules\Candidate\Requests\CandidateDocumentUpdateRequest;
 use App\Modules\Candidate\Resources\CandidateDocumentResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -39,7 +39,7 @@ class CandidateDocumentController extends BaseController
         return new CandidateDocumentResource($candidateDocument);
     }
 
-    public function store(StoreCandidateDocumentRequest $request)
+    public function store(CandidateDocumentStoreRequest $request)
     {
         Gate::authorize("create", CandidateDocument::class);
 
@@ -64,7 +64,7 @@ class CandidateDocumentController extends BaseController
         return $this->createdResponse(new CandidateDocumentResource($createdCandidateDocument));
     }
 
-    public function update(UpdateCandidateDocumentRequest $request, int $id)
+    public function update(CandidateDocumentUpdateRequest $request, int $id)
     {
         Gate::authorize("update", CandidateDocument::class);
         CandidateDocument::findOrFail($id)->update($request->validated());

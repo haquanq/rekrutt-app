@@ -3,8 +3,8 @@
 namespace App\Modules\RatingScale\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\RatingScale\Requests\StoreRatingScalePointRequest;
-use App\Modules\RatingScale\Requests\UpdateRatingScalePointRequest;
+use App\Modules\RatingScale\Requests\RatingScalePointStoreRequest;
+use App\Modules\RatingScale\Requests\RatingScalePointUpdateRequest;
 use App\Modules\RatingScale\Models\RatingScalePoint;
 use App\Modules\RatingScale\Resources\RatingScalePointResource;
 use App\Modules\RatingScale\Resources\RatingScaleResource;
@@ -35,14 +35,14 @@ class RatingScalePointController extends BaseController
         return $this->okResponse(new RatingScalePointResource($ratingScalePoint));
     }
 
-    public function store(StoreRatingScalePointRequest $request)
+    public function store(RatingScalePointStoreRequest $request)
     {
         Gate::authorize("create", RatingScalePoint::class);
         $createdRatingScalePoint = RatingScalePoint::create($request->validated());
         return $this->createdResponse(new RatingScalePointResource($createdRatingScalePoint));
     }
 
-    public function update(UpdateRatingScalePointRequest $request, int $id)
+    public function update(RatingScalePointUpdateRequest $request, int $id)
     {
         Gate::authorize("update", RatingScalePoint::class);
         RatingScalePoint::findOrFail($id)->update($request->validated());

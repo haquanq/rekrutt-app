@@ -4,8 +4,8 @@ namespace App\Modules\Candidate\Controllers;
 
 use App\Abstracts\BaseController;
 use App\Modules\Candidate\Models\CandidateExperience;
-use App\Modules\Candidate\Requests\StoreCandidateExperienceRequest;
-use App\Modules\Candidate\Requests\UpdateCandidateExperienceRequest;
+use App\Modules\Candidate\Requests\CandidateExperienceStoreRequest;
+use App\Modules\Candidate\Requests\CandidateExperienceUpdateRequest;
 use App\Modules\Candidate\Resources\CandidateExperienceResource;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -39,14 +39,14 @@ class CandidateExperienceController extends BaseController
         return $this->okResponse(new CandidateExperienceResource($candidateExperience));
     }
 
-    public function store(StoreCandidateExperienceRequest $request)
+    public function store(CandidateExperienceStoreRequest $request)
     {
         Gate::authorize("create", CandidateExperience::class);
         $createdCandidateExperience = CandidateExperience::create($request->validated());
         return $this->createdResponse(new CandidateExperienceResource($createdCandidateExperience));
     }
 
-    public function update(UpdateCandidateExperienceRequest $request, int $id)
+    public function update(CandidateExperienceUpdateRequest $request, int $id)
     {
         Gate::authorize("update", CandidateExperience::class);
         CandidateExperience::findOrFail($id)->update($request->validated());

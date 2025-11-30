@@ -4,7 +4,7 @@ namespace App\Modules\Department\Requests;
 
 use App\Modules\Department\Abstracts\BaseDepartmentRequest;
 
-class StoreDepartmentRequest extends BaseDepartmentRequest
+class DepartmentStoreRequest extends BaseDepartmentRequest
 {
     public function rules(): array
     {

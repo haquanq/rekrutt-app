@@ -3,9 +3,8 @@
 namespace App\Modules\Proposal\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\Department\Models\Department;
-use App\Modules\Proposal\Requests\StoreProposalRequest;
-use App\Modules\Proposal\Requests\UpdateProposalRequest;
+use App\Modules\Proposal\Requests\ProposalStoreRequest;
+use App\Modules\Proposal\Requests\ProposalUpdateRequest;
 use App\Modules\Proposal\Resources\ProposalResource;
 use App\Modules\Proposal\Models\Proposal;
 use Illuminate\Support\Facades\Gate;
@@ -57,7 +56,7 @@ class ProposalController extends BaseController
         return $this->okResponse(new ProposalResource($proposal));
     }
 
-    public function store(StoreProposalRequest $request)
+    public function store(ProposalStoreRequest $request)
     {
         Gate::authorize("create", Proposal::class);
 
@@ -65,7 +64,7 @@ class ProposalController extends BaseController
         return $this->createdResponse(new ProposalResource($createdProposal));
     }
 
-    public function update(UpdateProposalRequest $request, int $id)
+    public function update(ProposalUpdateRequest $request, int $id)
     {
         Gate::authorize("update", Proposal::class);
         $proposal = Proposal::findOrFail($id);

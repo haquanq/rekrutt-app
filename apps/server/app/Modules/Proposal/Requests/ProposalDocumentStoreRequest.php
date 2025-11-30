@@ -4,7 +4,7 @@ namespace App\Modules\Proposal\Requests;
 
 use App\Modules\Proposal\Abstracts\BaseProposalDocumentRequest;
 
-class StoreProposalDocumentRequest extends BaseProposalDocumentRequest
+class ProposalDocumentStoreRequest extends BaseProposalDocumentRequest
 {
     public function rules(): array
     {

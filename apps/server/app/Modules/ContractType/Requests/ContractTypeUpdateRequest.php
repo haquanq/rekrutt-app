@@ -4,7 +4,7 @@ namespace App\Modules\ContractType\Requests;
 
 use App\Modules\ContractType\Abstracts\BaseContractTypeRequest;
 
-class UpdateContractTypeRequest extends BaseContractTypeRequest
+class ContractTypeUpdateRequest extends BaseContractTypeRequest
 {
     public function rules(): array
     {

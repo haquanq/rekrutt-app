@@ -4,7 +4,7 @@ namespace App\Modules\HiringSource\Requests;
 
 use App\Modules\HiringSource\Abstracts\BaseHiringSourceRequest;
 
-class StoreHiringSourceRequest extends BaseHiringSourceRequest
+class HiringSourceUpdateRequest extends BaseHiringSourceRequest
 {
     public function rules(): array
     {

@@ -4,7 +4,7 @@ namespace App\Modules\Auth\Requests;
 
 use App\Modules\Auth\Abstracts\BaseUserRequest;
 
-class UpdateUserRequest extends BaseUserRequest
+class UserUpdateRequest extends BaseUserRequest
 {
     public function rules(): array
     {

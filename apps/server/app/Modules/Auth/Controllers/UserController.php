@@ -4,10 +4,10 @@ namespace App\Modules\Auth\Controllers;
 
 use App\Abstracts\BaseController;
 use App\Modules\Auth\Enums\UserRole;
-use App\Modules\Auth\Requests\StoreUserRequest;
-use App\Modules\Auth\Requests\UpdateUserRequest;
+use App\Modules\Auth\Requests\UserStoreRequest;
+use App\Modules\Auth\Requests\UserUpdateRequest;
 use App\Modules\Auth\Models\User;
-use App\Modules\Auth\Requests\UpdateUserStatusRequest;
+use App\Modules\Auth\Requests\UserStatusUpdateRequest;
 use App\Modules\Auth\Resources\UserResource;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -28,21 +28,21 @@ class UserController extends BaseController
         return $this->okResponse(new UserResource($user));
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(UserStoreRequest $request)
     {
         Gate::authorize("create", User::class);
         $user = User::create($request->validated());
         return new UserResource($user);
     }
 
-    public function update(UpdateUserRequest $request, int $id)
+    public function update(UserUpdateRequest $request, int $id)
     {
         Gate::authorize("update", User::class);
         User::findOrFail($id)->update($request->validated());
         return $this->noContentResponse();
     }
 
-    public function updateStatus(UpdateUserStatusRequest $request, int $id)
+    public function updateStatus(UserStatusUpdateRequest $request, int $id)
     {
         Gate::authorize("update", User::class);
         User::findOrFail($id)->update($request->validated());

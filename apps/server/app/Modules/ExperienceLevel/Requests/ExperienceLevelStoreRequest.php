@@ -4,7 +4,7 @@ namespace App\Modules\ExperienceLevel\Requests;
 
 use App\Modules\ExperienceLevel\Abstracts\BaseExperienceLevelRequest;
 
-class StoreExperienceLevelRequest extends BaseExperienceLevelRequest
+class ExperienceLevelStoreRequest extends BaseExperienceLevelRequest
 {
     public function rules(): array
     {

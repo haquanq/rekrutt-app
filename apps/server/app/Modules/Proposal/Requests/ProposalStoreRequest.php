@@ -6,7 +6,7 @@ use App\Modules\Proposal\Abstracts\BaseProposalRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class StoreProposalRequest extends BaseProposalRequest
+class ProposalStoreRequest extends BaseProposalRequest
 {
     public function authorize(): bool
     {

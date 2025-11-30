@@ -6,7 +6,7 @@ use App\Modules\Auth\Abstracts\BaseUserRequest;
 use App\Modules\Auth\Enums\UserStatus;
 use Carbon\Carbon;
 
-class UpdateUserStatusRequest extends BaseUserRequest
+class UserStatusUpdateRequest extends BaseUserRequest
 {
     public function rules(): array
     {
