@@ -19,7 +19,7 @@ abstract class BaseCandidateDocumentRequest extends BaseFormRequest
         return [
             "candidate_id" => ["required", "integer", "exists:candidate,id"],
             "document" => ["required", FileRule::types(["pdf", "docx", "doc"])->max(5 * 1024)],
-            "note" => ["string", "max:500"],
+            "description" => ["string", "max:500"],
         ];
     }
 }
