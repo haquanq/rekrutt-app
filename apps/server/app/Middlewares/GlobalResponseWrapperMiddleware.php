@@ -15,7 +15,7 @@ class GlobalResponseWrapperMiddleware
     {
         $response = $next($request);
 
-        if ($response instanceof JsonResponse) {
+        if ($response instanceof JsonResponse && $request->is("api/*")) {
             $wrappedData = [
                 "success" => $response->isSuccessful(),
                 "status_code" => $response->getStatusCode(),
