@@ -39,13 +39,14 @@ class ScrambleServiceProvider extends ServiceProvider
             $newSchemaName = $this->createDtoName($schemaName);
             $schema->setTitle($newSchemaName);
 
-            $newProperties = [];
             if (isset($schema->type->properties)) {
+                $newProperties = [];
                 foreach ($schema->type->properties as $propertyName => $propertyMetadata) {
                     $newProperties[Str::camel($propertyName)] = $propertyMetadata;
                 }
+                $schema->type->properties = $newProperties;
             }
-            $schema->type->properties = $newProperties;
+
             $newSchemas[$newSchemaName] = $schema;
         }
         $document->components->schemas = $newSchemas;
