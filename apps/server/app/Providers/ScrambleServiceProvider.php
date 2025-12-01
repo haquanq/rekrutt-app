@@ -26,9 +26,9 @@ class ScrambleServiceProvider extends ServiceProvider
             });
     }
 
-    public function createCustomeModelName(string $name): string
+    public function findAndRenameSchemaNames(string $name): string
     {
-        $name = str_replace(["Request", "Resource"], "Dto", $name);
+        $name = str_replace(["Request", "ResourceCollection", "Resource"], ["Dto", "ListDto", "Dto"], $name);
         $name = str_replace(["StoreDto"], "CreateDto", $name);
         return $name;
     }
@@ -36,9 +36,18 @@ class ScrambleServiceProvider extends ServiceProvider
     public function updateTypeReference(Reference|Schema|Type $type): void
     {
         if ($type instanceof Reference) {
-            $type->fullName = $this->createCustomeModelName($type->fullName);
+            $type->fullName = $this->findAndRenameSchemaNames($type->fullName);
         } elseif ($type->type === "array" && $type->items instanceof Reference) {
-            $type->items->fullName = $this->createCustomeModelName($type->items->fullName);
+            $type->items->fullName = $this->findAndRenameSchemaNames($type->items->fullName);
+        }
+
+        if (isset($type->properties)) {
+            $newProperties = [];
+            foreach ($type->properties as $propertyName => $propertySchema) {
+                $this->updateTypeReference($propertySchema);
+                $newProperties[Str::camel($propertyName)] = $propertySchema;
+            }
+            $type->properties = $newProperties;
         }
     }
 
@@ -46,17 +55,8 @@ class ScrambleServiceProvider extends ServiceProvider
     {
         $newSchemas = [];
         foreach ($document->components->schemas as $schemaName => $schema) {
-            $newSchemaName = $this->createCustomeModelName($schemaName);
-
-            if (isset($schema->type->properties)) {
-                $newProperties = [];
-                foreach ($schema->type->properties as $propertyName => $propertySchema) {
-                    $this->updateTypeReference($propertySchema);
-                    $newProperties[Str::camel($propertyName)] = $propertySchema;
-                }
-                $schema->type->properties = $newProperties;
-            }
-
+            $newSchemaName = $this->findAndRenameSchemaNames($schemaName);
+            $this->updateTypeReference($schema->type);
             $newSchemas[$newSchemaName] = $schema;
         }
         $document->components->schemas = $newSchemas;
@@ -70,7 +70,7 @@ class ScrambleServiceProvider extends ServiceProvider
 
         foreach ($operation->requestBodyObject->content as $contentType => $content) {
             if ($content instanceof Reference) {
-                $content->fullName = $this->createCustomeModelName($content->fullName);
+                $this->updateTypeReference($content);
             }
         }
     }
