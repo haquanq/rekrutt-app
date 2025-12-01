@@ -82,6 +82,15 @@ class UserController extends BaseController
      *
      * Return a unique user. Allow relations query
      */
+    #[
+        QueryParameter(
+            name: "include",
+            type: "string",
+            description: "Include nested relations </br>" .
+                " Allow relations: position </br>" .
+                "Example: include=position",
+        ),
+    ]
     public function show(int $id)
     {
         Gate::authorize("view", User::class);
