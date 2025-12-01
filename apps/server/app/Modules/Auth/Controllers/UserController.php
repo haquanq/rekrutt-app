@@ -11,12 +11,52 @@ use App\Modules\Auth\Requests\UserUpdateRequest;
 use App\Modules\Auth\Models\User;
 use App\Modules\Auth\Resources\UserResource;
 use App\Modules\Auth\Resources\UserResourceCollection;
+use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends BaseController
 {
+    /**
+     * Find all users
+     *
+     * Retrive a list of users. Allows pagination, relations and filter query.
+     */
+    #[
+        QueryParameter(
+            name: "page[number]",
+            type: "integer",
+            description: "Current page number (default: 1)",
+            example: 1,
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "page[size]",
+            type: "integer",
+            description: "Size of current page (default: 15, max: 100)",
+            example: 15,
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "include",
+            type: "string",
+            description: "Include nested relations </br>" .
+                " Allow relations: position </br>" .
+                "Example: include=position",
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "filter[*]",
+            type: "string",
+            description: "Filter by fields </br>" .
+                "Allow fields: email, username, role, positionId, status </br>" .
+                "Example: filter[email]=admin@gmail.com&filter[status]=active",
+        ),
+    ]
     public function index()
     {
         Gate::authorize("viewAny", User::class);
@@ -35,6 +75,11 @@ class UserController extends BaseController
         return UserResourceCollection::make($users);
     }
 
+    /**
+     * Find user by Id
+     *
+     * Return a unique user. Allow relations query
+     */
     public function show(int $id)
     {
         Gate::authorize("view", User::class);
@@ -44,6 +89,11 @@ class UserController extends BaseController
         return UserResource::make($user);
     }
 
+    /**
+     * Create user
+     *
+     * Return created user
+     */
     public function store(UserStoreRequest $request)
     {
         Gate::authorize("create", User::class);
@@ -51,6 +101,11 @@ class UserController extends BaseController
         return new UserResource($user);
     }
 
+    /**
+     * Update user
+     *
+     * Return empty
+     */
     public function update(UserUpdateRequest $request, int $id)
     {
         Gate::authorize("update", User::class);
@@ -58,6 +113,11 @@ class UserController extends BaseController
         return $this->noContentResponse();
     }
 
+    /**
+     * Suspend user
+     *
+     * Return empty
+     */
     public function suspend(UserSuspendRequest $request, User $id)
     {
         Gate::authorize("update", User::class);
@@ -65,6 +125,11 @@ class UserController extends BaseController
         return $this->noContentResponse();
     }
 
+    /**
+     * Retire user
+     *
+     * Return empty
+     */
     public function retire(UserRetireRequest $request, int $id)
     {
         Gate::authorize("update", User::class);
@@ -72,6 +137,11 @@ class UserController extends BaseController
         return $this->noContentResponse();
     }
 
+    /**
+     * Re-activate user
+     *
+     * Return empty
+     */
     public function activate(UserActivateRequest $request, int $id)
     {
         Gate::authorize("update", User::class);
@@ -79,6 +149,11 @@ class UserController extends BaseController
         return $this->noContentResponse();
     }
 
+    /**
+     * Delete user by Id
+     *
+     * Permanently delete user. Return empty
+     */
     public function destroy(int $id)
     {
         Gate::authorize("delete", User::class);
