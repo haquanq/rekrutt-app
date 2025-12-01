@@ -18,7 +18,7 @@ class ContractTypeController extends BaseController
     /**
      * Find all contract types
      *
-     * Retrive a list of contract types. Allows pagination and filter query.
+     * Return a list of contract types. Allows pagination and filter query.
      */
     #[
         QueryParameter(
