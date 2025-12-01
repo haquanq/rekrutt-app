@@ -86,6 +86,8 @@ class ScrambleServiceProvider extends ServiceProvider
                 continue;
             }
 
+            $response->description = $this->findAndRenameSchemaNames($response->description);
+
             foreach ($response->content as $contentType => $content) {
                 if ($content instanceof Schema) {
                     $this->updateTypeReference($content->type);
