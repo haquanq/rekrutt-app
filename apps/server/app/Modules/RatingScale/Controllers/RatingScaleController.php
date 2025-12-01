@@ -8,12 +8,52 @@ use App\Modules\RatingScale\Requests\RatingScaleUpdateRequest;
 use App\Modules\RatingScale\Models\RatingScale;
 use App\Modules\RatingScale\Resources\RatingScaleResource;
 use App\Modules\RatingScale\Resources\RatingScaleResourceCollection;
+use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class RatingScaleController extends BaseController
 {
+    /**
+     * Find all rating scales
+     *
+     * Return a list of rating scales. Allows pagination, relations and filter query.
+     */
+    #[
+        QueryParameter(
+            name: "page[number]",
+            type: "integer",
+            description: "Current page number (default: 1)",
+            example: 1,
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "page[size]",
+            type: "integer",
+            description: "Size of current page (default: 15, max: 100)",
+            example: 15,
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "include",
+            type: "string",
+            description: "Include nested relations </br>" .
+                " Allow relations: points </br>" .
+                "Example: include=points",
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "filter[*]",
+            type: "string",
+            description: "Filter by fields </br>" .
+                "Allow fields: name, isActive </br>" .
+                "Example: filter[isActive]=true",
+        ),
+    ]
     public function index()
     {
         Gate::authorize("viewAny", RatingScale::class);
@@ -26,6 +66,20 @@ class RatingScaleController extends BaseController
         return RatingScaleResourceCollection::make($ratingScales);
     }
 
+    /**
+     * Find rating scale by Id
+     *
+     * Return a unique rating scale. Allow relations query
+     */
+    #[
+        QueryParameter(
+            name: "include",
+            type: "string",
+            description: "Include nested relations </br>" .
+                " Allow relations: points </br>" .
+                "Example: include=points",
+        ),
+    ]
     public function show(int $id)
     {
         Gate::authorize("view", RatingScale::class);
@@ -37,6 +91,11 @@ class RatingScaleController extends BaseController
         return RatingScaleResource::make($ratingScale);
     }
 
+    /**
+     * Create rating scale
+     *
+     * Return created rating scale
+     */
     public function store(RatingScaleStoreRequest $request)
     {
         Gate::authorize("create", RatingScale::class);
@@ -44,6 +103,11 @@ class RatingScaleController extends BaseController
         return $this->createdResponse(new RatingScaleResource($createdRatingScale));
     }
 
+    /**
+     * Update rating scale
+     *
+     *  Return no content
+     */
     public function update(RatingScaleUpdateRequest $request, int $id)
     {
         Gate::authorize("update", RatingScale::class);
@@ -51,6 +115,11 @@ class RatingScaleController extends BaseController
         return $this->noContentResponse();
     }
 
+    /**
+     * Delete rating scale by Id
+     *
+     * Permanently delete rating scale. Return no content
+     */
     public function destroy(int $id)
     {
         Gate::authorize("delete", RatingScale::class);
