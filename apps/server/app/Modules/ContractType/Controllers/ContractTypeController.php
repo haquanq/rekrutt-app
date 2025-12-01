@@ -7,6 +7,7 @@ use App\Modules\ContractType\Requests\ContractTypeStoreRequest;
 use App\Modules\ContractType\Requests\ContractTypeUpdateRequest;
 use App\Modules\ContractType\Models\ContractType;
 use App\Modules\ContractType\Resources\ContractTypeResource;
+use App\Modules\ContractType\Resources\ContractTypeResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -19,16 +20,16 @@ class ContractTypeController extends BaseController
 
         $contractTypes = QueryBuilder::for(ContractType::class)
             ->allowedFilters([AllowedFilter::partial("name")])
-            ->get();
+            ->autoPaginate();
 
-        return $this->okResponse(ContractTypeResource::collection($contractTypes));
+        return ContractTypeResourceCollection::make($contractTypes);
     }
 
     public function show(int $id)
     {
         Gate::authorize("view", ContractType::class);
         $contractType = ContractType::findOrFail($id);
-        return $this->okResponse(new ContractTypeResource($contractType));
+        return ContractTypeResource::make($contractType);
     }
 
     public function store(ContractTypeStoreRequest $request)
