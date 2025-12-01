@@ -14,8 +14,16 @@ abstract class BaseDepartmentRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
+            /**
+             * Name
+             * @example "Research and Development"
+             */
             "name" => ["required", "string", "max:100"],
-            "description" => ["nullable", "string", "max:500"],
+            /**
+             * Description
+             * @example "Research something"
+             */
+            "description" => ["string", "max:500"],
         ];
     }
 }
