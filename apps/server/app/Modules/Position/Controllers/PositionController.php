@@ -3,10 +3,14 @@
 namespace App\Modules\Position\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\Position\Requests\PositionIndexRequest;
 use App\Modules\Position\Requests\PositionStoreReqeust;
 use App\Modules\Position\Requests\PositionUpdateRequest;
 use App\Modules\Position\Models\Position;
 use App\Modules\Position\Resources\PositionResource;
+use App\Modules\Position\Resources\PositionResourceCollection;
+use Dedoc\Scramble\Attributes\Endpoint;
+use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -20,9 +24,9 @@ class PositionController extends BaseController
         $positions = QueryBuilder::for(Position::class)
             ->allowedIncludes(["department"])
             ->allowedFilters([AllowedFilter::partial("title"), AllowedFilter::exact("departmentId", "department_id")])
-            ->get();
+            ->autoPaginate();
 
-        return $this->okResponse(PositionResource::collection(PositionResource::collection($positions)));
+        return PositionResourceCollection::make($positions);
     }
 
     public function show(int $id)
@@ -33,7 +37,7 @@ class PositionController extends BaseController
             ->allowedIncludes(["department"])
             ->findOrFail($id);
 
-        return $this->okResponse(new PositionResource($position));
+        return PositionResource::make($position);
     }
 
     public function store(PositionStoreReqeust $request)
