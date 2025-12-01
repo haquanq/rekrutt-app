@@ -9,6 +9,7 @@ use App\Modules\RatingScale\Models\RatingScalePoint;
 use App\Modules\RatingScale\Resources\RatingScalePointResource;
 use App\Modules\RatingScale\Resources\RatingScalePointResourceCollection;
 use Illuminate\Support\Facades\Gate;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class RatingScalePointController extends BaseController
@@ -19,6 +20,7 @@ class RatingScalePointController extends BaseController
 
         $ratingScalePoints = QueryBuilder::for(RatingScalePoint::class)
             ->allowedIncludes(["ratingScale"])
+            ->allowedFilters([AllowedFilter::exact("ratingScaleId", "rating_scale_id")])
             ->autoPaginate();
 
         return RatingScalePointResourceCollection::make($ratingScalePoints);
