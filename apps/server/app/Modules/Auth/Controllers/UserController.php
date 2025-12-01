@@ -16,13 +16,13 @@ class UserController extends BaseController
 {
     public function index()
     {
-        Gate::authorize("findAll", User::class);
+        Gate::authorize("viewAny", User::class);
         return $this->okResponse(UserResource::collection(User::all()));
     }
 
     public function show(int $id)
     {
-        Gate::authorize("findById", User::class);
+        Gate::authorize("view", User::class);
         $user = User::findOrFail($id);
         return $this->okResponse(new UserResource($user));
     }
