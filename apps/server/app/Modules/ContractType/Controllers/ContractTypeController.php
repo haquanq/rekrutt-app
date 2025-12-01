@@ -15,7 +15,7 @@ class ContractTypeController extends BaseController
 {
     public function index()
     {
-        Gate::authorize("findAll", ContractType::class);
+        Gate::authorize("viewAny", ContractType::class);
 
         $contractTypes = QueryBuilder::for(ContractType::class)
             ->allowedFilters([AllowedFilter::partial("name")])
@@ -26,7 +26,7 @@ class ContractTypeController extends BaseController
 
     public function show(int $id)
     {
-        Gate::authorize("findById", ContractType::class);
+        Gate::authorize("view", ContractType::class);
         $contractType = ContractType::findOrFail($id);
         return $this->okResponse(new ContractTypeResource($contractType));
     }
