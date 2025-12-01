@@ -60,7 +60,6 @@ class PositionController extends BaseController
 
         $positions = QueryBuilder::for(Position::class)
             ->allowedIncludes(["department"])
-            // awdawdawd
             ->allowedFilters([AllowedFilter::partial("title"), AllowedFilter::exact("departmentId", "department_id")])
             ->autoPaginate();
 
