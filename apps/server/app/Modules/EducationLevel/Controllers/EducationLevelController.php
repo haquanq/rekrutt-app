@@ -92,7 +92,7 @@ class EducationLevelController extends BaseController
     /**
      * Delete education level by Id
      *
-     * Return no content
+     * Permanently delete education level. Return no content
      */
     public function destroy(int $id)
     {
