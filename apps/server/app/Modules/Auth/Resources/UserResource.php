@@ -2,6 +2,7 @@
 
 namespace App\Modules\Auth\Resources;
 
+use App\Modules\Position\Resources\PositionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,7 +24,7 @@ class UserResource extends JsonResource
             "status" => $this->status,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
-            "position" => UserResource::collection($this->whenLoaded("position")),
+            "position" => PositionResource::make($this->whenLoaded("position")),
         ];
     }
 }
