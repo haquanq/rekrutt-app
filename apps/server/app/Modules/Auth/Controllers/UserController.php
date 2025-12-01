@@ -11,11 +11,13 @@ use App\Modules\Auth\Requests\UserUpdateRequest;
 use App\Modules\Auth\Models\User;
 use App\Modules\Auth\Resources\UserResource;
 use App\Modules\Auth\Resources\UserResourceCollection;
+use Dedoc\Scramble\Attributes\Group;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
+#[Group(weight: 1)]
 class UserController extends BaseController
 {
     /**

@@ -5,9 +5,11 @@ namespace App\Modules\Auth\Controllers;
 use App\Abstracts\BaseController;
 use App\Modules\Auth\Requests\UserLoginRequest;
 use App\Modules\Auth\Resources\UserResource;
+use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+#[Group(weight: 0)]
 class AuthController extends BaseController
 {
     /**
