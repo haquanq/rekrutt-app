@@ -21,7 +21,7 @@ class CandidateResource extends JsonResource
             "status" => $this->status,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
-            "source" => new HiringSourceResource($this->whenLoaded("source")),
+            "hiringSource" => new HiringSourceResource($this->whenLoaded("hiringSource")),
             "experiences" => CandidateExperienceResource::collection($this->whenLoaded("experiences")),
             "documents" => CandidateDocumentResource::collection($this->whenLoaded("documents")),
         ];

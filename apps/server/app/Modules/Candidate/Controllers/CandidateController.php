@@ -17,7 +17,7 @@ class CandidateController extends BaseController
     {
         Gate::authorize("findAll", Candidate::class);
         $candidates = QueryBuilder::for(Candidate::class)
-            ->allowedIncludes(["source", "experiences", "documents"])
+            ->allowedIncludes(["hiringSource", "experiences", "documents"])
             ->allowedFilters([
                 AllowedFilter::exact("email"),
                 AllowedFilter::exact("phoneNumber", "phone_number"),
@@ -34,7 +34,7 @@ class CandidateController extends BaseController
         Gate::authorize("findById", Candidate::class);
 
         $candidate = QueryBuilder::for(Candidate::class)
-            ->allowedIncludes(["source", "experiences", "documents"])
+            ->allowedIncludes(["hiringSource", "experiences", "documents"])
             ->findOrFail($id);
 
         return $this->okResponse(new CandidateResource($candidate));
