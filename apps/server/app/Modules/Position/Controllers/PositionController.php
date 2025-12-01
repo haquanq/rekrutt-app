@@ -18,7 +18,7 @@ class PositionController extends BaseController
     /**
      * Find all positions
      *
-     * Retrive a list of positions. Allows pagination, relations and filter query.
+     * Return a list of positions. Allows pagination, relations and filter query.
      */
     #[
         QueryParameter(
@@ -106,7 +106,7 @@ class PositionController extends BaseController
     /**
      * Update position
      *
-     *  Return empty
+     *  Return no content
      */
     public function update(PositionUpdateRequest $request, int $id)
     {
@@ -118,7 +118,7 @@ class PositionController extends BaseController
     /**
      * Delete position by Id
      *
-     * Permanently delete position. Return empty
+     * Permanently delete position. Return no content
      */
     public function destroy(int $id)
     {
