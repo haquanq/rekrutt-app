@@ -15,7 +15,7 @@ class DepartmentController extends BaseController
 {
     public function index()
     {
-        Gate::authorize("findAll", Department::class);
+        Gate::authorize("viewAny", Department::class);
 
         $departments = QueryBuilder::for(Department::class)
             ->allowedIncludes(["positions"])
@@ -27,7 +27,7 @@ class DepartmentController extends BaseController
 
     public function show(int $id)
     {
-        Gate::authorize("findById", Department::class);
+        Gate::authorize("view", Department::class);
 
         $department = QueryBuilder::for(Department::class)
             ->allowedIncludes(["positions"])
