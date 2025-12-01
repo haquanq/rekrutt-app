@@ -115,7 +115,7 @@ class UserController extends BaseController
     /**
      * Update user
      *
-     * Return empty
+     * Return no content
      */
     public function update(UserUpdateRequest $request, int $id)
     {
@@ -127,7 +127,7 @@ class UserController extends BaseController
     /**
      * Suspend user
      *
-     * Return empty
+     * Return no content
      */
     public function suspend(UserSuspendRequest $request, User $id)
     {
@@ -139,7 +139,7 @@ class UserController extends BaseController
     /**
      * Retire user
      *
-     * Return empty
+     * Return no content
      */
     public function retire(UserRetireRequest $request, int $id)
     {
@@ -151,7 +151,7 @@ class UserController extends BaseController
     /**
      * Re-activate user
      *
-     * Return empty
+     * Return no content
      */
     public function activate(UserActivateRequest $request, int $id)
     {
@@ -163,7 +163,7 @@ class UserController extends BaseController
     /**
      * Delete user by Id
      *
-     * Permanently delete user. Return empty
+     * Permanently delete user. Return no content
      */
     public function destroy(int $id)
     {
