@@ -66,9 +66,8 @@ class ProposalController extends BaseController
 
     public function update(ProposalUpdateRequest $request, int $id)
     {
-        Gate::authorize("update", Proposal::class);
         $proposal = Proposal::findOrFail($id);
-        Gate::authorize("updateResource", $proposal);
+        Gate::authorize("update", $proposal);
 
         $proposal->update($request->validated());
         return $this->noContentResponse();
