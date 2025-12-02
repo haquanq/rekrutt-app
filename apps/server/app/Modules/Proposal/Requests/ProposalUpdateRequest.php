@@ -8,6 +8,8 @@ class ProposalUpdateRequest extends BaseProposalRequest
 {
     public function rules(): array
     {
-        return array_merge(parent::rules(), []);
+        $rules = parent::rules();
+        unset($rules["created_by_user_id"]);
+        return $rules;
     }
 }
