@@ -41,8 +41,6 @@ class ProposalDocumentController extends BaseController
 
     public function store(ProposalDocumentStoreRequest $request)
     {
-        Gate::authorize("create", ProposalDocument::class);
-
         $file = $request->file("document");
         $fileExtension = $file->extension();
         $fileMimeType = $file->getClientMimeType();
@@ -57,7 +55,7 @@ class ProposalDocumentController extends BaseController
             "file_url" => $fileUrl,
             "file_extension" => $fileExtension,
             "mime_type" => $fileMimeType,
-            "candidate_id" => $request->validated()["candidate_id"],
+            "proposal_id" => $request->validated()["proposal_id"],
             "note" => $request->validated()["note"] ?? null,
         ]);
 
