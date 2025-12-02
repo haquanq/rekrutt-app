@@ -3,7 +3,7 @@
 namespace App\Modules\Position\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\Position\Requests\PositionStoreReqeust;
+use App\Modules\Position\Requests\PositionStoreRequest;
 use App\Modules\Position\Requests\PositionUpdateRequest;
 use App\Modules\Position\Models\Position;
 use App\Modules\Position\Resources\PositionResource;
@@ -96,7 +96,7 @@ class PositionController extends BaseController
      *
      * Return created position
      */
-    public function store(PositionStoreReqeust $request)
+    public function store(PositionStoreRequest $request)
     {
         Gate::authorize("create", Position::class);
         $createdPosition = Position::create($request->validated());
