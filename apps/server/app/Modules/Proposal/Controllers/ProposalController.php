@@ -8,6 +8,7 @@ use App\Modules\Proposal\Requests\ProposalStoreRequest;
 use App\Modules\Proposal\Requests\ProposalUpdateRequest;
 use App\Modules\Proposal\Resources\ProposalResource;
 use App\Modules\Proposal\Models\Proposal;
+use App\Modules\Proposal\Resources\ProposalResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -34,9 +35,9 @@ class ProposalController extends BaseController
                 AllowedFilter::exact("reviewedByUserId", "reviewed_by_user_id"),
                 AllowedFilter::exact("positionId", "position_id"),
             ])
-            ->get();
+            ->autoPaginate();
 
-        return $this->okResponse(ProposalResource::collection($proposals));
+        return ProposalResourceCollection::make($proposals);
     }
 
     public function show(int $id)
@@ -54,7 +55,7 @@ class ProposalController extends BaseController
             ])
             ->findOrFail($id);
 
-        return $this->okResponse(new ProposalResource($proposal));
+        return ProposalResource::make($proposal);
     }
 
     public function store(ProposalStoreRequest $request)
