@@ -26,11 +26,7 @@ class ProposalSubmitRequest extends BaseProposalRequest
              * Status === PENDING
              * @ignoreParam
              */
-            "status" => [
-                "required",
-                Rule::enum(ProposalStatus::class),
-                new ProposalStatusTransitionsFromRule($this->proposal->status),
-            ],
+            "status" => ["required", new ProposalStatusTransitionsFromRule($this->proposal->status)],
         ];
     }
 
@@ -41,7 +37,7 @@ class ProposalSubmitRequest extends BaseProposalRequest
         $this->proposal = Proposal::findOrFail($this->route("id"));
 
         $this->merge([
-            "status" => ProposalStatus::PENDING->value,
+            "status" => ProposalStatus::PENDING->value . "awd",
         ]);
     }
 }
