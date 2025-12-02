@@ -3,6 +3,7 @@
 namespace App\Modules\Proposal\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
+use App\Modules\Position\Rules\PositionExistsInCurrentUserDepartmentRule;
 
 abstract class BaseProposalRequest extends BaseFormRequest
 {
@@ -45,10 +46,10 @@ abstract class BaseProposalRequest extends BaseFormRequest
              */
             "created_by_user_id" => ["required", "integer"],
             /**
-             * Id of Position
+             * Id of Position in current User's department
              * @example 1
              */
-            "position_id" => ["required", "integer", "exists:position,id"],
+            "position_id" => ["required", "integer", new PositionExistsInCurrentUserDepartmentRule()],
             /**
              * Id of ContractType
              * @example 1
