@@ -20,7 +20,6 @@ class ProposalController extends BaseController
 
         $proposals = QueryBuilder::for(Proposal::class)
             ->allowedIncludes([
-                "candidate",
                 "position",
                 "contractType",
                 "educationLevel",
@@ -32,6 +31,8 @@ class ProposalController extends BaseController
                 AllowedFilter::exact("status"),
                 AllowedFilter::partial("title"),
                 AllowedFilter::exact("createdByUserId", "created_by_user_id"),
+                AllowedFilter::exact("reviewedByUserId", "reviewed_by_user_id"),
+                AllowedFilter::exact("positionId", "position_id"),
             ])
             ->get();
 
@@ -44,7 +45,6 @@ class ProposalController extends BaseController
 
         $proposal = QueryBuilder::for(Proposal::class)
             ->allowedIncludes([
-                "candidate",
                 "position",
                 "contractType",
                 "educationLevel",
