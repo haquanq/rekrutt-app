@@ -3,6 +3,7 @@
 namespace App\Modules\Proposal\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\Proposal\Requests\ProposalPendingRequest;
 use App\Modules\Proposal\Requests\ProposalStoreRequest;
 use App\Modules\Proposal\Requests\ProposalUpdateRequest;
 use App\Modules\Proposal\Resources\ProposalResource;
@@ -58,18 +59,13 @@ class ProposalController extends BaseController
 
     public function store(ProposalStoreRequest $request)
     {
-        Gate::authorize("create", Proposal::class);
-
         $createdProposal = Proposal::create($request->validated());
         return $this->createdResponse(new ProposalResource($createdProposal));
     }
 
-    public function update(ProposalUpdateRequest $request, int $id)
+    public function update(ProposalUpdateRequest $request)
     {
-        $proposal = Proposal::findOrFail($id);
-        Gate::authorize("update", $proposal);
-
-        $proposal->update($request->validated());
+        $request->proposal->update($request->validated());
         return $this->noContentResponse();
     }
 

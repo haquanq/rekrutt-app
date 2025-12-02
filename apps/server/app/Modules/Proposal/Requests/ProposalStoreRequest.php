@@ -2,29 +2,17 @@
 
 namespace App\Modules\Proposal\Requests;
 
-use App\Modules\Position\Rules\PositionExistsInCurrentUserDepartmentRule;
 use App\Modules\Proposal\Abstracts\BaseProposalRequest;
+use App\Modules\Proposal\Models\Proposal;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProposalStoreRequest extends BaseProposalRequest
 {
     public function authorize(): bool
     {
+        Gate::authorize("create", Proposal::class);
         return true;
-    }
-
-    public function rules(): array
-    {
-        return [
-            ...parent::rules(),
-            ...[
-                /**
-                 * Id of Position in current User's department
-                 * @example 1
-                 */
-                "position_id" => ["required", "integer", new PositionExistsInCurrentUserDepartmentRule()],
-            ],
-        ];
     }
 
     public function prepareForValidation(): void
