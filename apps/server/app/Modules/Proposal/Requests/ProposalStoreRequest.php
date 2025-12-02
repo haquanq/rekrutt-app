@@ -2,9 +2,9 @@
 
 namespace App\Modules\Proposal\Requests;
 
+use App\Modules\Position\Rules\PositionExistsInCurrentUserDepartmentRule;
 use App\Modules\Proposal\Abstracts\BaseProposalRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class ProposalStoreRequest extends BaseProposalRequest
 {
@@ -15,19 +15,15 @@ class ProposalStoreRequest extends BaseProposalRequest
 
     public function rules(): array
     {
-        return array_merge(parent::rules(), [
-            "position_id" => [
-                "required",
-                "integer",
-                Rule::exists("position", "id")->where("department_id", Auth::user()->position->department->id),
-            ],
-        ]);
-    }
-
-    public function messages(): array
-    {
         return [
-            "position_id.exists" => "Position id must be in the same department as the current user",
+            ...parent::rules(),
+            ...[
+                /**
+                 * Id of Position in current User's department
+                 * @example 1
+                 */
+                "position_id" => ["required", "integer", new PositionExistsInCurrentUserDepartmentRule()],
+            ],
         ];
     }
 
