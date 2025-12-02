@@ -4,7 +4,6 @@ namespace App\Modules\Proposal\Policies;
 
 use App\Modules\Auth\Enums\UserRole;
 use App\Modules\Auth\Models\User;
-use App\Modules\Proposal\Enums\ProposalStatus;
 use App\Modules\Proposal\Models\Proposal;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Log;
@@ -59,6 +58,24 @@ class ProposalPolicy
             return Response::deny("You are not allowed to submit this proposal");
         } elseif ($user->id !== $proposal->created_by_user_id) {
             return Response::deny("You are not the author of this proposal");
+        }
+
+        return Response::allow();
+    }
+
+    public function reject(User $user): Response
+    {
+        if (!$user->hasRole(UserRole::EXECUTIVE)) {
+            return Response::deny("You are not allowed to reject proposal");
+        }
+
+        return Response::allow();
+    }
+
+    public function approve(User $user): Response
+    {
+        if (!$user->hasRole(UserRole::EXECUTIVE)) {
+            return Response::deny("You are not allowed to approve proposal");
         }
 
         return Response::allow();

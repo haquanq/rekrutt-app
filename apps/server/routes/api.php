@@ -165,6 +165,8 @@ Route::middleware("protected")->group(function () {
             Route::post("", "store");
             Route::put("/{id}", "update");
             Route::post("/{id}/submit", "submit");
+            Route::post("/{id}/reject", "reject");
+            Route::post("/{id}/approve", "approve");
             Route::delete("/{id}", "destroy");
         });
 

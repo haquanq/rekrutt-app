@@ -4,6 +4,8 @@ namespace App\Modules\Proposal\Controllers;
 
 use App\Abstracts\BaseController;
 use App\Modules\Proposal\Enums\ProposalStatus;
+use App\Modules\Proposal\Requests\ProposalApproveRequest;
+use App\Modules\Proposal\Requests\ProposalRejectRequest;
 use App\Modules\Proposal\Requests\ProposalStoreRequest;
 use App\Modules\Proposal\Requests\ProposalSubmitRequest;
 use App\Modules\Proposal\Requests\ProposalUpdateRequest;
@@ -177,6 +179,38 @@ class ProposalController extends BaseController
     public function submit(ProposalSubmitRequest $request)
     {
         if ($request->proposal->status === ProposalStatus::DRAFT) {
+            $request->proposal->update($request->validated());
+        }
+        return $this->noContentResponse();
+    }
+
+    /**
+     * Reject proposal
+     *
+     * Reject PENDING proposal. Return no content
+     *
+     * Authorization rules:
+     * - User with roles: EXECUTIVE.
+     */
+    public function reject(ProposalRejectRequest $request)
+    {
+        if ($request->proposal->status === ProposalStatus::PENDING) {
+            $request->proposal->update($request->validated());
+        }
+        return $this->noContentResponse();
+    }
+
+    /**
+     * Approve proposal
+     *
+     * Approve PENDING proposal. Return no content
+     *
+     * Authorization rules:
+     * - User with roles: EXECUTIVE.
+     */
+    public function approve(ProposalApproveRequest $request)
+    {
+        if ($request->proposal->status === ProposalStatus::PENDING) {
             $request->proposal->update($request->validated());
         }
         return $this->noContentResponse();
