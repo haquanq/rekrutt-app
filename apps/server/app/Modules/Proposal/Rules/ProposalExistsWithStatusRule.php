@@ -10,19 +10,21 @@ use Illuminate\Support\Str;
 
 class ProposalExistsWithStatusRule implements ValidationRule
 {
-    public function __construct(protected ProposalStatus $requiredStatus) {}
+    public function __construct(protected ProposalStatus $requiredStatus, protected ?Proposal $proposal = null) {}
 
     public function validate(string $attribute, mixed $id, Closure $fail): void
     {
-        $proposal = Proposal::find($id);
+        if (!$this->proposal) {
+            $this->proposal = Proposal::find($id);
+        }
 
-        if (!$proposal) {
+        if (!$this->proposal) {
             $fail("Proposal does not exist");
             return;
         }
 
-        if ($proposal->status !== ProposalStatus::APPROVED->value) {
-            $fail("Proposal is not " . Str::lower($this->requiredStatus->value));
+        if ($this->proposal->status !== $this->requiredStatus) {
+            $fail("Proposal must have status: " . $this->requiredStatus->value);
             return;
         }
     }
