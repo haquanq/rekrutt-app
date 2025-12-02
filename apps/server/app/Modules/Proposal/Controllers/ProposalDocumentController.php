@@ -7,11 +7,12 @@ use App\Modules\Proposal\Models\ProposalDocument;
 use App\Modules\Proposal\Requests\ProposalDocumentStoreRequest;
 use App\Modules\Proposal\Requests\ProposalDocumentUpdateRequest;
 use App\Modules\Proposal\Resources\ProposalDocumentResource;
+use App\Modules\Proposal\Resources\ProposalDocumentResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Str;
 
 class ProposalDocumentController extends BaseController
 {
@@ -19,23 +20,23 @@ class ProposalDocumentController extends BaseController
     {
         Gate::authorize("viewAny", ProposalDocument::class);
 
-        $candidateDocuments = QueryBuilder::for(ProposalDocument::class)
+        $proposalDocuments = QueryBuilder::for(ProposalDocument::class)
             ->allowedIncludes(["proposal"])
             ->allowedFilters([AllowedFilter::exact("proposalId", "proposal_id")])
-            ->get();
+            ->autoPaginate();
 
-        return $this->okResponse(ProposalDocumentResource::collection($candidateDocuments));
+        return ProposalDocumentResourceCollection::make($proposalDocuments);
     }
 
     public function show(int $id)
     {
         Gate::authorize("view", ProposalDocument::class);
 
-        $candidateDocument = QueryBuilder::for(ProposalDocument::class)
-            ->allowedIncludes(["candidate"])
-            ->get();
+        $proposalDocument = QueryBuilder::for(ProposalDocument::class)
+            ->allowedIncludes(["proposal"])
+            ->findOrFail($id);
 
-        return new ProposalDocumentResource($candidateDocument);
+        return ProposalDocumentResource::make($proposalDocument);
     }
 
     public function store(ProposalDocumentStoreRequest $request)
