@@ -3,12 +3,15 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        Route::pattern("id", "[0-9]+");
+
         Builder::macro("autoPaginate", function (
             $defaultPerPage = 15,
             $columns = ["*"],
