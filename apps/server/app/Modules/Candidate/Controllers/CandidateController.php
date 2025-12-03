@@ -3,6 +3,7 @@
 namespace App\Modules\Candidate\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\Candidate\Enums\CandidateStatus;
 use App\Modules\Candidate\Requests\CandidateStoreRequest;
 use App\Modules\Candidate\Requests\CandidateUpdateRequest;
 use App\Modules\Candidate\Models\Candidate;
@@ -10,6 +11,7 @@ use App\Modules\Candidate\Resources\CandidateResource;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class CandidateController extends BaseController
 {
@@ -42,15 +44,13 @@ class CandidateController extends BaseController
 
     public function store(CandidateStoreRequest $request)
     {
-        Gate::authorize("create", Candidate::class);
         $createdCandidate = Candidate::create($request->validated());
         return $this->createdResponse(new CandidateResource($createdCandidate));
     }
 
-    public function update(CandidateUpdateRequest $request, int $id)
+    public function update(CandidateUpdateRequest $request)
     {
-        Gate::authorize("update", Candidate::class);
-        Candidate::findOrFail($id)->update($request->validated());
+        $request->candidate->update($request->validated());
         return $this->noContentResponse();
     }
 
