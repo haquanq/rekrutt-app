@@ -12,6 +12,10 @@ class Candidate extends BaseModel
 {
     protected $guarded = ["id", "created_at", "updated_at"];
 
+    protected $casts = [
+        "status" => CandidateStatus::class,
+    ];
+
     public function hiringSource(): BelongsTo
     {
         return $this->belongsTo(HiringSource::class, "hiring_source_id", "id");
