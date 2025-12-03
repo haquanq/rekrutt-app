@@ -11,6 +11,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Spatie\QueryBuilder\Exceptions\InvalidQuery as InvalidQueryException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(api: __DIR__ . "/../routes/api.php", commands: __DIR__ . "/../routes/console.php", health: "/up")
@@ -49,6 +50,15 @@ return Application::configure(basePath: dirname(__DIR__))
             }
 
             if ($exception instanceof QueryException) {
+                return response()->json(
+                    [
+                        "message" => $exception->getMessage(),
+                    ],
+                    Response::HTTP_BAD_REQUEST,
+                );
+            }
+
+            if ($exception instanceof HttpException) {
                 return response()->json(
                     [
                         "message" => $exception->getMessage(),
