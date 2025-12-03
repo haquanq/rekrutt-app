@@ -22,7 +22,7 @@ class ProposalApproveRequest extends BaseProposalRequest
     {
         return [
             /**
-             * Status === REJECTED
+             * Status === APPROVED
              * @ignoreParam
              */
             "status" => ["required", new ProposalStatusTransitionsFromRule($this->proposal->status)],
