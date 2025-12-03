@@ -10,9 +10,6 @@ class ProposalDocumentUpdateRequest extends BaseProposalDocumentRequest
 {
     public ProposalDocument $proposalDocument;
 
-    /**
-     * @bodyParam proposal_id integer required The proposal ID. Example: 123
-     */
     public function rules(): array
     {
         return [
