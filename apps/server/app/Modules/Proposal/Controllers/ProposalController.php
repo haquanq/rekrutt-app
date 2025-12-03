@@ -149,7 +149,6 @@ class ProposalController extends BaseController
      * - User must be the author of the proposal.
      */
     #[OpenApiResponse(403, description: "Authorization error", type: AuthorizationException::class)]
-    #[OpenApiResponse(409, description: "Conflict error", type: AuthorizationException::class)]
     public function update(ProposalUpdateRequest $request)
     {
         if ($request->proposal->status === ProposalStatus::PENDING) {
@@ -173,7 +172,6 @@ class ProposalController extends BaseController
      * - User with roles: MANAGER, HIRING_MANAGER.
      * - User must be the author of the proposal.
      */
-    #[OpenApiResponse(409, description: "Conflict error", type: AuthorizationException::class)]
     public function destroy(int $id)
     {
         $proposal = Proposal::findOrFail($id);
@@ -201,7 +199,6 @@ class ProposalController extends BaseController
      * - User must be the author of the proposal.
      */
     #[OpenApiResponse(403, description: "Authorization error", type: AuthorizationException::class)]
-    #[OpenApiResponse(409, description: "Conflict error", type: AuthorizationException::class)]
     public function submit(ProposalSubmitRequest $request)
     {
         if ($request->proposal->status === ProposalStatus::PENDING) {
@@ -221,7 +218,6 @@ class ProposalController extends BaseController
      * - User with roles: EXECUTIVE.
      */
     #[OpenApiResponse(403, description: "Authorization error", type: AuthorizationException::class)]
-    #[OpenApiResponse(409, description: "Conflict error", type: AuthorizationException::class)]
     public function reject(ProposalRejectRequest $request)
     {
         if ($request->proposal->status === ProposalStatus::REJECTED) {
@@ -241,7 +237,6 @@ class ProposalController extends BaseController
      * - User with roles: EXECUTIVE.
      */
     #[OpenApiResponse(403, description: "Authorization error", type: AuthorizationException::class)]
-    #[OpenApiResponse(409, description: "Conflict error", type: AuthorizationException::class)]
     public function approve(ProposalApproveRequest $request)
     {
         if ($request->proposal->status === ProposalStatus::APPROVED) {
