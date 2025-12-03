@@ -3,6 +3,7 @@
 namespace App\Modules\Proposal\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\Proposal\Enums\ProposalStatus;
 use App\Modules\Proposal\Models\ProposalDocument;
 use App\Modules\Proposal\Requests\ProposalDocumentStoreRequest;
 use App\Modules\Proposal\Requests\ProposalDocumentUpdateRequest;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class ProposalDocumentController extends BaseController
 {
@@ -70,8 +72,16 @@ class ProposalDocumentController extends BaseController
 
     public function destroy(int $id)
     {
-        $proposalDocument = ProposalDocument::findOrFail($id)->load("proposal");
+        $proposalDocument = ProposalDocument::with("proposal")->findOrFail($id);
+
         Gate::authorize("delete", $proposalDocument);
+
+        if ($proposalDocument->proposal->status !== ProposalStatus::DRAFT) {
+            throw new ConflictHttpException(
+                "The document cannot be deleted because the proposal is " . $proposalDocument->proposal->status->value,
+            );
+        }
+
         $proposalDocument->delete();
         return $this->noContentResponse();
     }
