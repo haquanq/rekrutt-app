@@ -50,6 +50,10 @@ class CandidateController extends BaseController
 
     public function update(CandidateUpdateRequest $request)
     {
+        if ($request->candidate->status === CandidateStatus::PROCESSING) {
+            throw new ConflictHttpException("Cannot update. Candidate is being processed.");
+        }
+
         $request->candidate->update($request->validated());
         return $this->noContentResponse();
     }
@@ -57,7 +61,13 @@ class CandidateController extends BaseController
     public function destroy(int $id)
     {
         Gate::authorize("delete", Candidate::class);
-        Candidate::findOrFail($id)->delete();
+        $candidate = Candidate::findOrFail($id);
+
+        if ($candidate->status === CandidateStatus::PROCESSING) {
+            throw new ConflictHttpException("Cannot delete. Candidate is being processed.");
+        }
+
+        $candidate->delete();
         return $this->noContentResponse();
     }
 }
