@@ -11,20 +11,19 @@ use Illuminate\Support\Facades\Gate;
 
 class ProposalDocumentStoreRequest extends BaseProposalDocumentRequest
 {
-    public Proposal $proposal;
+    public $proposal;
 
     public function rules(): array
     {
-        return [
-            ...parent::rules(),
-            ...[
-                "proposal_id" => [
-                    "required",
-                    "integer",
-                    new ProposalExistsWithStatusRule(ProposalStatus::DRAFT, $this->proposal),
-                ],
-            ],
+        $rules = parent::rules();
+
+        $rules["proposal_id"] = [
+            "required",
+            "integer",
+            new ProposalExistsWithStatusRule(ProposalStatus::DRAFT, $this->proposal),
         ];
+
+        return $rules;
     }
 
     public function authorize(): bool
