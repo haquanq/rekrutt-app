@@ -4,6 +4,7 @@ namespace App\Modules\Candidate\Controllers;
 
 use App\Abstracts\BaseController;
 use App\Modules\Candidate\Models\CandidateDocument;
+use App\Modules\Candidate\Requests\CandidateDocumentDestroyRequest;
 use App\Modules\Candidate\Requests\CandidateDocumentStoreRequest;
 use App\Modules\Candidate\Requests\CandidateDocumentUpdateRequest;
 use App\Modules\Candidate\Resources\CandidateDocumentResource;
@@ -67,10 +68,9 @@ class CandidateDocumentController extends BaseController
         return $this->noContentResponse();
     }
 
-    public function destroy(int $id)
+    public function destroy(CandidateDocumentDestroyRequest $request)
     {
-        Gate::authorize("delete", CandidateDocument::class);
-        CandidateDocument::findOrFail($id)->delete($id);
+        $request->candidateDocument->delete();
         return $this->noContentResponse();
     }
 }
