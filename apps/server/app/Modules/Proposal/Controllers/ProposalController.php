@@ -5,6 +5,7 @@ namespace App\Modules\Proposal\Controllers;
 use App\Abstracts\BaseController;
 use App\Modules\Proposal\Enums\ProposalStatus;
 use App\Modules\Proposal\Requests\ProposalApproveRequest;
+use App\Modules\Proposal\Requests\ProposalDestroyRequest;
 use App\Modules\Proposal\Requests\ProposalRejectRequest;
 use App\Modules\Proposal\Requests\ProposalStoreRequest;
 use App\Modules\Proposal\Requests\ProposalSubmitRequest;
@@ -13,7 +14,7 @@ use App\Modules\Proposal\Resources\ProposalResource;
 use App\Modules\Proposal\Models\Proposal;
 use App\Modules\Proposal\Resources\ProposalResourceCollection;
 use Dedoc\Scramble\Attributes\QueryParameter;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -154,8 +155,8 @@ class ProposalController extends BaseController
     {
         $proposalStatus = $request->proposal->status;
 
-        if (!Arr::hasAny([ProposalStatus::APPROVED, ProposalStatus::REJECTED], $proposalStatus)) {
-            throw new ConflictHttpException("Cannot update. " . $proposalStatus->description());
+        if (!Collection::make([ProposalStatus::DRAFT, ProposalStatus::REJECTED])->contains($proposalStatus)) {
+            throw new ConflictHttpException("Cannot delete. " . $proposalStatus->description());
         }
 
         $request->proposal->update($request->validated());
@@ -165,32 +166,30 @@ class ProposalController extends BaseController
     /**
      * Detele proposal
      *
-     * Permanently delete proposal. Return no content
+     * Permanently delete proposal. Return no content.
      *
      * Authorization rules:
      * - User with roles: MANAGER, HIRING_MANAGER.
      * - User must be the author of the proposal.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(int $id)
+    public function destroy(ProposalDestroyRequest $request)
     {
-        $proposal = Proposal::findOrFail($id);
+        $proposalStatus = $request->proposal->status;
 
-        Gate::authorize("delete", $proposal);
-
-        $proposalStatus = $proposal->status;
-
-        if (!Arr::hasAny([ProposalStatus::APPROVED, ProposalStatus::REJECTED], $proposalStatus)) {
+        if (!Collection::make([ProposalStatus::DRAFT, ProposalStatus::REJECTED])->contains($proposalStatus)) {
             throw new ConflictHttpException("Cannot delete. " . $proposalStatus->description());
         }
 
-        $proposal->delete();
+        $request->proposal->delete();
         return $this->noContentResponse();
     }
 
     /**
      * Submit proposal
      *
-     * Submit proposal for approval. Return no content
+     * Submit proposal for approval. Return no content.
      *
      * Authorization rules:
      * - User with roles: MANAGER, HIRING_MANAGER.
@@ -211,7 +210,7 @@ class ProposalController extends BaseController
     /**
      * Reject proposal
      *
-     * Reject PENDING proposal. Return no content
+     * Reject PENDING proposal. Return no content.
      *
      * Authorization rules:
      * - User with roles: EXECUTIVE.
@@ -231,7 +230,7 @@ class ProposalController extends BaseController
     /**
      * Approve proposal
      *
-     * Approve PENDING proposal. Return no content
+     * Approve PENDING proposal. Return no content.
      *
      * Authorization rules:
      * - User with roles: EXECUTIVE.
