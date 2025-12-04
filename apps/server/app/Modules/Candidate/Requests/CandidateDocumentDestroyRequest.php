@@ -12,9 +12,7 @@ class CandidateDocumentDestroyRequest extends BaseCandidateDocumentRequest
 
     public function rules(): array
     {
-        $rules = parent::rules();
-        unset($rules["document"]);
-        return $rules;
+        return [];
     }
 
     public function authorize(): bool
