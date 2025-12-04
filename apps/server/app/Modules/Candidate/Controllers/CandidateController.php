@@ -9,6 +9,7 @@ use App\Modules\Candidate\Requests\CandidateUpdateRequest;
 use App\Modules\Candidate\Models\Candidate;
 use App\Modules\Candidate\Resources\CandidateResource;
 use App\Modules\Candidate\Resources\CandidateResourceCollection;
+use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -16,6 +17,48 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class CandidateController extends BaseController
 {
+    /**
+     * Find all candidates
+     *
+     * Return a list of candidates. Allows pagination, relations and filters query.
+     *
+     * Authorization rules:
+     * - User with roles: any.
+     */
+    #[
+        QueryParameter(
+            name: "page[number]",
+            type: "integer",
+            description: "Current page number (default: 1)",
+            example: 1,
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "page[size]",
+            type: "integer",
+            description: "Size of current page (default: 15, max: 100)",
+            example: 15,
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "include",
+            type: "string",
+            description: "Include nested relations </br>" .
+                " Allow relations: hiringSource, experiences, documents </br>" .
+                "Example: include=hiringSource,experiences",
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "filter[*]",
+            type: "string",
+            description: "Filter by fields </br>" .
+                "Allow fields: email, phoneNumber, status, hiringSourceId </br>" .
+                "Example: filter[status]=EMPLOYED",
+        ),
+    ]
     public function index()
     {
         Gate::authorize("viewAny", Candidate::class);
@@ -32,6 +75,23 @@ class CandidateController extends BaseController
         return CandidateResourceCollection::make($candidates);
     }
 
+    /**
+     * Find proposal by Id
+     *
+     * Return a unique proposal. Allows relations query.
+     *
+     * Authorization rules:
+     * - User with roles: any.
+     */
+    #[
+        QueryParameter(
+            name: "include",
+            type: "string",
+            description: "Include nested relations </br>" .
+                " Allow relations: hiringSource, experiences, documents </br>" .
+                "Example: include=hiringSource,experiences",
+        ),
+    ]
     public function show(int $id)
     {
         Gate::authorize("view", Candidate::class);
@@ -43,12 +103,32 @@ class CandidateController extends BaseController
         return CandidateResource::make($candidate);
     }
 
+    /**
+     * Create candidate
+     *
+     * Return a unique candidate.
+     *
+     * Authorization rules:
+     * - User with roles: RECRUITER, HIRING_MANAGER.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function store(CandidateStoreRequest $request)
     {
         $createdCandidate = Candidate::create($request->validated());
         return $this->createdResponse(CandidateResource::make($createdCandidate));
     }
 
+    /**
+     * Update candidate
+     *
+     * Return no content.
+     *
+     * Authorization rules:
+     * - User with roles: RECRUITER, HIRING_MANAGER.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(CandidateUpdateRequest $request)
     {
         if ($request->candidate->status === CandidateStatus::PROCESSING) {
@@ -59,6 +139,14 @@ class CandidateController extends BaseController
         return $this->noContentResponse();
     }
 
+    /**
+     * Delete candidate
+     *
+     * Permanently delete candidate. Return no content.
+     *
+     * Authorization rules:
+     * - User with roles: RECRUITER, HIRING_MANAGER.
+     */
     public function destroy(int $id)
     {
         Gate::authorize("delete", Candidate::class);
