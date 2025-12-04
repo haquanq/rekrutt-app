@@ -7,6 +7,7 @@ use App\Modules\Candidate\Enums\CandidateStatus;
 use App\Modules\Candidate\Requests\CandidateStoreRequest;
 use App\Modules\Candidate\Requests\CandidateUpdateRequest;
 use App\Modules\Candidate\Models\Candidate;
+use App\Modules\Candidate\Requests\CandidateDestroyRequest;
 use App\Modules\Candidate\Resources\CandidateResource;
 use App\Modules\Candidate\Resources\CandidateResourceCollection;
 use Dedoc\Scramble\Attributes\QueryParameter;
@@ -146,17 +147,16 @@ class CandidateController extends BaseController
      *
      * Authorization rules:
      * - User with roles: RECRUITER, HIRING_MANAGER.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(int $id)
+    public function destroy(CandidateDestroyRequest $request)
     {
-        Gate::authorize("delete", Candidate::class);
-        $candidate = Candidate::findOrFail($id);
-
-        if ($candidate->status === CandidateStatus::PROCESSING) {
+        if ($request->candidate->status === CandidateStatus::PROCESSING) {
             throw new ConflictHttpException("Cannot delete. Candidate is being processed.");
         }
 
-        $candidate->delete();
+        $request->candidate->delete();
         return $this->noContentResponse();
     }
 }
