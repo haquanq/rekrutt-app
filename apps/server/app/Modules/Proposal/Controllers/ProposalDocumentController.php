@@ -167,6 +167,8 @@ class ProposalDocumentController extends BaseController
      * Authorization rules:
      * - User with roles: MANAGER, HIRING_MANAGER.
      * - User must be the author of the related proposal.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(ProposalDocumentDestroyRequest $request)
     {
