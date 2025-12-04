@@ -41,7 +41,6 @@ class CandidateExperienceController extends BaseController
 
     public function store(CandidateExperienceStoreRequest $request)
     {
-        Gate::authorize("create", CandidateExperience::class);
         $createdCandidateExperience = CandidateExperience::create($request->validated());
         return $this->createdResponse(new CandidateExperienceResource($createdCandidateExperience));
     }
