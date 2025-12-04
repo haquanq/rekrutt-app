@@ -201,4 +201,14 @@ Route::middleware("protected")->group(function () {
             Route::post("/{id}/publish", "publish");
             Route::post("/{id}/close", "close");
         });
+
+    Route::prefix("recruitment-applications")
+        ->controller(RecruitmentController::class)
+        ->group(function () {
+            Route::get("", "index");
+            Route::get("/{id}", "show");
+            Route::post("", "store");
+            Route::patch("/{id}/priority", "updatePriority");
+            Route::delete("/{id}", "destroy");
+        });
 });
