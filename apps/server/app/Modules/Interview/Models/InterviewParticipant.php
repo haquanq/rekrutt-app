@@ -5,7 +5,7 @@ namespace App\Modules\Interview\Models;
 use App\Abstracts\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class InterviewInterviewer extends BaseModel
+class InterviewParticipant extends BaseModel
 {
     protected $guarded = ["id", "created_at", "updated_at"];
 

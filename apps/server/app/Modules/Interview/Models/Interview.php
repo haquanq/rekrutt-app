@@ -45,7 +45,7 @@ class Interview extends BaseModel
 
     public function interviewers(): HasMany
     {
-        return $this->hasMany(InterviewInterviewer::class);
+        return $this->hasMany(InterviewParticipant::class);
     }
 
     public function ratingScale(): BelongsTo
