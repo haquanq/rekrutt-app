@@ -77,9 +77,9 @@ class CandidateController extends BaseController
     }
 
     /**
-     * Find proposal by Id
+     * Find candidate by Id
      *
-     * Return a unique proposal. Allows relations query.
+     * Return a unique candidate. Allows relations query.
      *
      * Authorization rules:
      * - User with roles: any.
