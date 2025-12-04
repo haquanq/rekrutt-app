@@ -9,7 +9,6 @@ use App\Modules\Proposal\Requests\ProposalDocumentStoreRequest;
 use App\Modules\Proposal\Requests\ProposalDocumentUpdateRequest;
 use App\Modules\Proposal\Resources\ProposalDocumentResource;
 use App\Modules\Proposal\Resources\ProposalDocumentResourceCollection;
-use Dedoc\Scramble\Attributes\Response as OpenApiResponse;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -109,8 +108,8 @@ class ProposalDocumentController extends BaseController
      * - User with roles: MANAGER, HIRING_MANAGER.
      * - User must be the author of the related proposal.
      *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    #[OpenApiResponse(403, description: "Authorization error", type: AuthorizationException::class)]
     public function store(ProposalDocumentStoreRequest $request)
     {
         $file = $request->file("document");
@@ -142,8 +141,9 @@ class ProposalDocumentController extends BaseController
      * Authorization rules:
      * - User with roles: MANAGER, HIRING_MANAGER.
      * - User must be the author of the related proposal.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    #[OpenApiResponse(403, description: "Authorization error", type: AuthorizationException::class)]
     public function update(ProposalDocumentUpdateRequest $request)
     {
         if ($request->proposalDocument->proposal->status === ProposalStatus::PENDING) {
