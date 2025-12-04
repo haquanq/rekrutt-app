@@ -37,7 +37,7 @@ class CandidateDocumentController extends BaseController
             ->allowedIncludes(["candidate"])
             ->get();
 
-        return new CandidateDocumentResource($candidateDocument);
+        return CandidateDocumentResource::make($candidateDocument);
     }
 
     public function store(CandidateDocumentStoreRequest $request)
@@ -60,7 +60,7 @@ class CandidateDocumentController extends BaseController
             "note" => $request->validated()["note"] ?? null,
         ]);
 
-        return $this->createdResponse(new CandidateDocumentResource($createdCandidateDocument));
+        return $this->createdResponse(CandidateDocumentResource::make($createdCandidateDocument));
     }
 
     public function update(CandidateDocumentUpdateRequest $request)
