@@ -52,12 +52,24 @@ class CandidateExperienceController extends BaseController
 
     public function update(CandidateExperienceUpdateRequest $request)
     {
+        $candidateStatus = $request->candidateExperience->candidate->status;
+
+        if ($candidateStatus !== CandidateStatus::PROCESSING) {
+            throw new ConflictHttpException("Cannot update. " . $candidateStatus->description());
+        }
+
         $request->candidateExperience->update($request->validated());
         return $this->noContentResponse();
     }
 
     public function destroy(CandidateExperienceDestroyRequest $request)
     {
+        $candidateStatus = $request->candidateExperience->candidate->status;
+
+        if ($candidateStatus !== CandidateStatus::PROCESSING) {
+            throw new ConflictHttpException("Cannot delete. " . $candidateStatus->description());
+        }
+
         $request->candidateExperience->delete();
         return $this->noContentResponse();
     }
