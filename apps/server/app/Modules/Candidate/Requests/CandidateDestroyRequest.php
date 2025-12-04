@@ -25,6 +25,6 @@ class CandidateDestroyRequest extends BaseCandidateRequest
     {
         parent::prepareForValidation();
 
-        $this->candidate = Candidate::find($this->route("id"));
+        $this->candidate = Candidate::findOrFail($this->route("id"));
     }
 }
