@@ -8,6 +8,7 @@ use App\Modules\Candidate\Requests\CandidateStoreRequest;
 use App\Modules\Candidate\Requests\CandidateUpdateRequest;
 use App\Modules\Candidate\Models\Candidate;
 use App\Modules\Candidate\Resources\CandidateResource;
+use App\Modules\Candidate\Resources\CandidateResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -26,9 +27,9 @@ class CandidateController extends BaseController
                 AllowedFilter::exact("status"),
                 AllowedFilter::exact("hiringSourceId", "hiring_source_id"),
             ])
-            ->get();
+            ->autoPaginate();
 
-        return $this->okResponse(CandidateResource::collection($candidates));
+        return CandidateResourceCollection::make($candidates);
     }
 
     public function show(int $id)
