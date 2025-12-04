@@ -13,6 +13,7 @@ use App\Modules\Proposal\Resources\ProposalResource;
 use App\Modules\Proposal\Models\Proposal;
 use App\Modules\Proposal\Resources\ProposalResourceCollection;
 use Dedoc\Scramble\Attributes\QueryParameter;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -151,12 +152,10 @@ class ProposalController extends BaseController
      */
     public function update(ProposalUpdateRequest $request)
     {
-        if ($request->proposal->status === ProposalStatus::PENDING) {
-            throw new ConflictHttpException("Cannot update. Proposal is pending for approval.");
-        }
+        $proposalStatus = $request->proposal->status;
 
-        if ($request->proposal->status === ProposalStatus::APPROVED) {
-            throw new ConflictHttpException("Cannot update. Proposal is approved.");
+        if (!Arr::hasAny([ProposalStatus::APPROVED, ProposalStatus::REJECTED], $proposalStatus)) {
+            throw new ConflictHttpException("Cannot update. " . $proposalStatus->description());
         }
 
         $request->proposal->update($request->validated());
@@ -176,15 +175,14 @@ class ProposalController extends BaseController
     {
         $proposal = Proposal::findOrFail($id);
 
-        if ($proposal->status === ProposalStatus::PENDING) {
-            throw new ConflictHttpException("Cannot delete. Proposal is pending for approval.");
-        }
-
-        if ($proposal->status === ProposalStatus::APPROVED) {
-            throw new ConflictHttpException("Cannot delete. Proposal is approved.");
-        }
-
         Gate::authorize("delete", $proposal);
+
+        $proposalStatus = $proposal->status;
+
+        if (!Arr::hasAny([ProposalStatus::APPROVED, ProposalStatus::REJECTED], $proposalStatus)) {
+            throw new ConflictHttpException("Cannot delete. " . $proposalStatus->description());
+        }
+
         $proposal->delete();
         return $this->noContentResponse();
     }
