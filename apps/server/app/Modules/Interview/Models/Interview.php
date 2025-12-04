@@ -12,17 +12,17 @@ class Interview extends BaseModel
 {
     protected $guarded = ["id", "created_at", "updated_at"];
 
-    public function recruitmentApplication(): BelongsTo
+    public function application(): BelongsTo
     {
         return $this->belongsTo(RecruitmentApplication::class);
     }
 
-    public function interviewType(): BelongsTo
+    public function method(): BelongsTo
     {
         return $this->belongsTo(InterviewMethod::class);
     }
 
-    public function user(): BelongsTo
+    public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
