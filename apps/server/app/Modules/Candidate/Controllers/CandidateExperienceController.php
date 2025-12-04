@@ -54,7 +54,7 @@ class CandidateExperienceController extends BaseController
     {
         $candidateStatus = $request->candidateExperience->candidate->status;
 
-        if ($candidateStatus !== CandidateStatus::PROCESSING) {
+        if ($candidateStatus !== CandidateStatus::PENDING) {
             throw new ConflictHttpException("Cannot update. " . $candidateStatus->description());
         }
 
@@ -66,7 +66,7 @@ class CandidateExperienceController extends BaseController
     {
         $candidateStatus = $request->candidateExperience->candidate->status;
 
-        if ($candidateStatus !== CandidateStatus::PROCESSING) {
+        if ($candidateStatus !== CandidateStatus::PENDING) {
             throw new ConflictHttpException("Cannot delete. " . $candidateStatus->description());
         }
 
