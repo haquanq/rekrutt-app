@@ -6,11 +6,6 @@ use App\Abstracts\BaseFormRequest;
 
 abstract class BaseCandidateExperienceRequest extends BaseFormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [

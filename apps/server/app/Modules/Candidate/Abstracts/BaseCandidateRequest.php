@@ -8,11 +8,6 @@ use Illuminate\Validation\Rule;
 
 abstract class BaseCandidateRequest extends BaseFormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         $id = \intval($this->route("id"));
