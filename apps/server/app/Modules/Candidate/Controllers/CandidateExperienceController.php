@@ -7,6 +7,7 @@ use App\Modules\Candidate\Models\CandidateExperience;
 use App\Modules\Candidate\Requests\CandidateExperienceStoreRequest;
 use App\Modules\Candidate\Requests\CandidateExperienceUpdateRequest;
 use App\Modules\Candidate\Resources\CandidateExperienceResource;
+use App\Modules\Candidate\Resources\CandidateExperienceResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -23,9 +24,9 @@ class CandidateExperienceController extends BaseController
                 AllowedFilter::exact("candidateId", "candidate_id"),
                 AllowedFilter::partial("employerName", "employer_name"),
             ])
-            ->get();
+            ->autoPaginate();
 
-        return $this->okResponse(CandidateExperienceResource::collection($candidateExperiences));
+        return CandidateExperienceResourceCollection::make($candidateExperiences);
     }
 
     public function show(int $id)
