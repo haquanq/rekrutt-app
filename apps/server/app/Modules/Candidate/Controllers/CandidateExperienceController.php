@@ -3,7 +3,9 @@
 namespace App\Modules\Candidate\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\Candidate\Enums\CandidateStatus;
 use App\Modules\Candidate\Models\CandidateExperience;
+use App\Modules\Candidate\Requests\CandidateExperienceDestroyRequest;
 use App\Modules\Candidate\Requests\CandidateExperienceStoreRequest;
 use App\Modules\Candidate\Requests\CandidateExperienceUpdateRequest;
 use App\Modules\Candidate\Resources\CandidateExperienceResource;
@@ -11,6 +13,7 @@ use App\Modules\Candidate\Resources\CandidateExperienceResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class CandidateExperienceController extends BaseController
 {
@@ -53,10 +56,9 @@ class CandidateExperienceController extends BaseController
         return $this->noContentResponse();
     }
 
-    public function destroy(int $id)
+    public function destroy(CandidateExperienceDestroyRequest $request)
     {
-        Gate::authorize("delete", CandidateExperience::class);
-        CandidateExperience::findOrFail($id)->delete();
+        $request->candidateExperience->delete();
         return $this->noContentResponse();
     }
 }
