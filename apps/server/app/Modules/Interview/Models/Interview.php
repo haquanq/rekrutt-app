@@ -43,7 +43,7 @@ class Interview extends BaseModel
         return $this->hasMany(InterviewEvaluation::class);
     }
 
-    public function interviewers(): HasMany
+    public function participants(): HasMany
     {
         return $this->hasMany(InterviewParticipant::class);
     }
