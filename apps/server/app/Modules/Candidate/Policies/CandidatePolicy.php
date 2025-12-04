@@ -30,7 +30,7 @@ class CandidatePolicy
     public function update(User $user): Response
     {
         if (!$user->hasRole(UserRole::RECRUITER, UserRole::HIRING_MANAGER)) {
-            return Response::deny("You are not allowed to update this candidate.");
+            return Response::deny("You are not allowed to update any candidate.");
         }
 
         return Response::allow();
@@ -39,7 +39,7 @@ class CandidatePolicy
     public function delete(User $user): Response
     {
         if (!$user->hasRole(UserRole::RECRUITER, UserRole::HIRING_MANAGER)) {
-            return Response::deny("You are not allowed to delete this candidate.");
+            return Response::deny("You are not allowed to delete any candidate.");
         }
 
         return Response::allow();
