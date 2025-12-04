@@ -3,6 +3,7 @@
 namespace App\Modules\Candidate\Models;
 
 use App\Abstracts\BaseModel;
+use App\Modules\Candidate\Enums\CandidateStatus;
 use App\Modules\HiringSource\Models\HiringSource;
 use App\Modules\Recruitment\Models\RecruitmentApplication;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
