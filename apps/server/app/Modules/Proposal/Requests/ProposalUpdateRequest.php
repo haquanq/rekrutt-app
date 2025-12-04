@@ -18,13 +18,6 @@ class ProposalUpdateRequest extends BaseProposalRequest
         return true;
     }
 
-    public function rules(): array
-    {
-        $rules = parent::rules();
-        unset($rules["created_by_user_id"]);
-        return $rules;
-    }
-
     public function prepareForValidation(): void
     {
         parent::prepareForValidation();
