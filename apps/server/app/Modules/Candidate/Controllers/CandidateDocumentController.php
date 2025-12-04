@@ -10,6 +10,7 @@ use App\Modules\Candidate\Requests\CandidateDocumentStoreRequest;
 use App\Modules\Candidate\Requests\CandidateDocumentUpdateRequest;
 use App\Modules\Candidate\Resources\CandidateDocumentResource;
 use App\Modules\Candidate\Resources\CandidateDocumentResourceCollection;
+use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -19,6 +20,48 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class CandidateDocumentController extends BaseController
 {
+    /**
+     * Find all candidate documents
+     *
+     * Return a list of candidate documents. Allows pagination, relations and filters query.
+     *
+     * Authorization rules:
+     * - User with roles: any.
+     */
+    #[
+        QueryParameter(
+            name: "page[number]",
+            type: "integer",
+            description: "Current page number (default: 1)",
+            example: 1,
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "page[size]",
+            type: "integer",
+            description: "Size of current page (default: 15, max: 100)",
+            example: 15,
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "include",
+            type: "string",
+            description: "Include nested relations </br>" .
+                " Allow relations: candidate </br>" .
+                "Example: include=candidate",
+        ),
+    ]
+    #[
+        QueryParameter(
+            name: "filter[*]",
+            type: "string",
+            description: "Filter by fields </br>" .
+                "Allow fields: candidateId </br>" .
+                "Example: filter[candidateId]=32",
+        ),
+    ]
     public function index()
     {
         Gate::authorize("viewAny", CandidateDocument::class);
@@ -31,6 +74,23 @@ class CandidateDocumentController extends BaseController
         return CandidateDocumentResourceCollection::make($candidateDocuments);
     }
 
+    /**
+     * Find candidate document by Id
+     *
+     * Return a unique candidate document. Allows relations query.
+     *
+     * Authorization rules:
+     * - User with roles: any.
+     */
+    #[
+        QueryParameter(
+            name: "include",
+            type: "string",
+            description: "Include nested relations </br>" .
+                " Allow relations: candidate </br>" .
+                "Example: include=candidate",
+        ),
+    ]
     public function show(int $id)
     {
         Gate::authorize("view", CandidateDocument::class);
@@ -42,6 +102,16 @@ class CandidateDocumentController extends BaseController
         return CandidateDocumentResource::make($candidateDocument);
     }
 
+    /**
+     * Create candidate document
+     *
+     * Return created candidate document.
+     *
+     * Authorization rules:
+     * - User with roles: RECRUITER, HIRING_MANAGER.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function store(CandidateDocumentStoreRequest $request)
     {
         $file = $request->file("document");
@@ -65,6 +135,16 @@ class CandidateDocumentController extends BaseController
         return $this->createdResponse(CandidateDocumentResource::make($createdCandidateDocument));
     }
 
+    /**
+     * Update candidate document description
+     *
+     * Return no content.
+     *
+     * Authorization rules:
+     * - User with roles: RECRUITER, HIRING_MANAGER.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(CandidateDocumentUpdateRequest $request)
     {
         $candidateStatus = $request->candidateExperience->candidate->status;
@@ -77,6 +157,16 @@ class CandidateDocumentController extends BaseController
         return $this->noContentResponse();
     }
 
+    /**
+     * Delete candidate document
+     *
+     * Permanently delete candidate document. Return no content.
+     *
+     * Authorization rules:
+     * - User with roles: RECRUITER, HIRING_MANAGER.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function destroy(CandidateDocumentDestroyRequest $request)
     {
         $candidateStatus = $request->candidateExperience->candidate->status;
