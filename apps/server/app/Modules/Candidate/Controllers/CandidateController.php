@@ -132,8 +132,8 @@ class CandidateController extends BaseController
      */
     public function update(CandidateUpdateRequest $request)
     {
-        if ($request->candidate->status === CandidateStatus::PROCESSING) {
-            throw new ConflictHttpException("Cannot update. Candidate is being processed.");
+        if ($request->candidate->status !== CandidateStatus::PROCESSING) {
+            throw new ConflictHttpException("Cannot update. " . $request->candidate->status->description());
         }
 
         $request->candidate->update($request->validated());
@@ -152,8 +152,8 @@ class CandidateController extends BaseController
      */
     public function destroy(CandidateDestroyRequest $request)
     {
-        if ($request->candidate->status === CandidateStatus::PROCESSING) {
-            throw new ConflictHttpException("Cannot delete. Candidate is being processed.");
+        if ($request->candidate->status !== CandidateStatus::PROCESSING) {
+            throw new ConflictHttpException("Cannot delete. " . $request->candidate->status->description());
         }
 
         $request->candidate->delete();
