@@ -23,7 +23,7 @@ class ProposalDocumentPolicy
     public function create(User $user, Proposal $proposal): Response
     {
         if (!$user->hasRole(UserRole::MANAGER, UserRole::HIRING_MANAGER)) {
-            return Response::deny("You are not allowed to create proposal document.");
+            return Response::deny("You are not allowed to create new proposal document.");
         } elseif ($user->id !== $proposal->created_by_user_id) {
             return Response::deny("You are not the author of the selected proposal.");
         }
@@ -33,7 +33,7 @@ class ProposalDocumentPolicy
     public function update(User $user, ProposalDocument $proposalDocument): Response
     {
         if (!$user->hasRole(UserRole::MANAGER, UserRole::HIRING_MANAGER)) {
-            return Response::deny("You are not allowed to update proposal document.");
+            return Response::deny("You are not allowed to update any proposal document.");
         } elseif ($user->id !== $proposalDocument->proposal->created_by_user_id) {
             return Response::deny("You are not the author of the proposal of the selected document.");
         }
@@ -44,7 +44,7 @@ class ProposalDocumentPolicy
     public function delete(User $user, ProposalDocument $proposalDocument): Response
     {
         if (!$user->hasRole(UserRole::MANAGER, UserRole::HIRING_MANAGER)) {
-            return Response::deny("You are not allowed to delete proposal document.");
+            return Response::deny("You are not allowed to delete any proposal document.");
         } elseif ($user->id !== $proposalDocument->proposal->created_by_user_id) {
             return Response::deny("You are not the author of the proposal of the selected document.");
         }
