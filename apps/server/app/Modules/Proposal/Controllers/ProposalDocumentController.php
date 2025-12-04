@@ -5,6 +5,7 @@ namespace App\Modules\Proposal\Controllers;
 use App\Abstracts\BaseController;
 use App\Modules\Proposal\Enums\ProposalStatus;
 use App\Modules\Proposal\Models\ProposalDocument;
+use App\Modules\Proposal\Requests\ProposalDocumentDestroyRequest;
 use App\Modules\Proposal\Requests\ProposalDocumentStoreRequest;
 use App\Modules\Proposal\Requests\ProposalDocumentUpdateRequest;
 use App\Modules\Proposal\Resources\ProposalDocumentResource;
@@ -167,21 +168,17 @@ class ProposalDocumentController extends BaseController
      * - User with roles: MANAGER, HIRING_MANAGER.
      * - User must be the author of the related proposal.
      */
-    public function destroy(int $id)
+    public function destroy(ProposalDocumentDestroyRequest $request)
     {
-        $proposalDocument = ProposalDocument::with("proposal")->findOrFail($id);
-
-        Gate::authorize("delete", $proposalDocument);
-
-        if ($proposalDocument->proposal->status === ProposalStatus::PENDING) {
+        if ($request->proposalDocument->proposal->status === ProposalStatus::PENDING) {
             throw new ConflictHttpException("Cannot delete. Proposal of this document is pending for approval.");
         }
 
-        if ($proposalDocument->proposal->status === ProposalStatus::APPROVED) {
+        if ($request->proposalDocument->proposal->status === ProposalStatus::APPROVED) {
             throw new ConflictHttpException("Cannot delete. Proposal of this document is approved.");
         }
 
-        $proposalDocument->delete();
+        $request->proposalDocument->delete();
         return $this->noContentResponse();
     }
 }
