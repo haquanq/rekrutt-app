@@ -7,12 +7,11 @@ use App\Modules\Candidate\Models\CandidateDocument;
 use App\Modules\Candidate\Requests\CandidateDocumentStoreRequest;
 use App\Modules\Candidate\Requests\CandidateDocumentUpdateRequest;
 use App\Modules\Candidate\Resources\CandidateDocumentResource;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Str;
 
 class CandidateDocumentController extends BaseController
 {
