@@ -6,6 +6,7 @@ enum InterviewStatus: string
 {
     case DRAFT = "DRAFT";
     case PENDING = "PENDING";
+    case EVALUATING = "EVALUATING";
     case COMPLETED = "COMPLETED";
     case CANCELLED = "CANCELLED";
 }
