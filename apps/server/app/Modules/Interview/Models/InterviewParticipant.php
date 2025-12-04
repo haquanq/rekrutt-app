@@ -3,19 +3,20 @@
 namespace App\Modules\Interview\Models;
 
 use App\Abstracts\BaseModel;
+use App\Modules\Auth\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InterviewParticipant extends BaseModel
 {
     protected $guarded = ["id", "created_at", "updated_at"];
 
-    public function interviews(): BelongsTo
+    public function interview(): BelongsTo
     {
         return $this->belongsTo(Interview::class);
     }
 
-    public function users(): BelongsTo
+    public function participant(): BelongsTo
     {
-        return $this->belongsTo(Interview::class);
+        return $this->belongsTo(User::class);
     }
 }
