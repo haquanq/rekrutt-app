@@ -2,10 +2,10 @@
 
 namespace App\Modules\Recruitment\Requests;
 
-use App\Modules\Proposal\Rules\RecruitmentStatusTransitionsFromRule;
 use App\Modules\Recruitment\Abstracts\BaseRecruitmentRequest;
 use App\Modules\Recruitment\Enums\RecruitmentStatus;
 use App\Modules\Recruitment\Models\Recruitment;
+use App\Modules\Recruitment\Rules\RecruitmentStatusTransitionsFromRule;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;

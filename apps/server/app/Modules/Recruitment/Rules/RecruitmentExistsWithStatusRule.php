@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Proposal\Rules;
+namespace App\Modules\Recruitment\Rules;
 
 use App\Modules\Recruitment\Enums\RecruitmentStatus;
 use App\Modules\Recruitment\Models\Recruitment;

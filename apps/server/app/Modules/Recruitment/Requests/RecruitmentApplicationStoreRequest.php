@@ -4,7 +4,7 @@ namespace App\Modules\Recruitment\Requests;
 
 use App\Modules\Candidate\Enums\CandidateStatus;
 use App\Modules\Candidate\Rules\CandidateExistsWithStatusRule;
-use App\Modules\Proposal\Rules\RecruitmentExistsWithStatusRule;
+use App\Modules\Recruitment\Rules\RecruitmentExistsWithStatusRule;
 use App\Modules\Recruitment\Abstracts\BaseRecruitmentApplicationRequest;
 use App\Modules\Recruitment\Enums\RecruitmentApplicationPriority;
 use App\Modules\Recruitment\Enums\RecruitmentApplicationStatus;
