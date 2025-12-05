@@ -135,7 +135,11 @@ class RecruitmentController extends BaseController
      */
     public function update(RecruitmentUpdateRequest $request, int $id)
     {
-        if ($request->recruitment->status !== RecruitmentStatus::DRAFT) {
+        if (
+            Collection::make([RecruitmentStatus::DRAFT, RecruitmentStatus::SCHEDULED])->has(
+                $request->recruitment->status,
+            )
+        ) {
             throw new ConflictHttpException("Cannot update. " . $request->recruitment->status->description());
         }
 
@@ -156,7 +160,11 @@ class RecruitmentController extends BaseController
      */
     public function destroy(RecruitmentDestroyRequest $request)
     {
-        if ($request->recruitment->status !== RecruitmentStatus::DRAFT) {
+        if (
+            Collection::make([RecruitmentStatus::DRAFT, RecruitmentStatus::SCHEDULED])->has(
+                $request->recruitment->status,
+            )
+        ) {
             throw new ConflictHttpException("Cannot delete. " . $request->recruitment->status->description());
         }
 
