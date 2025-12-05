@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RecruitmentApplication extends BaseModel
 {
+    protected $guarded = ["id", "created_at", "updated_at"];
+
     public function recruitment(): BelongsTo
     {
         return $this->belongsTo(Recruitment::class);
