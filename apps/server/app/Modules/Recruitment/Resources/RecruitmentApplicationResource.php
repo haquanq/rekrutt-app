@@ -13,7 +13,6 @@ class RecruitmentApplicationResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "title" => $this->title,
             "completed_at" => $this->completed_at,
             "status" => $this->status,
             "priority" => $this->priority,
