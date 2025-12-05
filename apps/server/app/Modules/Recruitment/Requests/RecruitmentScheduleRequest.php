@@ -23,7 +23,7 @@ class RecruitmentScheduleRequest extends BaseRecruitmentRequest
              */
             "status" => [
                 "required",
-                Rule::enum(RecruitmentStatus::class)->only(RecruitmentStatus::CLOSED),
+                Rule::enum(RecruitmentStatus::class)->only(RecruitmentStatus::SCHEDULED),
                 new RecruitmentStatusTransitionsFromRule($this->recruitment->status),
             ],
             /**
