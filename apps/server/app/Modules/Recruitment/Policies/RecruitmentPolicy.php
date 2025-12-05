@@ -50,7 +50,7 @@ class RecruitmentPolicy
         return Response::allow();
     }
 
-    public function publish(User $user, Recruitment $recruitment): Response
+    public function schedule(User $user, Recruitment $recruitment): Response
     {
         if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
             return Response::deny("You are not allowed to publish any recruitment.");
@@ -61,9 +61,18 @@ class RecruitmentPolicy
         return Response::allow();
     }
 
+    public function publish(User $user, Recruitment $recruitment): Response
+    {
+        if (!$user->hasRole(UserRole::HIRING_MANAGER)) {
+            return Response::deny("You are not allowed to publish any recruitment.");
+        }
+
+        return Response::allow();
+    }
+
     public function close(User $user, Recruitment $recruitment): Response
     {
-        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+        if (!$user->hasRole(UserRole::HIRING_MANAGER)) {
             return Response::deny("You are not allowed to close any recruitment.");
         }
 
