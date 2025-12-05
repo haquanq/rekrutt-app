@@ -197,10 +197,10 @@ class RecruitmentController extends BaseController
     /**
      * Publish recruitment.
      *
-     * Return no content.
+     * Only hiring managers can publish recruitment before schedule. Return no content.
      *
      * Authorization rules:
-     * - User with roles: RECRUITER, HIRING_MANAGER.
+     * - User with roles: HIRING_MANAGER.
      * - User must be the creator of the recruitment.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -218,7 +218,7 @@ class RecruitmentController extends BaseController
     /**
      * Close recruitment.
      *
-     * Return no content.
+     * Only hiring managers can close recruitment before schedule. Return no content.
      *
      * Authorization rules:
      * - User with roles: HIRING_MANAGER.
