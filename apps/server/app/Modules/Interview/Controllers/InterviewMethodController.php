@@ -21,7 +21,7 @@ class InterviewMethodController extends BaseController
      *
      * Return a list of interview methods. Allows pagination, relations and filters query.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: any.
      */
     #[
@@ -73,7 +73,7 @@ class InterviewMethodController extends BaseController
      *
      * Return a unique interview method. Allow relations query.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: any.
      */
     #[
@@ -101,7 +101,7 @@ class InterviewMethodController extends BaseController
      *
      * Return created interview method.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: HIRING_MANAGER, RECRUITER.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -117,7 +117,7 @@ class InterviewMethodController extends BaseController
      *
      * Return no content.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: HIRING_MANAGER, RECRUITER.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -133,7 +133,7 @@ class InterviewMethodController extends BaseController
      *
      * Permanently delete interview method. Return no content.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: HIRING_MANAGER, RECRUITER.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
