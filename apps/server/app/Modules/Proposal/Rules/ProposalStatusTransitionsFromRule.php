@@ -19,35 +19,19 @@ class ProposalStatusTransitionsFromRule implements ValidationRule
             return;
         }
 
+        $transitions = [
+            ProposalStatus::DRAFT->value => [ProposalStatus::PENDING],
+            ProposalStatus::PENDING->value => [ProposalStatus::APPROVED, ProposalStatus::REJECTED],
+            ProposalStatus::APPROVED->value => [],
+            ProposalStatus::REJECTED->value => [],
+        ];
+
         if ($this->oldStatus === $newStatus) {
             return;
         }
 
-        $isDraft = $this->oldStatus === ProposalStatus::DRAFT;
-        $isPending = $this->oldStatus === ProposalStatus::PENDING;
-        $isRejectedOrApproved = \in_array($this->oldStatus, [ProposalStatus::APPROVED, ProposalStatus::REJECTED]);
-
-        $changesToDraft = $newStatus === ProposalStatus::DRAFT;
-        $changesToPending = $newStatus === ProposalStatus::PENDING;
-        $changesToRejectedOrApproved = \in_array($newStatus, [ProposalStatus::APPROVED, ProposalStatus::REJECTED]);
-
-        $message = "Can't change proposal status from {$this->oldStatus->value} to {$newStatus->value}.";
-
-        if ($changesToPending && !$isDraft) {
-            $requiredStatus = ProposalStatus::DRAFT->value;
-            $fail("$message Required status: $requiredStatus");
-            return;
-        }
-
-        if ($changesToRejectedOrApproved && !$isPending) {
-            $requiredStatus = ProposalStatus::PENDING->value;
-            $fail("$message Required status: $requiredStatus");
-            return;
-        }
-
-        if ($changesToDraft && !$isRejectedOrApproved) {
-            $requiredStatus = ProposalStatus::APPROVED->value . "," . ProposalStatus::REJECTED->value;
-            $fail("$message Required status: $requiredStatus");
+        if (!\in_array($newStatus, $transitions[$this->oldStatus->value])) {
+            $fail("Can't change proposal status from {$this->oldStatus->value} to {$newStatus->value}.");
             return;
         }
     }
