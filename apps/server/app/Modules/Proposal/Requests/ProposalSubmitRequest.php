@@ -7,6 +7,7 @@ use App\Modules\Proposal\Enums\ProposalStatus;
 use App\Modules\Proposal\Models\Proposal;
 use App\Modules\Proposal\Rules\ProposalStatusTransitionsFromRule;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class ProposalSubmitRequest extends BaseProposalRequest
 {
@@ -25,7 +26,11 @@ class ProposalSubmitRequest extends BaseProposalRequest
              * Status === PENDING
              * @ignoreParam
              */
-            "status" => ["required", new ProposalStatusTransitionsFromRule($this->proposal->status)],
+            "status" => [
+                "required",
+                Rule::enum(ProposalStatus::class)->only(ProposalStatus::PENDING),
+                new ProposalStatusTransitionsFromRule($this->proposal->status),
+            ],
         ];
     }
 
