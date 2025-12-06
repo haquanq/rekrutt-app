@@ -41,7 +41,7 @@ class RecruitmentScheduleRequest extends BaseRecruitmentRequest
 
     public function authorize(): bool
     {
-        Gate::authorize("schedule", Recruitment::class);
+        Gate::authorize("schedule", $this->recruitment);
         return true;
     }
 
