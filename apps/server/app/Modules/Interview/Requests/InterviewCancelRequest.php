@@ -21,7 +21,7 @@ class InterviewCancelRequest extends BaseInterviewRequest
              * Status === CANCELLED
              * @ignoreParam
              */
-            "status" => ["required", Rule::enum(InterviewStatus::cases())->only(InterviewStatus::CANCELLED)],
+            "status" => ["required", Rule::enum(InterviewStatus::class)->only(InterviewStatus::CANCELLED)],
             /**
              * Cancel timestamp
              * @ignoreParam
@@ -46,7 +46,7 @@ class InterviewCancelRequest extends BaseInterviewRequest
         return true;
     }
 
-    public function prepareForValidation()
+    public function prepareForValidation(): void
     {
         parent::prepareForValidation();
 

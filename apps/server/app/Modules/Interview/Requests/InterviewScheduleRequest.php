@@ -19,7 +19,7 @@ class InterviewScheduleRequest extends BaseInterviewRequest
              * Status === SCHEDULED
              * @ignoreParam
              */
-            "status" => ["required", Rule::enum(InterviewStatus::cases())->only(InterviewStatus::SCHEDULED)],
+            "status" => ["required", Rule::enum(InterviewStatus::class)->only(InterviewStatus::SCHEDULED)],
         ];
     }
 
@@ -29,7 +29,7 @@ class InterviewScheduleRequest extends BaseInterviewRequest
         return true;
     }
 
-    public function prepareForValidation()
+    public function prepareForValidation(): void
     {
         parent::prepareForValidation();
 

@@ -16,7 +16,7 @@ class InterviewUpdateRequest extends BaseInterviewRequest
         return true;
     }
 
-    public function prepareForValidation()
+    public function prepareForValidation(): void
     {
         parent::prepareForValidation();
 

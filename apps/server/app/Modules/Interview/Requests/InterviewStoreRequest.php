@@ -23,7 +23,7 @@ class InterviewStoreRequest extends BaseInterviewRequest
                  * Status === DRAFT
                  * @ignoreParam
                  */
-                "status" => ["required", Rule::enum(InterviewStatus::cases())->only(InterviewStatus::DRAFT)],
+                "status" => ["required", Rule::enum(InterviewStatus::class)->only(InterviewStatus::DRAFT)],
                 /**
                  * Created by user (generated automatically)
                  * @ignoreParam

@@ -41,14 +41,10 @@ abstract class BaseInterviewRequest extends BaseFormRequest
              */
             "rating_scale_id" => ["required", "integer:strict", new RatingScaleExistsAndIsActiveRule()],
             /**
-             * Id of Interview
-             * @example 1
-             */
-            "interview_method_id" => ["required", "integer:strict", "exists:interview_method,id"],
-            /**
              * Id of InterviewMethod
              * @example 1
              */
+            "interview_method_id" => ["required", "integer:strict", "exists:interview_method,id"],
         ];
     }
 }
