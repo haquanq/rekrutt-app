@@ -21,7 +21,7 @@ class RecruitmentApplicationController extends BaseController
      *
      * Return a list of recruitment applications. Allows pagination, relations and filter query.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: any.
      */
     #[
@@ -80,7 +80,7 @@ class RecruitmentApplicationController extends BaseController
      *
      * Return a unique recruitment application. Allow relations query.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: any.
      */
     #[
@@ -108,7 +108,7 @@ class RecruitmentApplicationController extends BaseController
      *
      * Return created recruitment application.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: RECRUITER, HIRING_MANAGER.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -124,7 +124,7 @@ class RecruitmentApplicationController extends BaseController
      *
      * Return no content.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: RECRUITER, HIRING_MANAGER.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -140,7 +140,7 @@ class RecruitmentApplicationController extends BaseController
      *
      * Permanently delete recruitment application. Return no content.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: RECRUITER, HIRING_MANAGER.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException

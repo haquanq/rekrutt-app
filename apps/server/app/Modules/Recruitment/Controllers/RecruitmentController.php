@@ -27,7 +27,7 @@ class RecruitmentController extends BaseController
      *
      * Return a list of recruitments. Allows pagination, relations and filters query.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: any.
      */
     #[
@@ -86,7 +86,7 @@ class RecruitmentController extends BaseController
      *
      * Return a unique recruitment. Allow relations query.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: any.
      */
     #[
@@ -114,7 +114,7 @@ class RecruitmentController extends BaseController
      *
      * Return created recruitment.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: RECRUITER, HIRING_MANAGER.
      */
     public function store(RecruitmentStoreRequest $request)
@@ -128,7 +128,7 @@ class RecruitmentController extends BaseController
      *
      * Return no content.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: RECRUITER, HIRING_MANAGER.
      * - User must be the creator of the recruitment.
      *
@@ -153,7 +153,7 @@ class RecruitmentController extends BaseController
      *
      * Permanently delete recruitment. Return no content.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: RECRUITER, HIRING_MANAGER.
      * - User must be the creator of the recruitment.
      *
@@ -178,7 +178,7 @@ class RecruitmentController extends BaseController
      *
      * Return no content.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: RECRUITER, HIRING_MANAGER.
      * - User must be the creator of the recruitment.
      *
@@ -199,7 +199,7 @@ class RecruitmentController extends BaseController
      *
      * Only hiring managers can publish recruitment before schedule. Return no content.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: HIRING_MANAGER.
      * - User must be the creator of the recruitment.
      *
@@ -220,7 +220,7 @@ class RecruitmentController extends BaseController
      *
      * Only hiring managers can close recruitment before schedule. Return no content.
      *
-     * Authorization rules:
+     * Authorization
      * - User with roles: HIRING_MANAGER.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
