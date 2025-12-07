@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Recruitment\Commands;
+namespace App\Modules\Interview\Commands;
 
 use App\Modules\Interview\Enums\InterviewStatus;
 use App\Modules\Interview\Models\Interview;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class ProcessScheduledInterviewCommand extends Command
 {
-    protected $signature = "interview:process-sheduled";
+    protected $signature = "interview:process-scheduled";
     protected $description = "Process scheduled interview statuses.";
 
     public function handle(): void
@@ -22,7 +22,7 @@ class ProcessScheduledInterviewCommand extends Command
         Interview::query()->update([
             "status" => DB::raw(
                 "CASE WHEN started_at <= '$currentTimeText' THEN '$inProgressStatus' " .
-                    " WHEN ended_at <= '$currentTimeText' THEN '$completedStatus' ",
+                    " WHEN ended_at <= '$currentTimeText' THEN '$completedStatus' END",
             ),
         ]);
     }
