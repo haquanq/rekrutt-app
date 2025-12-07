@@ -2,5 +2,5 @@
 
 use Illuminate\Support\Facades\Schedule;
 
-Schedule::command("recruitment:process-sheduled")->everyMinute();
-Schedule::command("interview:process-sheduled")->everyMinute();
+Schedule::command("recruitment:process-scheduled")->everyMinute();
+Schedule::command("interview:process-scheduled")->everyMinute();
