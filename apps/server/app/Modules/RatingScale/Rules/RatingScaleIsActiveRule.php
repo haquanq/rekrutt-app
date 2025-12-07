@@ -6,7 +6,7 @@ use App\Modules\RatingScale\Models\RatingScale;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class RatingScaleExistsAndIsActiveRule implements ValidationRule
+class RatingScaleIsActiveRule implements ValidationRule
 {
     public function validate(string $attribute, mixed $id, Closure $fail): void
     {

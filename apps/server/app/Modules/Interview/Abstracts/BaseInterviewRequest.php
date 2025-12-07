@@ -3,7 +3,7 @@
 namespace App\Modules\Interview\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
-use App\Modules\RatingScale\Rules\RatingScaleExistsAndIsActiveRule;
+use App\Modules\RatingScale\Rules\RatingScaleIsActiveRule;
 
 abstract class BaseInterviewRequest extends BaseFormRequest
 {
@@ -39,7 +39,7 @@ abstract class BaseInterviewRequest extends BaseFormRequest
              * Id of RatingScale
              * @example 1
              */
-            "rating_scale_id" => ["required", "integer:strict", new RatingScaleExistsAndIsActiveRule()],
+            "rating_scale_id" => ["required", "integer:strict", new RatingScaleIsActiveRule()],
             /**
              * Id of InterviewMethod
              * @example 1
