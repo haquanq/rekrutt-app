@@ -48,7 +48,7 @@ class InterviewCompleteRequest extends BaseInterviewRequest
         $this->interview = Interview::findOrFail($this->route("id"));
 
         $this->merge([
-            "status" => InterviewStatus::CANCELLED->value,
+            "status" => InterviewStatus::COMPLETED->value,
             "completed_at" => Carbon::now(),
         ]);
     }
