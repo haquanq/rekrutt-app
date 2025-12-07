@@ -14,11 +14,6 @@ class RatingScalePoint extends BaseModel
         return $this->belongsTo(RatingScale::class);
     }
 
-    public function interviewEvaluations(): HasMany
-    {
-        return $this->hasMany(InterviewEvaluation::class);
-    }
-
     protected static function booted()
     {
         static::addGlobalScope("orderByRank", function ($query) {
