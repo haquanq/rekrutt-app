@@ -4,6 +4,7 @@ namespace App\Modules\Auth\Controllers;
 
 use App\Abstracts\BaseController;
 use App\Modules\Auth\Requests\UserActivateRequest;
+use App\Modules\Auth\Requests\UserDestroyRequest;
 use App\Modules\Auth\Requests\UserRetireRequest;
 use App\Modules\Auth\Requests\UserStoreRequest;
 use App\Modules\Auth\Requests\UserSuspendRequest;
@@ -196,10 +197,9 @@ class UserController extends BaseController
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(int $id)
+    public function destroy(UserDestroyRequest $request)
     {
-        Gate::authorize("delete", User::class);
-        User::findOrFail($id)->delete();
+        $request->user->delete();
         return $this->noContentResponse();
     }
 }
