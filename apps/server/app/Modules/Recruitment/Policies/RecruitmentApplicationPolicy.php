@@ -27,10 +27,10 @@ class RecruitmentApplicationPolicy
         return Response::allow();
     }
 
-    public function updatePriority(User $user): Response
+    public function update(User $user): Response
     {
         if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            return Response::deny("You are not allowed to update any recruitment application's priority.");
+            return Response::deny("You are not allowed to update any recruitment application.");
         }
 
         return Response::allow();
