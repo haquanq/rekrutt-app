@@ -10,14 +10,14 @@ class RatingScaleExistsAndIsActiveRule implements ValidationRule
 {
     public function validate(string $attribute, mixed $id, Closure $fail): void
     {
-        $ratingScare = RatingScale::find($id);
+        $ratingScale = RatingScale::find($id);
 
-        if (!$ratingScare) {
+        if (!$ratingScale) {
             $fail("Rating scale does not exist");
             return;
         }
 
-        if (!$ratingScare->is_active) {
+        if (!$ratingScale->is_active) {
             $fail("Rating scale is not active");
             return;
         }
