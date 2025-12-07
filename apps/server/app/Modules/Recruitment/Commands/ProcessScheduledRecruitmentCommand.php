@@ -17,12 +17,12 @@ class ProcessScheduledRecruitmentCommand extends Command
     {
         Recruitment::query()
             ->where("status", "=", RecruitmentStatus::SCHEDULED->value)
-            ->where("scheduled_publish_at", ">=", Carbon::now())
+            ->where("scheduled_publish_at", "<=", Carbon::now())
             ->update(["status" => RecruitmentStatus::PUBLISHED->value, "actual_published_at" => Carbon::now()]);
 
         Recruitment::query()
             ->where("status", "=", RecruitmentStatus::PUBLISHED->value)
-            ->where("scheduled_close_at", ">=", Carbon::now())
+            ->where("scheduled_close_at", "<=", Carbon::now())
             ->update(["status" => RecruitmentStatus::CLOSED->value, "actual_closed_at" => Carbon::now()]);
     }
 }
