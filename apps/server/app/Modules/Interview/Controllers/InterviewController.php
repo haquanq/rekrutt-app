@@ -50,7 +50,7 @@ class InterviewController extends BaseController
             name: "include",
             type: "string",
             description: "Include nested relations </br>" .
-                " Allow relations: interviews </br>" .
+                " Allow relations: method, application, createdBy, cancelledBy, evaluations, participants, ratingScale </br>" .
                 "Example: include=interviews",
         ),
     ]
@@ -58,7 +58,9 @@ class InterviewController extends BaseController
         QueryParameter(
             name: "filter[*]",
             type: "string",
-            description: "Filter by fields </br>" . "Allow fields: name </br>" . "Example: filter[name]=Screening",
+            description: "Filter by fields </br>" .
+                "Allow fields: title, status, recruitmentApplicationid, ratingScaleId, interviewMethodId </br>" .
+                "Example: filter[status]=UNDER_EVALUATION",
         ),
     ]
     public function index()
@@ -100,7 +102,7 @@ class InterviewController extends BaseController
             name: "include",
             type: "string",
             description: "Include nested relations </br>" .
-                " Allow relations: interviews </br>" .
+                " Allow relations: method, application, createdBy, cancelledBy, evaluations, participants, ratingScale </br>" .
                 "Example: include=interviews",
         ),
     ]
