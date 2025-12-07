@@ -6,7 +6,7 @@ use App\Modules\Auth\Enums\UserRole;
 use App\Modules\Auth\Enums\UserStatus;
 use App\Modules\Interview\Models\Interview;
 use App\Modules\Interview\Models\InterviewEvaluation;
-use App\Modules\Interview\Models\InterviewInterviewer;
+use App\Modules\Interview\Models\InterviewParticipant;
 use App\Modules\Position\Models\Position;
 use App\Modules\Proposal\Models\Proposal;
 use App\Modules\Recruitment\Models\Recruitment;
@@ -58,7 +58,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function joinedInterviews(): BelongsToMany
     {
-        return $this->belongsToMany(InterviewInterviewer::class);
+        return $this->belongsToMany(InterviewParticipant::class);
     }
 
     public function evaluatedInterviews(): HasMany
