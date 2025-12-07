@@ -7,7 +7,7 @@
         "dev": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "php artisan serve",
+                "commands": ["php artisan serve", "php artisan schedule:work"],
                 "cwd": "apps/server"
             }
         },
