@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->timestampTZ("started_at")->nullable();
             $table->timestampTZ("ended_at")->nullable();
             $table->timestampTZ("cancelled_at")->nullable();
+            $table->timestampTZ("completed_at")->nullable();
             $table->string("cancellation_reason", 300)->nullable();
             $table->enum("status", InterviewStatus::cases())->default(InterviewStatus::DRAFT);
             $table->timestampsTZ();
