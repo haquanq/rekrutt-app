@@ -24,6 +24,9 @@ class UserController extends BaseController
      * Find all users
      *
      * Retrive a list of users. Allows pagination, relations and filter query.
+     *
+     * Authorization
+     * - User with roles: any
      */
     #[
         QueryParameter(
@@ -80,7 +83,10 @@ class UserController extends BaseController
     /**
      * Find user by Id
      *
-     * Return a unique user. Allow relations query
+     * Return a unique user. Allow relations query.
+     *
+     * Authorization
+     * - User with roles: any
      */
     #[
         QueryParameter(
@@ -103,7 +109,12 @@ class UserController extends BaseController
     /**
      * Create user
      *
-     * Return created user
+     * Return created user.
+     *
+     * Authorization
+     * - User with roles: ADMIN
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(UserStoreRequest $request)
     {
@@ -115,7 +126,12 @@ class UserController extends BaseController
     /**
      * Update user
      *
-     * Return no content
+     * Return no content.
+     *
+     * Authorization
+     * - User with roles: ADMIN
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UserUpdateRequest $request, int $id)
     {
@@ -127,7 +143,12 @@ class UserController extends BaseController
     /**
      * Suspend user
      *
-     * Return no content
+     * Return no content.
+     *
+     * Authorization
+     * - User with roles: ADMIN
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function suspend(UserSuspendRequest $request, User $id)
     {
@@ -139,7 +160,12 @@ class UserController extends BaseController
     /**
      * Retire user
      *
-     * Return no content
+     * Return no content.
+     *
+     * Authorization
+     * - User with roles: ADMIN
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function retire(UserRetireRequest $request, int $id)
     {
@@ -151,7 +177,12 @@ class UserController extends BaseController
     /**
      * Re-activate user
      *
-     * Return no content
+     * Return no content.
+     *
+     * Authorization
+     * - User with roles: ADMIN
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function activate(UserActivateRequest $request, int $id)
     {
@@ -163,7 +194,12 @@ class UserController extends BaseController
     /**
      * Delete user by Id
      *
-     * Permanently delete user. Return no content
+     * Permanently delete user. Return no content.
+     *
+     * Authorization
+     * - User with roles: ADMIN
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(int $id)
     {
