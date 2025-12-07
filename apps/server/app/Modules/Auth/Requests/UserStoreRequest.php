@@ -8,13 +8,6 @@ use Illuminate\Support\Facades\Gate;
 
 class UserStoreRequest extends BaseUserRequest
 {
-    public function rules(): array
-    {
-        $rules = parent::rules();
-        unset($rules["status"]);
-        return $rules;
-    }
-
     public function authorize(): bool
     {
         Gate::authorize("create", User::class);
