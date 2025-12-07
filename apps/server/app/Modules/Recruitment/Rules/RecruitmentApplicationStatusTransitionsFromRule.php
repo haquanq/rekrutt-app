@@ -21,13 +21,17 @@ class RecruitmentApplicationStatusTransitionsFromRule implements ValidationRule
 
         $transitions = [
             RecruitmentApplicationStatus::PENDING->value => [
-                RecruitmentApplicationStatus::INTERVIEWING,
+                RecruitmentApplicationStatus::INTERVIEW_PLANNING,
                 RecruitmentApplicationStatus::DISCARDED,
             ],
-            RecruitmentApplicationStatus::INTERVIEWING->value => [
-                RecruitmentApplicationStatus::OFFER_PENDING,
-                RecruitmentApplicationStatus::WITHDRAWN,
+            RecruitmentApplicationStatus::INTERVIEW_PLANNING->value => [
+                RecruitmentApplicationStatus::INTERVIEW_SCHEDULED,
                 RecruitmentApplicationStatus::DISCARDED,
+            ],
+            RecruitmentApplicationStatus::INTERVIEW_SCHEDULED->value => [
+                RecruitmentApplicationStatus::INTERVIEW_COMPLETED,
+                RecruitmentApplicationStatus::DISCARDED,
+                RecruitmentApplicationStatus::WITHDRAWN,
             ],
             RecruitmentApplicationStatus::OFFER_PENDING->value => [
                 RecruitmentApplicationStatus::OFFER_ACCEPTED,
