@@ -13,6 +13,7 @@ use App\Modules\HiringSource\Controllers\HiringSourceController;
 use App\Modules\Interview\Controllers\InterviewController;
 use App\Modules\Interview\Controllers\InterviewEvaluationController;
 use App\Modules\Interview\Controllers\InterviewMethodController;
+use App\Modules\Interview\Controllers\InterviewParticipantController;
 use App\Modules\Position\Controllers\PositionController;
 use App\Modules\Proposal\Controllers\ProposalController;
 use App\Modules\Proposal\Controllers\ProposalDocumentController;
@@ -204,6 +205,16 @@ Route::middleware("protected")->group(function () {
             Route::post("/{id}/cancel", "cancel");
             Route::post("/{id}/schedule", "schedule");
             Route::post("/{id}/complete", "complete");
+        });
+
+    Route::prefix("interview-participants")
+        ->controller(InterviewParticipantController::class)
+        ->group(function () {
+            Route::get("", "index");
+            Route::get("/{id}", "show");
+            Route::post("", "store");
+            Route::put("/{id}", "update");
+            Route::delete("/{id}", "destroy");
         });
 
     Route::prefix("interview-evaluations")
