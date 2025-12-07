@@ -4,6 +4,7 @@ namespace App\Modules\Auth\Policies;
 
 use App\Modules\Auth\Enums\UserRole;
 use App\Modules\Auth\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
@@ -17,21 +18,30 @@ class UserPolicy
         return true;
     }
 
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        $role = UserRole::tryFrom($user["role"]);
-        return $role === UserRole::ADMIN;
+        if (!$user->hasRole(UserRole::ADMIN)) {
+            return Response::deny("You are not allowed to create new user.");
+        }
+
+        return Response::allow();
     }
 
-    public function update(User $user): bool
+    public function update(User $user): Response
     {
-        $role = UserRole::tryFrom($user["role"]);
-        return $role === UserRole::ADMIN;
+        if (!$user->hasRole(UserRole::ADMIN)) {
+            return Response::deny("You are not allowed to update this user.");
+        }
+
+        return Response::allow();
     }
 
-    public function delete(User $user): bool
+    public function delete(User $user): Response
     {
-        $role = UserRole::tryFrom($user["role"]);
-        return $role === UserRole::ADMIN;
+        if (!$user->hasRole(UserRole::ADMIN)) {
+            return Response::deny("You are not allowed to delete this user.");
+        }
+
+        return Response::allow();
     }
 }
