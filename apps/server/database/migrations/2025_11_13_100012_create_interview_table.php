@@ -14,11 +14,18 @@ return new class extends Migration {
             $table->string("title", 100);
             $table->string("description", 500);
             $table->string("location", 300);
+
             $table->timestampTZ("started_at")->nullable();
             $table->timestampTZ("ended_at")->nullable();
-            $table->timestampTZ("cancelled_at")->nullable();
             $table->timestampTZ("completed_at")->nullable();
-            $table->string("cancellation_reason", 300)->nullable();
+
+            $table->timestampTZ("cancelled_at")->nullable();
+            $table->string("cancelled_reason", 300)->nullable();
+            $table
+                ->foreignId("cancelled_by_user_id")
+                ->nullable()
+                ->constrained(table: "user", indexName: "fk_interview__canceller");
+
             $table->enum("status", InterviewStatus::cases())->default(InterviewStatus::DRAFT);
             $table->timestampsTZ();
 
@@ -35,8 +42,6 @@ return new class extends Migration {
                 ->constrained(table: "interview_method", indexName: "fk_interview__interview_method");
 
             $table->foreignId("created_by_user_id")->constrained(table: "user", indexName: "fk_interview__creator");
-
-            $table->foreignId("cancelled_by_user_id")->constrained(table: "user", indexName: "fk_interview__canceller");
         });
 
         DB::statement("ALTER TABLE public.interview ADD CONSTRAINT pk_interview PRIMARY KEY (id)");

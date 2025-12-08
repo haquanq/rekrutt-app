@@ -29,10 +29,10 @@ class InterviewCancelRequest extends BaseInterviewRequest
              */
             "cancelled_by_user_id" => ["required", "integer:strict"],
             /**
-             * Cancellation reason
+             * Reason for cancellation
              * @example The candidate did not show up
              */
-            "cancellation_reason" => ["required", "string", "max:300"],
+            "cancelled_reason" => ["required", "string", "max:300"],
             /**
              * Status === CANCELLED
              * @ignoreParam
