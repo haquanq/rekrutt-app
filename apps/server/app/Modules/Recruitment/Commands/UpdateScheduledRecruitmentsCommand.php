@@ -6,12 +6,11 @@ use App\Modules\Recruitment\Enums\RecruitmentStatus;
 use App\Modules\Recruitment\Models\Recruitment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 
-class ProcessScheduledRecruitmentCommand extends Command
+class UpdateScheduledRecruitmentsCommand extends Command
 {
-    protected $signature = "recruitment:process-scheduled";
-    protected $description = "Process scheduled recruitment statuses.";
+    protected $signature = "recruitment:update-scheduled";
+    protected $description = "Update scheduled recruitments.";
 
     public function handle(): void
     {
