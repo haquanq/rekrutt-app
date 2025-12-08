@@ -2,9 +2,9 @@
 
 namespace App\Modules\Interview\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use App\Abstracts\BaseResourceCollection;
 
-class InterviewParticipantResourceCollection extends JsonResource
+class InterviewParticipantResourceCollection extends BaseResourceCollection
 {
     public $collects = InterviewParticipantResource::class;
 }
