@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string("withdrawn_reason")->nullable();
 
             $table->timestampTZ("discarded_at")->nullable();
-            $table->string("discard_reason", 300)->nullable();
+            $table->string("discarded_reason", 300)->nullable();
             $table
                 ->foreignId("discarded_by_user_id")
                 ->nullable()
