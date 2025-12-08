@@ -17,8 +17,8 @@ class InterviewParticipantStoreRequest extends BaseInterviewParticipantRequest
             ...parent::rules(),
             ...[
                 /**
-                 * Created by user (generated automatically)
-                 * @ignoreParam
+                 * Id of Interview
+                 * @example 1
                  */
                 "interview_id" => ["required", "integer:strict"],
             ],
