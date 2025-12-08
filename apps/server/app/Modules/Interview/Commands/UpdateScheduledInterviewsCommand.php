@@ -8,10 +8,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class ProcessScheduledInterviewCommand extends Command
+class UpdateScheduledInterviewsCommand extends Command
 {
-    protected $signature = "interview:process-scheduled";
-    protected $description = "Process scheduled interview statuses.";
+    protected $signature = "interview:update-scheduled";
+    protected $description = "Update scheduled interviews.";
 
     public function handle(): void
     {
