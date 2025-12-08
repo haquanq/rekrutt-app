@@ -17,6 +17,6 @@ class InterviewParticipant extends BaseModel
 
     public function participant(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "user_id", "id");
     }
 }
