@@ -21,7 +21,7 @@ class InterviewParticipantController extends BaseController
     /**
      * Find all interview participants
      *
-     * Return a list of interview participants. Allows pagination, relations and filter query.
+     * Return a list of interview participants. Allows pagination and filter query.
      *
      * Authorization
      * - User with roles: any
@@ -44,15 +44,6 @@ class InterviewParticipantController extends BaseController
     ]
     #[
         QueryParameter(
-            name: "include",
-            type: "string",
-            description: "Include nested relations </br>" .
-                " Allow relations: interview, participant </br>" .
-                "Example: include=interview,participant",
-        ),
-    ]
-    #[
-        QueryParameter(
             name: "filter[*]",
             type: "string",
             description: "Filter by fields </br>" .
@@ -65,7 +56,7 @@ class InterviewParticipantController extends BaseController
         Gate::authorize("viewAny", InterviewParticipant::class);
 
         $interviewParticipants = QueryBuilder::for(InterviewParticipant::class)
-            ->allowedIncludes(["interview", "participant"])
+            ->with(["interview", "participant"])
             ->allowedFilters([
                 AllowedFilter::exact("interviewId", "interview_id"),
                 AllowedFilter::exact("participantId", "user_id"),
@@ -78,26 +69,17 @@ class InterviewParticipantController extends BaseController
     /**
      * Find interview participant by Id
      *
-     * Return a unique interview participant. Allow relations query.
+     * Return a unique interview participant.
      *
      * Authorization
      * - User with roles: any
      */
-    #[
-        QueryParameter(
-            name: "include",
-            type: "string",
-            description: "Include nested relations </br>" .
-                " Allow relations: interview, participant </br>" .
-                "Example: include=interview,participant",
-        ),
-    ]
     public function show(int $id)
     {
         Gate::authorize("view", InterviewParticipant::class);
 
         $interviewParticipant = QueryBuilder::for(InterviewParticipant::class)
-            ->allowedIncludes(["interview", "participant"])
+            ->with(["interview", "participant"])
             ->findOrFail($id);
 
         return InterviewParticipantResource::make($interviewParticipant);
