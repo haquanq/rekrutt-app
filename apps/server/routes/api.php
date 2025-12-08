@@ -246,7 +246,11 @@ Route::middleware("protected")->group(function () {
             Route::get("", "index");
             Route::get("/{id}", "show");
             Route::post("", "store");
-            Route::patch("/{id}/priority", "updatePriority");
             Route::delete("/{id}", "destroy");
+            Route::patch("/{id}/priority", "priority");
+            Route::patch("/{id}/interview", "interview");
+            Route::patch("/{id}/offer", "offer");
+            Route::post("/{id}/discard", "discard");
+            Route::post("/{id}/withdraw", "withdraw");
         });
 });
