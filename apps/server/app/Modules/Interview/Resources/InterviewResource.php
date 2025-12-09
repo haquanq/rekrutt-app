@@ -33,7 +33,7 @@ class InterviewResource extends JsonResource
             "created_by" => UserResource::make($this->whenLoaded("createdBy")),
 
             "application" => RecruitmentApplicationResource::make($this->whenLoaded("application")),
-            "evaluations" => InterviewEvaluationResource::make($this->whenLoaded("evaluations")),
+            "evaluations" => InterviewEvaluationResource::collection($this->whenLoaded("evaluations")),
             "participants" => InterviewParticipantResource::collection($this->whenLoaded("participants")),
         ];
     }
