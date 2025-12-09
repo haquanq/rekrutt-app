@@ -2,11 +2,11 @@
 
 namespace App\Modules\Interview\Requests;
 
-use App\Modules\Interview\Abstracts\BaseInterviewMethodRequest;
+use App\Modules\Interview\Abstracts\BaseInterviewEvaluationRequest;
 use App\Modules\Interview\Models\InterviewEvaluation;
 use Illuminate\Support\Facades\Gate;
 
-class InterviewEvaluationDestroyRequest extends BaseInterviewMethodRequest
+class InterviewEvaluationDestroyRequest extends BaseInterviewEvaluationRequest
 {
     public InterviewEvaluation $interviewEvaluation;
 

@@ -2,12 +2,12 @@
 
 namespace App\Modules\Interview\Requests;
 
-use App\Modules\Interview\Abstracts\BaseInterviewMethodRequest;
+use App\Modules\Interview\Abstracts\BaseInterviewEvaluationRequest;
 use App\Modules\Interview\Models\InterviewEvaluation;
 use App\Modules\RatingScale\Rules\RatingScalePointBelongsToScaleRule;
 use Illuminate\Support\Facades\Gate;
 
-class InterviewEvaluationUpdateRequest extends BaseInterviewMethodRequest
+class InterviewEvaluationUpdateRequest extends BaseInterviewEvaluationRequest
 {
     public InterviewEvaluation $interviewEvaluation;
 
