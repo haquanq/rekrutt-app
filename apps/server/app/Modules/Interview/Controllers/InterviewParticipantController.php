@@ -98,12 +98,6 @@ class InterviewParticipantController extends BaseController
      */
     public function store(InterviewParticipantStoreRequest $request)
     {
-        $interviewStatus = $request->interview->status;
-
-        if ($interviewStatus !== InterviewStatus::DRAFT) {
-            throw new ConflictHttpException("Cannot create. " . $interviewStatus->description());
-        }
-
         $createdInterviewParticipant = InterviewParticipant::create($request->validated());
         return $this->createdResponse(InterviewParticipantResource::make($createdInterviewParticipant));
     }
