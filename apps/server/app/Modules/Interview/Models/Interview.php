@@ -5,10 +5,12 @@ namespace App\Modules\Interview\Models;
 use App\Abstracts\BaseModel;
 use App\Modules\Auth\Models\User;
 use App\Modules\Interview\Enums\InterviewStatus;
+use App\Modules\RatingScale\Models\RatingScale;
 use App\Modules\RatingScale\Resources\RatingScaleResource;
 use App\Modules\Recruitment\Models\RecruitmentApplication;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
 
 class Interview extends BaseModel
 {
@@ -25,7 +27,7 @@ class Interview extends BaseModel
 
     public function hasParticipant(User $user): bool
     {
-        return $this->participants->pluck("id")->has($user->id);
+        return $this->participants->pluck("participant.id")->contains($user->id);
     }
 
     public function application(): BelongsTo
@@ -60,6 +62,6 @@ class Interview extends BaseModel
 
     public function ratingScale(): BelongsTo
     {
-        return $this->belongsTo(RatingScaleResource::class);
+        return $this->belongsTo(RatingScale::class);
     }
 }
