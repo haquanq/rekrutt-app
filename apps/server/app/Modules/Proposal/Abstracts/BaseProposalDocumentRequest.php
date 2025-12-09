@@ -16,11 +16,6 @@ abstract class BaseProposalDocumentRequest extends BaseFormRequest
     {
         return [
             /**
-             * Id of Proposal where document will be attached
-             * @example 1
-             */
-            "proposal_id" => ["required", "integer", "exists:proposal,id"],
-            /**
              * Document file (.pdf, .docx, .doc).
              * Max: 5MB
              */
