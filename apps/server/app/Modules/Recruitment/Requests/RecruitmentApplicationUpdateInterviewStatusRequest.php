@@ -18,27 +18,15 @@ class RecruitmentApplicationUpdateInterviewStatusRequest extends BaseRecruitment
         return [
             /**
              * Status
-             * @example INTERVIEW_PLANNING
+             * @example INTERVIEW_PENDING
              */
             "status" => [
                 "required",
                 Rule::enum(RecruitmentApplicationStatus::class)->only([
-                    RecruitmentApplicationStatus::INTERVIEW_PLANNING,
-                    RecruitmentApplicationStatus::INTERVIEW_SCHEDULED,
+                    RecruitmentApplicationStatus::INTERVIEW_PENDING,
+                    RecruitmentApplicationStatus::INTERVIEW_COMPLETED,
                 ]),
                 new RecruitmentApplicationStatusTransitionsFromRule($this->recruitmentApplication->status),
-            ],
-            /**
-             * Number of interviews (include when status is INTERVIEW_PLANNING)
-             * @example 4
-             * @default 1
-             */
-            "number_of_interviews" => [
-                Rule::excludeIf($this->input("status") !== RecruitmentApplicationStatus::INTERVIEW_PLANNING->value),
-                "required",
-                "integer",
-                "min:1",
-                "max:10",
             ],
         ];
     }
