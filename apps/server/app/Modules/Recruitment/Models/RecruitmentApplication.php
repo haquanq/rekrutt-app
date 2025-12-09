@@ -21,6 +21,16 @@ class RecruitmentApplication extends BaseModel
         "priority" => RecruitmentApplicationPriority::class,
     ];
 
+    public function isCompleted(): bool
+    {
+        return \in_array($this->status, [
+            RecruitmentApplicationStatus::WITHDRAWN,
+            RecruitmentApplicationStatus::DISCARDED,
+            RecruitmentApplicationStatus::OFFER_ACCEPTED,
+            RecruitmentApplicationStatus::OFFER_REJECTED,
+        ]);
+    }
+
     public function scopeCompleted(Builder $query): void
     {
         $query->whereIn("status", [
