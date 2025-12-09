@@ -20,11 +20,11 @@ class InterviewParticipantPolicy
         return true;
     }
 
-    public function create(User $user, Interview $interview): Response
+    public function create(User $user, ?Interview $interview): Response
     {
         if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
             return Response::deny("You are not allowed to create new interview participant");
-        } elseif (!$interview->isCreatedBy($user)) {
+        } elseif ($interview && !$interview->isCreatedBy($user)) {
             return Response::deny("You are not the creator of this interview");
         }
 
