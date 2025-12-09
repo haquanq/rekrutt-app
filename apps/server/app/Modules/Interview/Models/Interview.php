@@ -47,7 +47,7 @@ class Interview extends BaseModel
 
     public function cancelledBy(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "cancelled_by_user_id", "id");
     }
 
     public function evaluations(): HasMany
