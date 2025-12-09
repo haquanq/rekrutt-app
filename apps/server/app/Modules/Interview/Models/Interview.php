@@ -25,6 +25,11 @@ class Interview extends BaseModel
         return $this->created_by_user_id === $user->id;
     }
 
+    public function isCompleted(): bool
+    {
+        return \in_array($this->status, [InterviewStatus::COMPLETED, InterviewStatus::CANCELLED]);
+    }
+
     public function hasParticipant(User $user): bool
     {
         return $this->participants->pluck("participant.id")->contains($user->id);
