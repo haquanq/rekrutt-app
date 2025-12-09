@@ -23,7 +23,7 @@ return [
     | affect the paths of its internal API that aren't exposed to users.
     |
     */
-    "path" => "/scalar",
+    "path" => "/api-reference",
 
     /*
     |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ return [
     | Scalar Galaxy package. You can change this to use a custom OpenAPI file.
     |
     */
-    "url" => config("app.url") . "/docs/api.json",
+    "url" => "./api.json",
 
     /*
     |--------------------------------------------------------------------------
@@ -143,7 +143,7 @@ return [
          *
          * @example '/favicon.svg'
          */
-        "favicon" => "",
+        "favicon" => "/logo.svg",
 
         /**
          * List of httpsnippet clients to hide from the clients menu
