@@ -8,7 +8,6 @@ use Dedoc\Scramble\Support\Generator\Operation;
 use Dedoc\Scramble\Support\Generator\Reference;
 use Dedoc\Scramble\Support\Generator\Schema;
 use Dedoc\Scramble\Support\Generator\Types\Type;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Str;
 
@@ -17,6 +16,7 @@ class ScrambleServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Scramble::configure()
+            ->expose(false)
             ->withDocumentTransformers(function (OpenApi $document) {
                 $this->updateSchemas($document);
             })
