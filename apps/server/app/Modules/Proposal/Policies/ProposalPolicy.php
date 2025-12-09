@@ -32,8 +32,8 @@ class ProposalPolicy
     {
         if (!$user->hasRole(UserRole::MANAGER, UserRole::HIRING_MANAGER)) {
             return Response::deny("You are not allowed to update any proposal.");
-        } elseif ($user->id !== $proposal->created_by_user_id) {
-            return Response::deny("You are not the author of this proposal.");
+        } elseif (!$proposal->isCreatedBy($user)) {
+            return Response::deny("You are not the creator of this proposal.");
         }
 
         return Response::allow();
@@ -43,8 +43,8 @@ class ProposalPolicy
     {
         if (!$user->hasRole(UserRole::MANAGER, UserRole::HIRING_MANAGER)) {
             return Response::deny("You are not allowed to delete any proposal.");
-        } elseif ($user->id !== $proposal->created_by_user_id) {
-            return Response::deny("You are not the author of this proposal.");
+        } elseif (!$proposal->isCreatedBy($user)) {
+            return Response::deny("You are not the creator of this proposal.");
         }
 
         return Response::allow();
@@ -54,8 +54,8 @@ class ProposalPolicy
     {
         if (!$user->hasRole(UserRole::MANAGER, UserRole::HIRING_MANAGER)) {
             return Response::deny("You are not allowed to submit any proposal.");
-        } elseif ($user->id !== $proposal->created_by_user_id) {
-            return Response::deny("You are not the author of this proposal.");
+        } elseif (!$proposal->isCreatedBy($user)) {
+            return Response::deny("You are not the creator of this proposal.");
         }
 
         return Response::allow();
