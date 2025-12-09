@@ -4,6 +4,7 @@ namespace App\Modules\Recruitment\Requests;
 
 use App\Modules\Candidate\Enums\CandidateStatus;
 use App\Modules\Candidate\Rules\CandidateExistsWithStatusRule;
+use App\Modules\Recruitment\Models\Recruitment;
 use App\Modules\Recruitment\Rules\RecruitmentExistsWithStatusRule;
 use App\Modules\Recruitment\Abstracts\BaseRecruitmentApplicationRequest;
 use App\Modules\Recruitment\Enums\RecruitmentApplicationPriority;
@@ -12,9 +13,12 @@ use App\Modules\Recruitment\Enums\RecruitmentStatus;
 use App\Modules\Recruitment\Models\RecruitmentApplication;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class RecruitmentApplicationStoreRequest extends BaseRecruitmentApplicationRequest
 {
+    public ?Recruitment $recruitment = null;
+
     public function rules(): array
     {
         return [
@@ -25,7 +29,9 @@ class RecruitmentApplicationStoreRequest extends BaseRecruitmentApplicationReque
             "recruitment_id" => [
                 "required",
                 "integer:strict",
-                new RecruitmentExistsWithStatusRule(RecruitmentStatus::PUBLISHED),
+                RecruitmentExistsWithStatusRule::create(RecruitmentStatus::PUBLISHED)->withRecruitment(
+                    $this->recruitment,
+                ),
             ],
             /**
              * Id of Candidate to be applied
@@ -55,6 +61,21 @@ class RecruitmentApplicationStoreRequest extends BaseRecruitmentApplicationReque
         ];
     }
 
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator) {
+            if (!$this->recruitment) {
+                return;
+            }
+
+            $candidateId = $this->input("candidate_id");
+
+            if ($this->recruitment->applications()->where("candidate_id", $candidateId)->exists()) {
+                $validator->errors()->add("candidate_id", "Candidate has already applied for this recruitment.");
+            }
+        });
+    }
+
     public function authorize(): bool
     {
         Gate::authorize("create", RecruitmentApplication::class);
@@ -64,6 +85,8 @@ class RecruitmentApplicationStoreRequest extends BaseRecruitmentApplicationReque
     public function prepareForValidation(): void
     {
         parent::prepareForValidation();
+
+        $this->recruitment = Recruitment::find($this->input("recruitment_id"));
 
         $this->merge([
             "status" => RecruitmentApplicationStatus::PENDING->value,
