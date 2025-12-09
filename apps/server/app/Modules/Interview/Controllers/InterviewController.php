@@ -13,8 +13,12 @@ use App\Modules\Interview\Requests\InterviewStoreRequest;
 use App\Modules\Interview\Requests\InterviewUpdateRequest;
 use App\Modules\Interview\Resources\InterviewResource;
 use App\Modules\Interview\Resources\InterviewResourceCollection;
+use App\Modules\Recruitment\Enums\RecruitmentApplicationStatus;
+use App\Modules\Recruitment\Models\RecruitmentApplication;
 use Dedoc\Scramble\Attributes\QueryParameter;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
@@ -232,11 +236,34 @@ class InterviewController extends BaseController
      */
     public function complete(InterviewCompleteRequest $request)
     {
+        Log::info(json_encode($request->interview));
+        if ($request->interview->participants_count != $request->interview->evaluations_count) {
+            throw new ConflictHttpException("Interview is not evaluated by all participants.");
+        }
+
         if ($request->interview->status === InterviewStatus::COMPLETED) {
             throw new ConflictHttpException("Interview is already completed.");
         }
 
-        $request->interview->update($request->validated());
+        DB::transaction(function () use ($request) {
+            $request->interview->update($request->validated());
+
+            $applicationInterviews = Interview::where(
+                "recruitment_application_id",
+                $request->interview->recruitment_application_id,
+            )->get();
+
+            $allInterviewsCompleted = $applicationInterviews->every(function (Interview $interview) {
+                return \in_array($interview->status, [InterviewStatus::COMPLETED, InterviewStatus::CANCELLED]);
+            });
+
+            if ($allInterviewsCompleted) {
+                RecruitmentApplication::where("id", $request->interview->recruitment_application_id)->update([
+                    "status" => RecruitmentApplicationStatus::INTERVIEW_COMPLETED,
+                ]);
+            }
+        });
+
         return $this->noContentResponse();
     }
 }

@@ -7,7 +7,6 @@ use App\Modules\Interview\Enums\InterviewStatus;
 use App\Modules\Interview\Models\Interview;
 use App\Modules\Interview\Rules\InterviewStatusTransitionsFromRule;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
@@ -45,7 +44,7 @@ class InterviewCompleteRequest extends BaseInterviewRequest
     {
         parent::prepareForValidation();
 
-        $this->interview = Interview::findOrFail($this->route("id"));
+        $this->interview = Interview::withCount(["participants", "evaluations"])->findOrFail($this->route("id"));
 
         $this->merge([
             "status" => InterviewStatus::COMPLETED->value,
