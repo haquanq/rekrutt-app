@@ -2,7 +2,9 @@
 
 namespace App\Modules\Interview\Resources;
 
+use App\Modules\Auth\Resources\UserResource;
 use App\Modules\Interview\Resources\InterviewResource;
+use App\Modules\RatingScale\Resources\RatingScalePointResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,8 +18,8 @@ class InterviewEvaluationResource extends JsonResource
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
             "interview" => InterviewResource::make($this->whenLoaded("interview")),
-            "createdBy" => InterviewResource::make($this->whenLoaded("createdBy")),
-            "ratingScalePoint" => InterviewResource::make($this->whenLoaded("ratingScalePoint")),
+            "createdBy" => UserResource::make($this->whenLoaded("createdBy")),
+            "ratingScalePoint" => RatingScalePointResource::make($this->whenLoaded("ratingScalePoint")),
         ];
     }
 }
