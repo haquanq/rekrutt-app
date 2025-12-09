@@ -47,8 +47,8 @@ class InterviewEvaluationController extends BaseController
             name: "include",
             type: "string",
             description: "Include nested relations </br>" .
-                " Allow relations: interview, ratingScalePoint, createdBy </br>" .
-                "Example: include=interview,createdBy,ratingScalePoint",
+                " Allow relations: interview, createdBy </br>" .
+                "Example: include=interview,createdBy",
         ),
     ]
     #[
@@ -65,7 +65,7 @@ class InterviewEvaluationController extends BaseController
         Gate::authorize("viewAny", InterviewEvaluation::class);
 
         $interviewMethods = QueryBuilder::for(InterviewEvaluation::class)
-            ->allowedIncludes(["interviews", "ratingScalePoint", "createdBy"])
+            ->allowedIncludes(["interview", "createdBy"])
             ->allowedFilters([
                 AllowedFilter::exact("createdByUserId", "created_by_user_id"),
                 AllowedFilter::exact("interviewId", "interview_id"),
@@ -88,8 +88,8 @@ class InterviewEvaluationController extends BaseController
             name: "include",
             type: "string",
             description: "Include nested relations </br>" .
-                " Allow relations: interview, ratingScalePoint, createdBy </br>" .
-                "Example: include=interview,createdBy,ratingScalePoint",
+                " Allow relations: interview, createdBy </br>" .
+                "Example: include=interview,createdBy",
         ),
     ]
     public function show(int $id)
@@ -97,7 +97,7 @@ class InterviewEvaluationController extends BaseController
         Gate::authorize("view", InterviewEvaluation::class);
 
         $interviewEvaluation = QueryBuilder::for(InterviewEvaluation::class)
-            ->allowedIncludes(["interviews", "ratingScalePoint", "createdBy"])
+            ->allowedIncludes(["interview", "createdBy"])
             ->findOrFail($id);
 
         return InterviewEvaluationResource::make($interviewEvaluation);
