@@ -10,6 +10,8 @@ class InterviewParticipant extends BaseModel
 {
     protected $guarded = ["id", "created_at", "updated_at"];
 
+    protected $with = ["participant"];
+
     public function interview(): BelongsTo
     {
         return $this->belongsTo(Interview::class);
