@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create("recruitment_application", function (Blueprint $table) {
             $table->bigInteger("id")->generatedAs()->always();
-            $table->integer("number_of_interviews")->nullable();
 
             $table->timestampTZ("withdrawn_at")->nullable();
             $table->string("withdrawn_reason")->nullable();
