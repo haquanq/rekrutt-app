@@ -20,8 +20,8 @@ class InterviewMethodPolicy
 
     public function create(User $user): Response
     {
-        if ($user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to create new interview method");
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to create new interview method");
         }
 
         return Response::allow();
@@ -29,8 +29,8 @@ class InterviewMethodPolicy
 
     public function update(User $user): Response
     {
-        if ($user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to update any interview method");
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to update any interview method");
         }
 
         return Response::allow();
@@ -38,8 +38,8 @@ class InterviewMethodPolicy
 
     public function delete(User $user): Response
     {
-        if ($user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to delete any interview method");
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to delete any interview method");
         }
 
         return Response::allow();

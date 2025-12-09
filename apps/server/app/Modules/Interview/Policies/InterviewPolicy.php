@@ -21,8 +21,8 @@ class InterviewPolicy
 
     public function create(User $user): Response
     {
-        if ($user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to create new interview");
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to create new interview");
         }
 
         return Response::allow();
@@ -30,10 +30,10 @@ class InterviewPolicy
 
     public function update(User $user, Interview $interview): Response
     {
-        if ($user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to update any interview");
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to update any interview");
         } elseif (!$interview->isCreatedBy($user)) {
-            Response::deny("You are not the creator of this interview");
+            return Response::deny("You are not the creator of this interview");
         }
 
         return Response::allow();
@@ -41,10 +41,10 @@ class InterviewPolicy
 
     public function delete(User $user, Interview $interview): Response
     {
-        if ($user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to delete any interview");
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to delete any interview");
         } elseif (!$interview->isCreatedBy($user)) {
-            Response::deny("You are not the creator of this interview");
+            return Response::deny("You are not the creator of this interview");
         }
 
         return Response::allow();
@@ -52,10 +52,10 @@ class InterviewPolicy
 
     public function schedule(User $user, Interview $interview): Response
     {
-        if ($user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to schedule any interview");
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to schedule any interview");
         } elseif (!$interview->isCreatedBy($user)) {
-            Response::deny("You are not the creator of this interview");
+            return Response::deny("You are not the creator of this interview");
         }
 
         return Response::allow();
@@ -63,8 +63,8 @@ class InterviewPolicy
 
     public function cancel(User $user): Response
     {
-        if ($user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to cancel any interview");
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to cancel any interview");
         }
 
         return Response::allow();
@@ -72,8 +72,8 @@ class InterviewPolicy
 
     public function complete(User $user): Response
     {
-        if ($user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to complete any interview");
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to complete any interview");
         }
 
         return Response::allow();

@@ -23,9 +23,9 @@ class InterviewParticipantPolicy
     public function create(User $user, Interview $interview): Response
     {
         if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to create new interview participant");
+            return Response::deny("You are not allowed to create new interview participant");
         } elseif (!$interview->isCreatedBy($user)) {
-            Response::deny("You are not the creator of this interview");
+            return Response::deny("You are not the creator of this interview");
         }
 
         return Response::allow();
@@ -34,9 +34,9 @@ class InterviewParticipantPolicy
     public function update(User $user, InterviewParticipant $interviewParticipant): Response
     {
         if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to update any interview participant");
+            return Response::deny("You are not allowed to update any interview participant");
         } elseif (!$interviewParticipant->interview->isCreatedBy($user)) {
-            Response::deny("You are not the creator of this interview");
+            return Response::deny("You are not the creator of this interview");
         }
 
         return Response::allow();
@@ -45,9 +45,9 @@ class InterviewParticipantPolicy
     public function delete(User $user, InterviewParticipant $interviewParticipant): Response
     {
         if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
-            Response::deny("You are not allowed to delete any interview participant");
+            return Response::deny("You are not allowed to delete any interview participant");
         } elseif (!$interviewParticipant->interview->isCreatedBy($user)) {
-            Response::deny("You are not the creator of this interview");
+            return Response::deny("You are not the creator of this interview");
         }
 
         return Response::allow();
