@@ -5,6 +5,7 @@ namespace App\Modules\Recruitment\Commands;
 use App\Modules\Recruitment\Enums\RecruitmentStatus;
 use App\Modules\Recruitment\Models\Recruitment;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class UpdateCompletedRecruitmentsCommand extends Command
 {
@@ -13,19 +14,14 @@ class UpdateCompletedRecruitmentsCommand extends Command
 
     public function handle(): void
     {
-        $closedRecruitments = Recruitment::withCount([
-            "applications",
-            "applications as completed_applications" => function ($query) {
-                $query->completed();
-            },
-        ])
+        $closedRecruitments = Recruitment::with("applications")
             ->where(["status" => RecruitmentStatus::CLOSED->value])
             ->get();
 
         $completedRecruitmentIds = $closedRecruitments
-            ->filter(function ($recruitment) {
-                return $recruitment->applications_count === $recruitment->completed_applications_count;
-            })
+            ->filter(
+                fn($recruitment) => $recruitment->applications->every(fn($application) => $application->isCompleted()),
+            )
             ->pluck("id")
             ->toArray();
 
@@ -33,6 +29,7 @@ class UpdateCompletedRecruitmentsCommand extends Command
             ->whereIn("id", $completedRecruitmentIds)
             ->update([
                 "status" => RecruitmentStatus::COMPLETED,
+                "completed_at" => Carbon::now(),
             ]);
     }
 }
