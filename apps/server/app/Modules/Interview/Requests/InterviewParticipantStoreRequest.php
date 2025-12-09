@@ -17,19 +17,25 @@ class InterviewParticipantStoreRequest extends BaseInterviewParticipantRequest
     public function rules(): array
     {
         return [
-            ...parent::rules(),
-            ...[
-                /**
-                 * Id of Interview
-                 * @example 1
-                 */
-                "interview_id" => ["required", "integer:strict"],
-                /**
-                 * Id of User
-                 * @example 1
-                 */
-                "user_id" => ["required", "integer:strict"],
+            /**
+             * Note (role of participant)
+             * @example Focus on technical skills
+             */
+            "note" => ["nullable", "string", "max:300"],
+            /**
+             * Id of Interview
+             * @example 1
+             */
+            "interview_id" => [
+                "required",
+                "integer:strict",
+                InterviewExistsWithStatusRule::create(InterviewStatus::DRAFT)->withInterview($this->interview),
             ],
+            /**
+             * Id of User
+             * @example 1
+             */
+            "user_id" => ["required", "integer:strict"],
         ];
     }
 
