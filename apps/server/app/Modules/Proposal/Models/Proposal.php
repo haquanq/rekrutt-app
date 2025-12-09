@@ -22,6 +22,11 @@ class Proposal extends BaseModel
         "status" => ProposalStatus::class,
     ];
 
+    public function isCreatedBy(User $user): bool
+    {
+        return $this->created_by_user_id === $user->id;
+    }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, "created_by_user_id");
