@@ -116,12 +116,6 @@ class InterviewEvaluationController extends BaseController
      */
     public function store(InterviewEvaluationStoreRequest $request)
     {
-        $interviewStatus = $request->interview->status;
-
-        if ($interviewStatus !== InterviewStatus::UNDER_EVALUATION) {
-            throw new ConflictHttpException("Cannot create. " . $interviewStatus->description());
-        }
-
         $createdInterviewEvaluation = InterviewEvaluation::create($request->validated());
         return $this->createdResponse(InterviewEvaluationResource::make($createdInterviewEvaluation));
     }
