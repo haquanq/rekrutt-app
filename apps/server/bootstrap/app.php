@@ -33,9 +33,11 @@ return Application::configure(basePath: dirname(__DIR__))
             }
 
             if ($exception->getPrevious() instanceof ModelNotFoundException) {
+                $modelClass = $exception->getPrevious()->getModel();
+                $modelName = class_basename($modelClass);
                 return response()->json(
                     [
-                        "message" => "Resource not found",
+                        "message" => "The requested {$modelName} was not found.",
                     ],
                     Response::HTTP_NOT_FOUND,
                 );
