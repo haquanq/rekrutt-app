@@ -4,6 +4,7 @@ namespace App\Modules\Department\Policies;
 
 use App\Modules\Auth\Enums\UserRole;
 use App\Modules\Auth\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class DepartmentPolicy
 {
@@ -17,21 +18,30 @@ class DepartmentPolicy
         return true;
     }
 
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        $role = UserRole::tryFrom($user["role"]);
-        return \in_array($role, [UserRole::HIRING_MANAGER, UserRole::RECRUITER]);
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to create new department.");
+        }
+
+        return Response::allow();
     }
 
-    public function update(User $user): bool
+    public function update(User $user): Response
     {
-        $role = UserRole::tryFrom($user["role"]);
-        return \in_array($role, [UserRole::HIRING_MANAGER, UserRole::RECRUITER]);
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to update this department.");
+        }
+
+        return Response::allow();
     }
 
-    public function delete(User $user): bool
+    public function delete(User $user): Response
     {
-        $role = UserRole::tryFrom($user["role"]);
-        return \in_array($role, [UserRole::HIRING_MANAGER, UserRole::RECRUITER]);
+        if (!$user->hasRole(UserRole::HIRING_MANAGER, UserRole::RECRUITER)) {
+            return Response::deny("You are not allowed to delete this department.");
+        }
+
+        return Response::allow();
     }
 }
