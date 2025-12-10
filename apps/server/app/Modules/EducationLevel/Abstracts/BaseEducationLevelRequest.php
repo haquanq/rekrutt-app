@@ -6,11 +6,6 @@ use App\Abstracts\BaseFormRequest;
 
 abstract class BaseEducationLevelRequest extends BaseFormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
@@ -23,7 +18,7 @@ abstract class BaseEducationLevelRequest extends BaseFormRequest
              * Description
              * @example Graduated high school (no further education)
              */
-            "description" => ["string", "max:500"],
+            "description" => ["nullable", "string", "max:500"],
         ];
     }
 }
