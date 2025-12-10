@@ -57,7 +57,7 @@ class ContractTypeController extends BaseController
     /**
      * Find contract type by Id
      *
-     * Return a unique contract type
+     * Return a unique contract type.
      */
     public function show(int $id)
     {
@@ -69,7 +69,12 @@ class ContractTypeController extends BaseController
     /**
      * Create contract type
      *
-     * Return created contract type
+     * Return created contract type.
+     *
+     * Authorization
+     * - User must be hiring manager or recruiter
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(ContractTypeStoreRequest $request)
     {
@@ -81,7 +86,12 @@ class ContractTypeController extends BaseController
     /**
      * Update contract type
      *
-     * Return no content
+     * Return no content.
+     *
+     * Authorization
+     * - User must be hiring manager or recruiter
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(ContractTypeUpdateRequest $request, int $id)
     {
@@ -93,7 +103,12 @@ class ContractTypeController extends BaseController
     /**
      * Delete contract type by Id
      *
-     * Permanently delete contract type. Return no content
+     * Permanently delete contract type. Return no content.
+     *
+     * Authorization
+     * - User must be hiring manager or recruiter
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(int $id)
     {
