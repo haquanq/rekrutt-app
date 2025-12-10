@@ -23,7 +23,7 @@ abstract class BaseDepartmentRequest extends BaseFormRequest
              * Description
              * @example "Research something"
              */
-            "description" => ["string", "max:500"],
+            "description" => ["nullable", "string", "max:500"],
         ];
     }
 }
