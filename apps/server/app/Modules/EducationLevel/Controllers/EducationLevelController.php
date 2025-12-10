@@ -20,9 +20,6 @@ class EducationLevelController extends BaseController
      * Find all education levels
      *
      * Return a list of education levels. Allows pagination and filter query.
-     *
-     * Authorization
-     * - User with roles: any
      */
     #[
         QueryParameter(
@@ -62,9 +59,6 @@ class EducationLevelController extends BaseController
      * Find education level by Id
      *
      * Return a unique education level.
-     *
-     * Authorization
-     * - User with roles: any
      */
     public function show(int $id)
     {
@@ -79,7 +73,7 @@ class EducationLevelController extends BaseController
      * Return created education level.
      *
      * Authorization
-     * - User with roles: HIRING_MANAGER, RECRUITER
+     * - User must be hiring manager or recruiter
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -95,7 +89,7 @@ class EducationLevelController extends BaseController
      * Return no content.
      *
      * Authorization
-     * - User with roles: HIRING_MANAGER, RECRUITER
+     * - User must be hiring manager or recruiter
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -111,7 +105,7 @@ class EducationLevelController extends BaseController
      * Permanently delete education level. Return no content.
      *
      * Authorization
-     * - User with roles: HIRING_MANAGER, RECRUITER
+     * - User must be hiring manager or recruiter
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
