@@ -20,9 +20,6 @@ class DepartmentController extends BaseController
      * Find all departments
      *
      * Return a list of departments. Allows pagination, relations and filter query.
-     *
-     * Authorization
-     * - User with roles: any
      */
     #[
         QueryParameter(
@@ -72,9 +69,6 @@ class DepartmentController extends BaseController
      * Find department by Id
      *
      * Return a unique department. Allows relations query.
-     *
-     * Authorization
-     * - User with roles: any
      */
     #[
         QueryParameter(
@@ -102,7 +96,7 @@ class DepartmentController extends BaseController
      * Return created department.
      *
      * Authorization
-     * - User with roles: HIRING_MANAGER, RECRUITER
+     * - User must be hiring manager or recruiter
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -118,7 +112,7 @@ class DepartmentController extends BaseController
      * Return no content.
      *
      * Authorization
-     * - User with roles: HIRING_MANAGER, RECRUITER
+     * - User must be hiring manager or recruiter
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -134,7 +128,7 @@ class DepartmentController extends BaseController
      * Permanently delete department. Return no content.
      *
      * Authorization
-     * - User with roles: HIRING_MANAGER, RECRUITER
+     * - User must be hiring manager or recruiter
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
