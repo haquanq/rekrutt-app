@@ -3,13 +3,11 @@
 namespace App\Modules\ExperienceLevel\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
+use App\Modules\ExperienceLevel\Models\ExperienceLevel;
 
 abstract class BaseExperienceLevelRequest extends BaseFormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
+    protected ?ExperienceLevel $experienceLevel = null;
 
     public function rules(): array
     {
@@ -23,7 +21,16 @@ abstract class BaseExperienceLevelRequest extends BaseFormRequest
              * Description
              * @example Working as a freelancer
              */
-            "description" => ["string", "max:500"],
+            "description" => ["nullable", "string", "max:500"],
         ];
+    }
+
+    public function getExperienceLevelOrFail(): ExperienceLevel
+    {
+        if ($this->experienceLevel === null) {
+            $this->experienceLevel = ExperienceLevel::findOrFail($this->route("id"));
+        }
+
+        return $this->experienceLevel;
     }
 }
