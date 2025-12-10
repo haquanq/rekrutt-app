@@ -3,9 +3,12 @@
 namespace App\Modules\EducationLevel\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
+use App\Modules\EducationLevel\Models\EducationLevel;
 
 abstract class BaseEducationLevelRequest extends BaseFormRequest
 {
+    protected ?EducationLevel $educationLevel = null;
+
     public function rules(): array
     {
         return [
@@ -20,5 +23,14 @@ abstract class BaseEducationLevelRequest extends BaseFormRequest
              */
             "description" => ["nullable", "string", "max:500"],
         ];
+    }
+
+    public function getEducationLevelOrFail(string $param = null): EducationLevel
+    {
+        if ($this->educationLevel === null) {
+            $this->educationLevel = EducationLevel::findOrFail($this->route($param ?? "id"));
+        }
+
+        return $this->educationLevel;
     }
 }
