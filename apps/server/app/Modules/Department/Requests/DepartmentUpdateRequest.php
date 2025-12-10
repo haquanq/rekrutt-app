@@ -3,17 +3,14 @@
 namespace App\Modules\Department\Requests;
 
 use App\Modules\Department\Abstracts\BaseDepartmentRequest;
+use App\Modules\Department\Models\Department;
+use Illuminate\Support\Facades\Gate;
 
 class DepartmentUpdateRequest extends BaseDepartmentRequest
 {
-    public function rules(): array
+    public function authorize(): bool
     {
-        $rules = parent::rules();
-        if ($this->method() == "PATCH") {
-            foreach ($rules as $field => &$fieldRules) {
-                array_splice($fieldRules, 0, \boolval($fieldRules[0] === "required"), "sometimes");
-            }
-        }
-        return array_merge($rules, []);
+        Gate::authorize("update", Department::class);
+        return true;
     }
 }

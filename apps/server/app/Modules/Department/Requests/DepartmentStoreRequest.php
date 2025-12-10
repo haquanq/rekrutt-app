@@ -3,11 +3,14 @@
 namespace App\Modules\Department\Requests;
 
 use App\Modules\Department\Abstracts\BaseDepartmentRequest;
+use App\Modules\Department\Models\Department;
+use Illuminate\Support\Facades\Gate;
 
 class DepartmentStoreRequest extends BaseDepartmentRequest
 {
-    public function rules(): array
+    public function authorize(): bool
     {
-        return array_merge(parent::rules(), []);
+        Gate::authorize("create", Department::class);
+        return true;
     }
 }

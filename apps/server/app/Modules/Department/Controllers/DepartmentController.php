@@ -96,9 +96,8 @@ class DepartmentController extends BaseController
      */
     public function store(DepartmentStoreRequest $request)
     {
-        Gate::authorize("create", Department::class);
-        $department = Department::create($request->validated());
-        return $this->createdResponse(new DepartmentResource($department));
+        $createdDepartment = Department::create($request->validated());
+        return $this->createdResponse(DepartmentResource::make($createdDepartment));
     }
 
     /**
@@ -106,10 +105,9 @@ class DepartmentController extends BaseController
      *
      * Return no content
      */
-    public function update(DepartmentUpdateRequest $request, int $id)
+    public function update(DepartmentUpdateRequest $request)
     {
-        Gate::authorize("update", Department::class);
-        Department::findOrFail($id)->update($request->validated());
+        $request->getDepartment()->update($request->validated());
         return $this->noContentResponse();
     }
 
