@@ -10,6 +10,7 @@ use Carbon\Carbon;
 class CandidateFactory extends Factory
 {
     protected $model = Candidate::class;
+
     public function definition(): array
     {
         return [
@@ -19,7 +20,7 @@ class CandidateFactory extends Factory
             "address" => fake()->address(),
             "email" => fake()->unique()->safeEmail(),
             "phone_number" => fake()->unique()->numerify("##########"),
-            "status" => CandidateStatus::PENDING,
+            "status" => CandidateStatus::READY->value,
             "hiring_source_id" => random_int(1, 9),
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now(),
