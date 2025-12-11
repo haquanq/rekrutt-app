@@ -3,6 +3,8 @@
 namespace App\Modules\Recruitment\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\Candidate\Enums\CandidateStatus;
+use App\Modules\Candidate\Models\Candidate;
 use App\Modules\Recruitment\Enums\RecruitmentApplicationStatus;
 use App\Modules\Recruitment\Models\RecruitmentApplication;
 use App\Modules\Recruitment\Requests\RecruitmentApplicationDestroyRequest;
@@ -15,6 +17,7 @@ use App\Modules\Recruitment\Requests\RecruitmentApplicationWithdrawRequest;
 use App\Modules\Recruitment\Resources\RecruitmentApplicationResource;
 use App\Modules\Recruitment\Resources\RecruitmentApplicationResourceCollection;
 use Dedoc\Scramble\Attributes\QueryParameter;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -121,7 +124,12 @@ class RecruitmentApplicationController extends BaseController
      */
     public function store(RecruitmentApplicationStoreRequest $request)
     {
-        $createdRecruitmentApplication = RecruitmentApplication::create($request->validated());
+        $createdRecruitmentApplication = DB::transaction(function () use ($request) {
+            $application = RecruitmentApplication::create($request->validated());
+            Candidate::where("id", $application->candidate_id)->update(["status" => CandidateStatus::APPLYING->value]);
+            return $application;
+        });
+
         return $this->createdResponse(new RecruitmentApplicationResource($createdRecruitmentApplication));
     }
 
