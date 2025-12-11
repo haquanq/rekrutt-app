@@ -5,6 +5,7 @@ namespace App\Modules\Candidate\Controllers;
 use App\Abstracts\BaseController;
 use App\Modules\Candidate\Enums\CandidateStatus;
 use App\Modules\Candidate\Requests\CandidateBlacklistRequest;
+use App\Modules\Candidate\Requests\CandidateIndexRequest;
 use App\Modules\Candidate\Requests\CandidateReactivateRequest;
 use App\Modules\Candidate\Requests\CandidateStoreRequest;
 use App\Modules\Candidate\Requests\CandidateUpdateRequest;
@@ -49,7 +50,7 @@ class CandidateController extends BaseController
             name: "include",
             type: "string",
             description: "Include nested relations </br>" .
-                " Allow relations: hiringSource, experiences, documents </br>" .
+                " Allow relations: hiringSource, experiences, documents, blacklistedBy, reactivatedBy </br>" .
                 "Example: include=hiringSource,experiences",
         ),
     ]
@@ -66,7 +67,7 @@ class CandidateController extends BaseController
     {
         Gate::authorize("viewAny", Candidate::class);
         $candidates = QueryBuilder::for(Candidate::class)
-            ->allowedIncludes(["hiringSource", "experiences", "documents"])
+            ->allowedIncludes(["hiringSource", "experiences", "documents", "blacklistedBy", "reactivatedBy"])
             ->allowedFilters([
                 AllowedFilter::exact("email"),
                 AllowedFilter::exact("phoneNumber", "phone_number"),
@@ -91,7 +92,7 @@ class CandidateController extends BaseController
             name: "include",
             type: "string",
             description: "Include nested relations </br>" .
-                " Allow relations: hiringSource, experiences, documents </br>" .
+                " Allow relations: hiringSource, experiences, documents, blacklistedBy, reactivatedBy </br>" .
                 "Example: include=hiringSource,experiences",
         ),
     ]
@@ -100,7 +101,7 @@ class CandidateController extends BaseController
         Gate::authorize("view", Candidate::class);
 
         $candidate = QueryBuilder::for(Candidate::class)
-            ->allowedIncludes(["hiringSource", "experiences", "documents"])
+            ->allowedIncludes(["hiringSource", "experiences", "documents", "blacklistedBy", "reactivatedBy"])
             ->findOrFail($id);
 
         return CandidateResource::make($candidate);

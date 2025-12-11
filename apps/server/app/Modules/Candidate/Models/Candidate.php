@@ -3,6 +3,7 @@
 namespace App\Modules\Candidate\Models;
 
 use App\Abstracts\BaseModel;
+use App\Modules\Auth\Models\User;
 use App\Modules\Candidate\Enums\CandidateStatus;
 use App\Modules\HiringSource\Models\HiringSource;
 use App\Modules\Recruitment\Models\RecruitmentApplication;
@@ -35,5 +36,15 @@ class Candidate extends BaseModel
     public function applications(): HasMany
     {
         return $this->hasMany(RecruitmentApplication::class);
+    }
+
+    public function blacklistedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "blacklisted_by_user_id");
+    }
+
+    public function reactivatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "reactivated_by_user_id");
     }
 }

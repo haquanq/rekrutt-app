@@ -2,6 +2,7 @@
 
 namespace App\Modules\Candidate\Resources;
 
+use App\Modules\Auth\Resources\UserResource;
 use App\Modules\HiringSource\Resources\HiringSourceResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -19,6 +20,14 @@ class CandidateResource extends JsonResource
             "phone_number" => $this->phone_number,
             "address" => $this->address,
             "status" => $this->status,
+            "employed_at" => $this->employed_at,
+            "archived_at" => $this->archived_at,
+            "blacklisted_at" => $this->blacklisted_at,
+            "blacklisted_reason" => $this->blacklisted_reason,
+            "blacklisted_by" => UserResource::make($this->whenLoaded("blacklistedBy")),
+            "reactivated_at" => $this->reactivated_at,
+            "reactivated_reason" => $this->reactivated_reason,
+            "reactivated_by" => UserResource::make($this->whenLoaded("reactivatedBy")),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
             "hiringSource" => new HiringSourceResource($this->whenLoaded("hiringSource")),
