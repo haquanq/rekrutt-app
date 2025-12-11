@@ -124,7 +124,7 @@ class RatingScaleController extends BaseController
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(RatingScaleUpdateRequest $request, int $id)
+    public function update(RatingScaleUpdateRequest $request)
     {
         $request->getRatingScaleOrFail()->update($request->validated());
         return $this->noContentResponse();
