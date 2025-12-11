@@ -132,11 +132,13 @@ class CandidateController extends BaseController
      */
     public function update(CandidateUpdateRequest $request)
     {
-        if ($request->candidate->status !== CandidateStatus::PROCESSING) {
-            throw new ConflictHttpException("Cannot update. " . $request->candidate->status->description());
+        $candidate = $request->getCandidateOrFail();
+
+        if ($candidate->status !== CandidateStatus::PENDING) {
+            throw new ConflictHttpException("Cannot update. " . $candidate->status->description());
         }
 
-        $request->candidate->update($request->validated());
+        $candidate->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -152,11 +154,13 @@ class CandidateController extends BaseController
      */
     public function destroy(CandidateDestroyRequest $request)
     {
-        if ($request->candidate->status !== CandidateStatus::PROCESSING) {
-            throw new ConflictHttpException("Cannot delete. " . $request->candidate->status->description());
+        $candidate = $request->getCandidateOrFail();
+
+        if ($candidate->status !== CandidateStatus::PENDING) {
+            throw new ConflictHttpException("Cannot delete. " . $candidate->status->description());
         }
 
-        $request->candidate->delete();
+        $candidate->delete();
         return $this->noContentResponse();
     }
 }

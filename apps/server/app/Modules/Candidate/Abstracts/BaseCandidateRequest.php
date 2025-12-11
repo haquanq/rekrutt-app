@@ -3,11 +3,23 @@
 namespace App\Modules\Candidate\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
+use App\Modules\Candidate\Models\Candidate;
 use App\Rules\PhoneNumberRule;
 use Illuminate\Validation\Rule;
 
 abstract class BaseCandidateRequest extends BaseFormRequest
 {
+    protected ?Candidate $candidate = null;
+
+    public function getCandidateOrFail(string $param = "id"): Candidate
+    {
+        if ($this->candidate === null) {
+            $this->candidate = Candidate::findOrFail($this->route($param));
+        }
+
+        return $this->candidate;
+    }
+
     public function rules(): array
     {
         return [
