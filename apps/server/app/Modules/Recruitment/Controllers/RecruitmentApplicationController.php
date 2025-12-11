@@ -145,6 +145,10 @@ class RecruitmentApplicationController extends BaseController
      */
     public function destroy(RecruitmentApplicationDestroyRequest $request)
     {
+        if ($request->recruitmentApplication->status !== RecruitmentApplicationStatus::PENDING->value) {
+            throw new ConflictHttpException("Cannot delete. Recruitment application is processed.");
+        }
+
         $request->recruitmentApplication->delete();
         return $this->noContentResponse();
     }
