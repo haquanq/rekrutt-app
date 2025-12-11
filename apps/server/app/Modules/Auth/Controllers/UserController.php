@@ -3,6 +3,7 @@
 namespace App\Modules\Auth\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\Auth\Enums\UserStatus;
 use App\Modules\Auth\Requests\UserReactivateRequest;
 use App\Modules\Auth\Requests\UserDestroyRequest;
 use App\Modules\Auth\Requests\UserRetireRequest;
@@ -17,6 +18,7 @@ use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 #[Group(weight: 1)]
 class UserController extends BaseController
@@ -129,7 +131,13 @@ class UserController extends BaseController
      */
     public function update(UserUpdateRequest $request)
     {
-        $request->getQueriedUserOrFail()->update($request->validated());
+        $user = $request->getQueriedUserOrFail();
+
+        if ($user->status !== UserStatus::ACTIVE) {
+            throw new ConflictHttpException("Cannot update. " . $user->status->description());
+        }
+
+        $user->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -145,7 +153,13 @@ class UserController extends BaseController
      */
     public function suspend(UserSuspendRequest $request)
     {
-        $request->getQueriedUserOrFail()->update($request->validated());
+        $user = $request->getQueriedUserOrFail();
+
+        if ($user->status === UserStatus::SUSPENDED) {
+            throw new ConflictHttpException("Cannot suspend. User is already suspended.");
+        }
+
+        $user->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -161,7 +175,13 @@ class UserController extends BaseController
      */
     public function retire(UserRetireRequest $request)
     {
-        $request->getQueriedUserOrFail()->update($request->validated());
+        $user = $request->getQueriedUserOrFail();
+
+        if ($user->status === UserStatus::RETIRED) {
+            throw new ConflictHttpException("Cannot retire. User is already retired.");
+        }
+
+        $user->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -177,7 +197,13 @@ class UserController extends BaseController
      */
     public function reactivate(UserReactivateRequest $request)
     {
-        $request->getQueriedUserOrFail()->update($request->validated());
+        $user = $request->getQueriedUserOrFail();
+
+        if ($user->status === UserStatus::ACTIVE) {
+            throw new ConflictHttpException("Cannot reactivate. User is already active.");
+        }
+
+        $user->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -193,7 +219,13 @@ class UserController extends BaseController
      */
     public function destroy(UserDestroyRequest $request)
     {
-        $request->getQueriedUserOrFail()->delete();
+        $user = $request->getQueriedUserOrFail();
+
+        if ($user->status !== UserStatus::ACTIVE) {
+            throw new ConflictHttpException("Cannot delete. " . $user->status->description());
+        }
+
+        $user->delete();
         return $this->noContentResponse();
     }
 }
