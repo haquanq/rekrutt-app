@@ -10,8 +10,6 @@ abstract class BaseCandidateRequest extends BaseFormRequest
 {
     public function rules(): array
     {
-        $id = \intval($this->route("id"));
-
         return [
             /**
              * First name
@@ -37,7 +35,7 @@ abstract class BaseCandidateRequest extends BaseFormRequest
              * Email address
              * @example lamar.xander2@outlook.com
              */
-            "email" => ["required", "email", Rule::unique("candidate", "email")->ignore($id)],
+            "email" => ["required", "email", Rule::unique("candidate")->ignore($this->route("id"))],
             /**
              * Phone number
              * @example 123-456-7890
@@ -45,7 +43,7 @@ abstract class BaseCandidateRequest extends BaseFormRequest
             "phone_number" => [
                 "required",
                 new PhoneNumberRule(),
-                Rule::unique("candidate", "phone_number")->ignore($id),
+                Rule::unique("candidate")->ignore($this->route("id")),
             ],
             /**
              * Id of HiringSource where candidate originated
