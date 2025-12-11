@@ -3,6 +3,7 @@
 namespace App\Modules\RatingScale\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\RatingScale\Requests\RatingScalePointDestroyRequest;
 use App\Modules\RatingScale\Requests\RatingScalePointStoreRequest;
 use App\Modules\RatingScale\Requests\RatingScalePointUpdateRequest;
 use App\Modules\RatingScale\Models\RatingScalePoint;
@@ -107,7 +108,6 @@ class RatingScalePointController extends BaseController
      */
     public function store(RatingScalePointStoreRequest $request)
     {
-        Gate::authorize("create", RatingScalePoint::class);
         $createdRatingScalePoint = RatingScalePoint::create($request->validated());
         return $this->createdResponse(new RatingScalePointResource($createdRatingScalePoint));
     }
@@ -122,10 +122,9 @@ class RatingScalePointController extends BaseController
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(RatingScalePointUpdateRequest $request, int $id)
+    public function update(RatingScalePointUpdateRequest $request)
     {
-        Gate::authorize("update", RatingScalePoint::class);
-        RatingScalePoint::findOrFail($id)->update($request->validated());
+        $request->getRatingScalePointOrFail()->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -139,10 +138,9 @@ class RatingScalePointController extends BaseController
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(int $id)
+    public function destroy(RatingScalePointDestroyRequest $request)
     {
-        Gate::authorize("delete", RatingScalePoint::class);
-        RatingScalePoint::findOrFail($id)->delete();
+        $request->getRatingScalePointOrFail()->delete();
         return $this->noContentResponse();
     }
 }

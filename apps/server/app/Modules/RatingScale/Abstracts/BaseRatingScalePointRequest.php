@@ -3,12 +3,21 @@
 namespace App\Modules\RatingScale\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
+use App\Modules\RatingScale\Models\RatingScalePoint;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Validation\Rule;
 
 abstract class BaseRatingScalePointRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected ?RatingScalePoint $ratingScalePoint = null;
+
+    public function getRatingScalePointOrFail(string $param = "id"): RatingScalePoint
     {
-        return true;
+        if ($this->ratingScalePoint === null) {
+            $this->ratingScalePoint = RatingScalePoint::findOrFail($this->route($param));
+        }
+
+        return $this->ratingScalePoint;
     }
 
     public function rules(): array
@@ -23,7 +32,15 @@ abstract class BaseRatingScalePointRequest extends BaseFormRequest
              * Label
              * @example 9 - Pretty good
              */
-            "label" => ["required", "string", "max:100"],
+            "label" => [
+                "bail",
+                "required",
+                "string",
+                "max:100",
+                Rule::unique("rating_scale_point")->where(function (Builder $query) {
+                    return $query->where("rating_scale_id", $this->input("rating_scale_id"));
+                }),
+            ],
             /**
              * Description
              * @example Candidate scored 9 out of 10
@@ -33,7 +50,14 @@ abstract class BaseRatingScalePointRequest extends BaseFormRequest
              * Rating scale Id of which this rating scale point belongs
              * @example 1
              */
-            "rating_scale_id" => ["required", "integer", "exists:rating_scale,id"],
+            "rating_scale_id" => ["bail", "required", "integer:strict", Rule::exists("rating_scale", "id")],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            "label.unique" => "A rating scale point with this label already exists for this rating scale.",
         ];
     }
 }
