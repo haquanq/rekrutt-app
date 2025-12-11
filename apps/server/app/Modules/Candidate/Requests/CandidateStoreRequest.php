@@ -26,4 +26,11 @@ class CandidateStoreRequest extends BaseCandidateRequest
         Gate::authorize("create", Candidate::class);
         return true;
     }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            "status" => CandidateStatus::PENDING->value,
+        ]);
+    }
 }
