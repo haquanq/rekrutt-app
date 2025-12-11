@@ -9,7 +9,7 @@ use App\Modules\Auth\Rules\UserStatusTransitionsFromRule;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
-class UserActivateRequest extends BaseUserRequest
+class UserReactivateRequest extends BaseUserRequest
 {
     public User $user;
 

@@ -3,7 +3,7 @@
 namespace App\Modules\Auth\Controllers;
 
 use App\Abstracts\BaseController;
-use App\Modules\Auth\Requests\UserActivateRequest;
+use App\Modules\Auth\Requests\UserReactivateRequest;
 use App\Modules\Auth\Requests\UserDestroyRequest;
 use App\Modules\Auth\Requests\UserRetireRequest;
 use App\Modules\Auth\Requests\UserStoreRequest;
@@ -166,7 +166,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Re-activate user
+     * Reactivate user
      *
      * Return no content.
      *
@@ -175,7 +175,7 @@ class UserController extends BaseController
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function activate(UserActivateRequest $request)
+    public function reactivate(UserReactivateRequest $request)
     {
         $request->user->update($request->validated());
         return $this->noContentResponse();
