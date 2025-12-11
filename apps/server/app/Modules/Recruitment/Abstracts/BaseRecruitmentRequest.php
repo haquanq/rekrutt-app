@@ -3,9 +3,21 @@
 namespace App\Modules\Recruitment\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
+use App\Modules\Recruitment\Models\Recruitment;
 
 abstract class BaseRecruitmentRequest extends BaseFormRequest
 {
+    protected ?Recruitment $recruitment = null;
+
+    public function getRecruitmentOrFail(string $param = "id"): Recruitment
+    {
+        if ($this->recruitment === null) {
+            $this->recruitment = Recruitment::findOrFail($this->route($param));
+        }
+
+        return $this->recruitment;
+    }
+
     public function rules(): array
     {
         return [

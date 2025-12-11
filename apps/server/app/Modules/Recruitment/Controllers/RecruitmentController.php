@@ -136,15 +136,15 @@ class RecruitmentController extends BaseController
      */
     public function update(RecruitmentUpdateRequest $request, int $id)
     {
+        $recruitment = $request->getRecruitmentOrFail();
+
         if (
-            Collection::make([RecruitmentStatus::DRAFT, RecruitmentStatus::SCHEDULED])->has(
-                $request->recruitment->status,
-            )
+            !Collection::make([RecruitmentStatus::DRAFT, RecruitmentStatus::SCHEDULED])->contains($recruitment->status)
         ) {
-            throw new ConflictHttpException("Cannot update. " . $request->recruitment->status->description());
+            throw new ConflictHttpException("Cannot update. " . $recruitment->status->description());
         }
 
-        $request->recruitment->update($request->validated());
+        $recruitment->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -161,15 +161,13 @@ class RecruitmentController extends BaseController
      */
     public function destroy(RecruitmentDestroyRequest $request)
     {
-        if (
-            Collection::make([RecruitmentStatus::DRAFT, RecruitmentStatus::SCHEDULED])->has(
-                $request->recruitment->status,
-            )
-        ) {
-            throw new ConflictHttpException("Cannot delete. " . $request->recruitment->status->description());
+        $recruitment = $request->getRecruitmentOrFail();
+
+        if ($recruitment->status !== RecruitmentStatus::DRAFT) {
+            throw new ConflictHttpException("Cannot delete. " . $recruitment->status->description());
         }
 
-        $request->recruitment->delete();
+        $recruitment->delete();
         return $this->noContentResponse();
     }
 
@@ -186,11 +184,13 @@ class RecruitmentController extends BaseController
      */
     public function schedule(RecruitmentScheduleRequest $request)
     {
-        if ($request->recruitment->status === RecruitmentStatus::SCHEDULED) {
+        $recruitment = $request->getRecruitmentOrFail();
+
+        if ($recruitment->status === RecruitmentStatus::SCHEDULED) {
             throw new ConflictHttpException("Recruitment is already scheduled.");
         }
 
-        $request->recruitment->update($request->validated());
+        $recruitment->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -207,11 +207,13 @@ class RecruitmentController extends BaseController
      */
     public function publish(RecruitmentPublishRequest $request)
     {
-        if ($request->recruitment->status === RecruitmentStatus::PUBLISHED) {
+        $recruitment = $request->getRecruitmentOrFail();
+
+        if ($recruitment->status === RecruitmentStatus::PUBLISHED) {
             throw new ConflictHttpException("Recruitment is already published.");
         }
 
-        $request->recruitment->update($request->validated());
+        $recruitment->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -227,11 +229,13 @@ class RecruitmentController extends BaseController
      */
     public function close(RecruitmentCloseRequest $request)
     {
-        if ($request->recruitment->status === RecruitmentStatus::CLOSED) {
+        $recruitment = $request->getRecruitmentOrFail();
+
+        if ($recruitment->status === RecruitmentStatus::CLOSED) {
             throw new ConflictHttpException("Recruitment is already closed.");
         }
 
-        $request->recruitment->update($request->validated());
+        $recruitment->update($request->validated());
         return $this->noContentResponse();
     }
 }

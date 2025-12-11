@@ -4,7 +4,6 @@ namespace App\Modules\Recruitment\Requests;
 
 use App\Modules\Recruitment\Abstracts\BaseRecruitmentRequest;
 use App\Modules\Recruitment\Enums\RecruitmentStatus;
-use App\Modules\Recruitment\Models\Recruitment;
 use App\Modules\Recruitment\Rules\RecruitmentStatusTransitionsFromRule;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
@@ -12,8 +11,6 @@ use Illuminate\Validation\Rule;
 
 class RecruitmentScheduleRequest extends BaseRecruitmentRequest
 {
-    public Recruitment $recruitment;
-
     public function rules(): array
     {
         return [
@@ -22,9 +19,10 @@ class RecruitmentScheduleRequest extends BaseRecruitmentRequest
              * @ignoreParam
              */
             "status" => [
+                "bail",
                 "required",
                 Rule::enum(RecruitmentStatus::class)->only(RecruitmentStatus::SCHEDULED),
-                new RecruitmentStatusTransitionsFromRule($this->recruitment->status),
+                new RecruitmentStatusTransitionsFromRule($this->getRecruitmentOrFail()->status),
             ],
             /**
              * Scheduled start time
@@ -41,15 +39,13 @@ class RecruitmentScheduleRequest extends BaseRecruitmentRequest
 
     public function authorize(): bool
     {
-        Gate::authorize("schedule", $this->recruitment);
+        Gate::authorize("schedule", $this->getRecruitmentOrFail());
         return true;
     }
 
     public function prepareForValidation(): void
     {
         parent::prepareForValidation();
-
-        $this->recruitment = Recruitment::findOrFail($this->route("id"));
 
         $this->merge([
             "status" => RecruitmentStatus::SCHEDULED->value,

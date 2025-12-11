@@ -32,7 +32,12 @@ class RecruitmentStoreRequest extends BaseRecruitmentRequest
                  * Id of proposal for this recruitment
                  * @example 1
                  */
-                "proposal_id" => ["required", "integer", new ProposalExistsWithStatusRule(ProposalStatus::APPROVED)],
+                "proposal_id" => [
+                    "bail",
+                    "required",
+                    "integer",
+                    new ProposalExistsWithStatusRule(ProposalStatus::APPROVED),
+                ],
             ],
         ];
     }
