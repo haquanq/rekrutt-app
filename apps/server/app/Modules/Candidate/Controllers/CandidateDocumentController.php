@@ -147,13 +147,14 @@ class CandidateDocumentController extends BaseController
      */
     public function update(CandidateDocumentUpdateRequest $request)
     {
-        $candidateStatus = $request->candidateExperience->candidate->status;
+        $candidateDocument = $request->getCandidateDocumentOrFail();
+        $candidate = $candidateDocument->candidate;
 
-        if ($candidateStatus !== CandidateStatus::PENDING) {
-            throw new ConflictHttpException("Cannot update. " . $candidateStatus->description());
+        if ($candidate->status !== CandidateStatus::PENDING) {
+            throw new ConflictHttpException("Cannot update. " . $candidate->status->description());
         }
 
-        $request->candidateDocument->update($request->validated());
+        $candidateDocument->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -169,13 +170,14 @@ class CandidateDocumentController extends BaseController
      */
     public function destroy(CandidateDocumentDestroyRequest $request)
     {
-        $candidateStatus = $request->candidateExperience->candidate->status;
+        $candidateDocument = $request->getCandidateDocumentOrFail();
+        $candidate = $candidateDocument->candidate;
 
-        if ($candidateStatus !== CandidateStatus::PENDING) {
-            throw new ConflictHttpException("Cannot delete. " . $candidateStatus->description());
+        if ($candidate->status !== CandidateStatus::PENDING) {
+            throw new ConflictHttpException("Cannot delete. " . $candidate->status->description());
         }
 
-        $request->candidateDocument->delete();
+        $candidateDocument->delete();
         return $this->noContentResponse();
     }
 }

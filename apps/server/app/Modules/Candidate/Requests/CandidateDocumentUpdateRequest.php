@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Gate;
 
 class CandidateDocumentUpdateRequest extends BaseCandidateDocumentRequest
 {
-    public CandidateDocument $candidateDocument;
-
     public function rules(): array
     {
         $rules = parent::rules();
@@ -21,11 +19,5 @@ class CandidateDocumentUpdateRequest extends BaseCandidateDocumentRequest
     {
         Gate::authorize("update", CandidateDocument::class);
         return true;
-    }
-
-    public function prepareForValidation(): void
-    {
-        parent::prepareForValidation();
-        $this->candidateDocument = CandidateDocument::with("candidate")->findOrFail($this->route("id"));
     }
 }
