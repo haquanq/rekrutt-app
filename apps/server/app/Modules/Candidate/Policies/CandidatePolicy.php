@@ -44,4 +44,22 @@ class CandidatePolicy
 
         return Response::allow();
     }
+
+    public function blacklist(User $user): Response
+    {
+        if (!$user->hasRole(UserRole::HIRING_MANAGER)) {
+            return Response::deny("You are not allowed to blacklist any candidate.");
+        }
+
+        return Response::allow();
+    }
+
+    public function reactivate(User $user): Response
+    {
+        if (!$user->hasRole(UserRole::HIRING_MANAGER)) {
+            return Response::deny("You are not allowed to reactivate any candidate.");
+        }
+
+        return Response::allow();
+    }
 }

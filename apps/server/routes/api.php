@@ -139,6 +139,8 @@ Route::middleware("protected")->group(function () {
             Route::post("", "store");
             Route::put("/{id}", "update");
             Route::delete("/{id}", "destroy");
+            Route::post("/{id}/blacklist", "blacklist");
+            Route::post("/{id}/reactivate", "reactivate");
         });
 
     Route::prefix("candidate-documents")

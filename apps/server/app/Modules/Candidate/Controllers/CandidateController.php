@@ -4,6 +4,8 @@ namespace App\Modules\Candidate\Controllers;
 
 use App\Abstracts\BaseController;
 use App\Modules\Candidate\Enums\CandidateStatus;
+use App\Modules\Candidate\Requests\CandidateBlacklistRequest;
+use App\Modules\Candidate\Requests\CandidateReactivateRequest;
 use App\Modules\Candidate\Requests\CandidateStoreRequest;
 use App\Modules\Candidate\Requests\CandidateUpdateRequest;
 use App\Modules\Candidate\Models\Candidate;
@@ -161,6 +163,50 @@ class CandidateController extends BaseController
         }
 
         $candidate->delete();
+        return $this->noContentResponse();
+    }
+
+    /**
+     * Blacklist candidate
+     *
+     * Return no content.
+     *
+     * Authorization
+     * - User must be hiring manager.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function blacklist(CandidateBlacklistRequest $request)
+    {
+        $candidate = $request->getCandidateOrFail();
+
+        if ($candidate->status === CandidateStatus::BLACKLISTED) {
+            throw new ConflictHttpException("Cannot blacklist. Candidate is already blacklisted.");
+        }
+
+        $candidate->update($request->validated());
+        return $this->noContentResponse();
+    }
+
+    /**
+     * Reactivate candidate
+     *
+     * Return no content.
+     *
+     * Authorization
+     * - User must be hiring manager.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function reactivate(CandidateReactivateRequest $request)
+    {
+        $candidate = $request->getCandidateOrFail();
+
+        if ($candidate->status === CandidateStatus::READY) {
+            throw new ConflictHttpException("Cannot reactivate. Candidate is already active.");
+        }
+
+        $candidate->update($request->validated());
         return $this->noContentResponse();
     }
 }
