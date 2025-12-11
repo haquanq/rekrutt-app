@@ -19,7 +19,7 @@ class CandidateDocumentStoreRequest extends BaseCandidateDocumentRequest
                  * Id of Candidate
                  * @example 1
                  */
-                "candidate_id" => ["required", "integer", new CandidateExistsWithStatusRule(CandidateStatus::PENDING)],
+                "candidate_id" => ["required", "integer", new CandidateExistsWithStatusRule(CandidateStatus::READY)],
             ],
         ];
     }

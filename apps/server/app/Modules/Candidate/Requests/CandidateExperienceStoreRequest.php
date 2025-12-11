@@ -22,7 +22,7 @@ class CandidateExperienceStoreRequest extends BaseCandidateExperienceRequest
                 "candidate_id" => [
                     "required",
                     "integer:strict",
-                    new CandidateExistsWithStatusRule(CandidateStatus::PENDING),
+                    new CandidateExistsWithStatusRule(CandidateStatus::READY),
                 ],
             ],
         ];

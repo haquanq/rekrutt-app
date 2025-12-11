@@ -143,7 +143,7 @@ class CandidateDocumentController extends BaseController
         $candidateDocument = $request->getCandidateDocumentOrFail();
         $candidate = $candidateDocument->candidate;
 
-        if ($candidate->status !== CandidateStatus::PENDING) {
+        if ($candidate->status !== CandidateStatus::READY) {
             throw new ConflictHttpException("Cannot update. " . $candidate->status->description());
         }
 
@@ -166,7 +166,7 @@ class CandidateDocumentController extends BaseController
         $candidateDocument = $request->getCandidateDocumentOrFail();
         $candidate = $candidateDocument->candidate;
 
-        if ($candidate->status !== CandidateStatus::PENDING) {
+        if ($candidate->status !== CandidateStatus::READY) {
             throw new ConflictHttpException("Cannot delete. " . $candidate->status->description());
         }
 

@@ -134,7 +134,7 @@ class CandidateController extends BaseController
     {
         $candidate = $request->getCandidateOrFail();
 
-        if ($candidate->status !== CandidateStatus::PENDING) {
+        if ($candidate->status !== CandidateStatus::READY) {
             throw new ConflictHttpException("Cannot update. " . $candidate->status->description());
         }
 
@@ -156,7 +156,7 @@ class CandidateController extends BaseController
     {
         $candidate = $request->getCandidateOrFail();
 
-        if ($candidate->status !== CandidateStatus::PENDING) {
+        if ($candidate->status !== CandidateStatus::READY) {
             throw new ConflictHttpException("Cannot delete. " . $candidate->status->description());
         }
 

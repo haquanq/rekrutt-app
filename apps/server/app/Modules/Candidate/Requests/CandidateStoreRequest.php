@@ -17,7 +17,7 @@ class CandidateStoreRequest extends BaseCandidateRequest
              * Initial status (generated automatically)
              * @ignoreParam
              */
-            "status" => ["required", Rule::enum(CandidateStatus::class)->only(CandidateStatus::PENDING)],
+            "status" => ["required", Rule::enum(CandidateStatus::class)->only(CandidateStatus::READY)],
         ];
     }
 
@@ -30,7 +30,7 @@ class CandidateStoreRequest extends BaseCandidateRequest
     public function prepareForValidation(): void
     {
         $this->merge([
-            "status" => CandidateStatus::PENDING->value,
+            "status" => CandidateStatus::READY->value,
         ]);
     }
 }

@@ -4,8 +4,8 @@ namespace App\Modules\Candidate\Enums;
 
 enum CandidateStatus: string
 {
-    case PENDING = "PENDING";
-    case PROCESSING = "PROCESSING";
+    case READY = "READY";
+    case APPLYING = "APPLYING";
     case EMPLOYED = "EMPLOYED";
     case ARCHIVED = "ARCHIVED";
     case BLACKLISTED = "BLACKLISTED";
@@ -13,11 +13,11 @@ enum CandidateStatus: string
     public function description(): string
     {
         return match ($this) {
-            self::PENDING => "Candidate is ready",
-            self::PROCESSING => "Candidate is being processed",
-            self::EMPLOYED => "Candidate is employed",
-            self::ARCHIVED => "Candidate is archived",
-            self::BLACKLISTED => "Candidate is blacklisted",
+            self::READY => "Candidate is ready.",
+            self::APPLYING => "Candidate is applying.",
+            self::EMPLOYED => "Candidate is employed.",
+            self::ARCHIVED => "Candidate is archived.",
+            self::BLACKLISTED => "Candidate is blacklisted.",
         };
     }
 }
