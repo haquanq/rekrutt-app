@@ -10,6 +10,7 @@ use App\Modules\RatingScale\Resources\RatingScaleResource;
 use App\Modules\Recruitment\Models\RecruitmentApplication;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Log;
 
 class Interview extends BaseModel
@@ -28,6 +29,11 @@ class Interview extends BaseModel
     public function isCompleted(): bool
     {
         return \in_array($this->status, [InterviewStatus::COMPLETED, InterviewStatus::CANCELLED]);
+    }
+
+    public function scopeCompleted(Builder $query): void
+    {
+        $query->whereIn("status", [InterviewStatus::COMPLETED->value, InterviewStatus::CANCELLED->value]);
     }
 
     public function hasParticipant(User $user): bool
