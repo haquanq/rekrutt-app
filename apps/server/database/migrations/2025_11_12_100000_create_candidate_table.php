@@ -18,12 +18,21 @@ return new class extends Migration {
             $table->string("email", 256);
             $table->string("phone_number", 15);
             $table->enum("status", CandidateStatus::cases())->default(CandidateStatus::READY->value);
-            $table->timestampsTZ();
+
+            $table->timestampTZ("archived_at")->nullable();
+            $table->timestampTZ("employed_at")->nullable();
+            $table->timestampTZ("blacklisted_at")->nullable();
+            $table->string("blacklisted_reason", 500)->nullable();
+            $table
+                ->foreignId("blacklisted_by_user_id")
+                ->nullable()
+                ->constrained(table: "user", indexName: "fk_candidate__blacklisted_by_user");
 
             $table
                 ->foreignId("hiring_source_id")
                 ->constrained(table: "hiring_source", indexName: "fk_candidate__hiring_source");
 
+            $table->timestampsTZ();
             $table->unique(columns: ["email"], name: "uq_candidate__email");
             $table->unique(columns: ["phone_number"], name: "uq_candidate__phone_number");
         });
