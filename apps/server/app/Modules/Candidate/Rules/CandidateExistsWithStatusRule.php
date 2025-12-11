@@ -18,7 +18,7 @@ class CandidateExistsWithStatusRule implements ValidationRule
         if ($candidate === null) {
             $fail("Candidate does not exist.");
         } elseif ($candidate->status !== $this->requiredStatus) {
-            $fail("Recruitment must have status of {$this->requiredStatus->value}.");
+            $fail("Candidate must have status of {$this->requiredStatus->value}.");
         }
     }
 }
