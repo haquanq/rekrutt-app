@@ -23,29 +23,16 @@ class RecruitmentStatusTransitionsFromRule implements ValidationRule
             return;
         }
 
-        $isDraft = $this->oldStatus === RecruitmentStatus::DRAFT;
-        $isPublished = $this->oldStatus === RecruitmentStatus::PUBLISHED;
-        $isScheduled = $this->oldStatus === RecruitmentStatus::SCHEDULED;
-        $isClosed = $this->oldStatus === RecruitmentStatus::CLOSED;
-
-        $changesToDraft = $newStatus === RecruitmentStatus::PUBLISHED;
-        $changesToScheduled = $newStatus === RecruitmentStatus::SCHEDULED;
-        $changesToPublished = $newStatus === RecruitmentStatus::PUBLISHED;
-        $changesToClosed = $newStatus === RecruitmentStatus::CLOSED;
-        $changesToCompleted = $newStatus === RecruitmentStatus::COMPLETED;
-
-        $failConditions = [
-            $changesToScheduled && !$isDraft,
-            $changesToPublished && !$isScheduled,
-            $changesToClosed && !$isPublished,
-            $changesToCompleted && $isClosed,
-            $changesToDraft,
+        $transitions = [
+            RecruitmentStatus::DRAFT->value => [RecruitmentStatus::SCHEDULED],
+            RecruitmentStatus::SCHEDULED->value => [RecruitmentStatus::PUBLISHED],
+            RecruitmentStatus::PUBLISHED->value => [RecruitmentStatus::CLOSED],
+            RecruitmentStatus::CLOSED->value => [RecruitmentStatus::COMPLETED],
+            RecruitmentStatus::COMPLETED->value => [],
         ];
 
-        $message = "Can't change recruitment status from {$this->oldStatus->value} to {$newStatus->value}.";
-
-        if (in_array(true, $failConditions)) {
-            $fail($message);
+        if (!\in_array($newStatus, $transitions[$this->oldStatus->value])) {
+            $fail("Can't change recruitment status from {$this->oldStatus->value} to {$newStatus->value}.");
         }
     }
 }
