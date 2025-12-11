@@ -10,6 +10,7 @@ use App\Modules\Recruitment\Models\Recruitment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class RecruitmentStoreRequest extends BaseRecruitmentRequest
 {
@@ -40,6 +41,25 @@ class RecruitmentStoreRequest extends BaseRecruitmentRequest
                 ],
             ],
         ];
+    }
+
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator) {
+            if ($validator->errors()->isNotEmpty()) {
+                return;
+            }
+
+            $proposalHasInProgressRecruitment = Recruitment::where("proposal_id", $this->input("proposal_id"))
+                ->where("status", "!=", RecruitmentStatus::COMPLETED)
+                ->exists();
+
+            if ($proposalHasInProgressRecruitment) {
+                $validator
+                    ->errors()
+                    ->add("proposal_id", "Proposal has in progress recruitment, please complete it first.");
+            }
+        });
     }
 
     public function authorize(): bool
