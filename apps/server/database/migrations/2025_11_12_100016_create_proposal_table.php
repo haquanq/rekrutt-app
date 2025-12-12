@@ -17,11 +17,10 @@ return new class extends Migration {
             $table->integer("total_hired")->nullable();
             $table->integer("min_salary");
             $table->integer("max_salary");
-            $table->timestampTz("reviewed_at")->nullable();
             $table->enum("status", ProposalStatus::cases())->default(ProposalStatus::DRAFT);
-            $table->timestampsTZ();
 
-            $table->foreignId("created_by_user_id")->constrained(table: "user", indexName: "fk_proposal__creator");
+            $table->string("reviewed_notes", 500)->nullable();
+            $table->timestampTz("reviewed_at")->nullable();
             $table
                 ->foreignId("reviewed_by_user_id")
                 ->nullable()
@@ -37,6 +36,9 @@ return new class extends Migration {
                 ->foreignId("experience_level_id")
                 ->constrained(table: "experience_level", indexName: "fk_proposal__experience_level");
             $table->foreignId("position_id")->constrained(table: "position", indexName: "fk_proposal__position");
+
+            $table->timestampsTZ();
+            $table->foreignId("created_by_user_id")->constrained(table: "user", indexName: "fk_proposal__creator");
 
             $table->unique(columns: ["title"], name: "uq_proposal__title");
         });

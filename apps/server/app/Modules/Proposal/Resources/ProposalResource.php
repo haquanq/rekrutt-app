@@ -24,6 +24,8 @@ class ProposalResource extends JsonResource
             "max_salary" => $this->max_salary,
             "status" => $this->status,
             "reviewed_at" => $this->reviewed_at,
+            "reviewed_notes" => $this->reviewed_notes,
+            "reviewed_by" => new UserResource($this->whenLoaded("reviewedBy")),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
             "contract_type" => new ContractTypeResource($this->whenLoaded("contractType")),
@@ -31,7 +33,6 @@ class ProposalResource extends JsonResource
             "experience_level" => new ExperienceLevelResource($this->whenLoaded("experienceLevel")),
             "position" => new PositionResource($this->whenLoaded("experienceLevel")),
             "createdBy" => new UserResource($this->whenLoaded("createdBy")),
-            "reviewedBy" => new UserResource($this->whenLoaded("reviewedBy")),
         ];
     }
 }

@@ -40,6 +40,11 @@ class ProposalRejectRequest extends BaseProposalRequest
              * @ignoreParam
              */
             "reviewed_by_user_id" => ["required", "integer:strict"],
+            /**
+             * Reviewer notes
+             * @example
+             */
+            "reviewed_notes" => ["required", "string", "max:500"],
         ];
     }
 
