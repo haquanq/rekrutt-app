@@ -3,11 +3,12 @@
 namespace App\Modules\Auth\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\Auth\Models\User;
 use App\Modules\Auth\Requests\UserLoginRequest;
 use App\Modules\Auth\Resources\UserResource;
 use Dedoc\Scramble\Attributes\Group;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 #[Group(weight: 0)]
 class AuthController extends BaseController
@@ -20,12 +21,16 @@ class AuthController extends BaseController
     public function login(UserLoginRequest $request)
     {
         $credentials = $request->validated();
-        if (!($token = Auth::attempt($credentials))) {
+        $user = User::where("email", $credentials["email"])->first();
+
+        if (!$user || !Hash::check($credentials["password"], $user->password)) {
             // Invalid credentials
             return $this->unauthorizedResponse("Invalid credentials.");
         }
 
-        $cookie = cookie("jwt_token", $token, config("jwt.refresh_ttl"), sameSite: "none", secure: true);
+        $token = $user->createToken("api_token")->plainTextToken;
+        $cookie = cookie("api_token", $token, 0, sameSite: "strict", secure: true, httpOnly: true);
+        Auth::setUser($user);
         return $this->okResponse(new UserResource(Auth::user()))->withCookie($cookie);
     }
 
@@ -36,24 +41,12 @@ class AuthController extends BaseController
      */
     public function logout()
     {
-        Auth::logout();
+        Auth::user()->tokens()->delete();
         return $this->noContentResponse();
     }
 
     /**
-     * Refresh access token
-     *
-     * Return no content.
-     */
-    public function refresh(Request $request)
-    {
-        $token = Auth::refresh();
-        $cookie = cookie("jwt_token", $token, config("jwt.refresh_ttl"), sameSite: "none", secure: true);
-        return $this->noContentResponse()->withCookie($cookie);
-    }
-
-    /**
-     * Get authenticated user (me)
+     * Get authenticated user
      *
      * Return authenticated user.
      */

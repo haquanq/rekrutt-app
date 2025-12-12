@@ -14,12 +14,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as AuthenticatableUser;
 
-class User extends Authenticatable implements JWTSubject
+class User extends AuthenticatableUser
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens;
 
     protected $table = "user";
 
@@ -64,15 +64,5 @@ class User extends Authenticatable implements JWTSubject
     public function evaluatedInterviews(): HasMany
     {
         return $this->hasMany(InterviewEvaluation::class);
-    }
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
     }
 }

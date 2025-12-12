@@ -10,7 +10,7 @@ class CookieMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $token = $request->cookie("jwt_token");
+        $token = $request->cookie("api_token");
 
         if ($token !== null) {
             $request->headers->set("Authorization", "Bearer $token");

@@ -29,7 +29,7 @@ Route::prefix("auth")->group(function () {
         Route::post("refresh", "refresh");
     });
 
-    Route::middleware(["protected"])
+    Route::middleware("auth:sanctum")
         ->controller(AuthController::class)
         ->group(function () {
             Route::post("logout", "logout");
@@ -37,7 +37,7 @@ Route::prefix("auth")->group(function () {
         });
 });
 
-Route::middleware("protected")->group(function () {
+Route::middleware("auth:sanctum")->group(function () {
     Route::prefix("users")
         ->controller(UserController::class)
         ->group(function () {
