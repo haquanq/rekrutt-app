@@ -160,6 +160,7 @@ class UserController extends BaseController
         }
 
         $user->update($request->validated());
+        $user->tokens()->delete();
         return $this->noContentResponse();
     }
 
