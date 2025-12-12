@@ -59,7 +59,7 @@ abstract class BaseCandidateRequest extends BaseFormRequest
             ],
             /**
              * Id of HiringSource where candidate originated
-             * @example 123-456-7890
+             * @example 1
              */
             "hiring_source_id" => ["required", "integer:strict", "exists:hiring_source,id"],
         ];
