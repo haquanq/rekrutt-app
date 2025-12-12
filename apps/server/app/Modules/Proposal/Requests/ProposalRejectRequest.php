@@ -43,7 +43,7 @@ class ProposalRejectRequest extends BaseProposalRequest
             "reviewed_by_user_id" => ["required", "integer:strict"],
             /**
              * Reviewer notes
-             * @example
+             * @example Unnecessary
              */
             "reviewed_notes" => ["required", "string", "max:500"],
         ];
