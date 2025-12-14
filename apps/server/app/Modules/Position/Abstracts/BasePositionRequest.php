@@ -3,12 +3,19 @@
 namespace App\Modules\Position\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
+use App\Modules\Position\Models\Position;
 
 abstract class BasePositionRequest extends BaseFormRequest
 {
-    public function authorize(): bool
+    protected ?Position $position = null;
+
+    public function getQueriedPositionOrFail(string $param = "id"): Position
     {
-        return true;
+        if ($this->position === null) {
+            $this->position = Position::findOrFail($this->route($param));
+        }
+
+        return $this->position;
     }
 
     public function rules(): array

@@ -3,6 +3,7 @@
 namespace App\Modules\Position\Controllers;
 
 use App\Abstracts\BaseController;
+use App\Modules\Position\Requests\PositionDestroyRequest;
 use App\Modules\Position\Requests\PositionStoreRequest;
 use App\Modules\Position\Requests\PositionUpdateRequest;
 use App\Modules\Position\Models\Position;
@@ -109,7 +110,6 @@ class PositionController extends BaseController
      */
     public function store(PositionStoreRequest $request)
     {
-        Gate::authorize("create", Position::class);
         $createdPosition = Position::create($request->validated());
         return $this->createdResponse(new PositionResource($createdPosition));
     }
@@ -124,10 +124,9 @@ class PositionController extends BaseController
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(PositionUpdateRequest $request, int $id)
+    public function update(PositionUpdateRequest $request)
     {
-        Gate::authorize("update", Position::class);
-        Position::findOrFail($id)->update($request->validated());
+        $request->getPositionOrFail()->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -141,10 +140,9 @@ class PositionController extends BaseController
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(int $id)
+    public function destroy(PositionDestroyRequest $request)
     {
-        Gate::authorize("delete", Position::class);
-        Position::findOrFail($id)->delete();
+        $request->getPositionOrFail()->delete();
         return $this->noContentResponse();
     }
 }
