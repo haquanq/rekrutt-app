@@ -115,13 +115,14 @@ class InterviewParticipantController extends BaseController
      */
     public function update(InterviewParticipantUpdateRequest $request)
     {
-        $interviewStatus = $request->interviewParticipant->interview->status;
+        $interviewParticipant = $request->getQueriedInterviewParticipantOrFail();
+        $interview = $interviewParticipant->interview;
 
-        if ($interviewStatus !== InterviewStatus::DRAFT) {
-            throw new ConflictHttpException("Cannot update. " . $interviewStatus->description());
+        if ($interview->status !== InterviewStatus::DRAFT) {
+            throw new ConflictHttpException("Cannot update. " . $interview->status());
         }
 
-        $request->interview->update($request->validated());
+        $interview->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -136,13 +137,14 @@ class InterviewParticipantController extends BaseController
      */
     public function destroy(InterviewParticipantDestroyRequest $request)
     {
-        $interviewStatus = $request->interviewParticipant->interview->status;
+        $interviewParticipant = $request->getQueriedInterviewParticipantOrFail();
+        $interview = $interviewParticipant->interview;
 
-        if ($interviewStatus !== InterviewStatus::DRAFT) {
-            throw new ConflictHttpException("Cannot delete. " . $interviewStatus->description());
+        if ($interview !== InterviewStatus::DRAFT) {
+            throw new ConflictHttpException("Cannot delete. " . $interview->description());
         }
 
-        $request->interviewParticipant->delete();
+        $interviewParticipant->delete();
         return $this->noContentResponse();
     }
 }
