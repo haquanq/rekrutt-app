@@ -3,9 +3,21 @@
 namespace App\Modules\Interview\Abstracts;
 
 use App\Abstracts\BaseFormRequest;
+use App\Modules\Interview\Models\InterviewMethod;
 
 abstract class BaseInterviewMethodRequest extends BaseFormRequest
 {
+    protected ?InterviewMethod $interviewMethod = null;
+
+    public function getQueriedInterviewMethodOrFail(string $param = "id"): InterviewMethod
+    {
+        if ($this->interviewMethod === null) {
+            $this->interviewMethod = InterviewMethod::findOrFail($this->route($param));
+        }
+
+        return $this->interviewMethod;
+    }
+
     public function rules(): array
     {
         return [

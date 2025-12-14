@@ -124,7 +124,7 @@ class InterviewMethodController extends BaseController
      */
     public function update(InterviewMethodUpdateRequest $request)
     {
-        $request->interviewMethod->update($request->validated());
+        $request->getQueriedInterviewMethodOrFail()->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -140,7 +140,7 @@ class InterviewMethodController extends BaseController
      */
     public function destroy(InterviewMethodDestroyRequest $request)
     {
-        $request->interviewMethod->delete();
+        $request->getQueriedInterviewMethodOrFail()->delete();
         return $this->noContentResponse();
     }
 }
