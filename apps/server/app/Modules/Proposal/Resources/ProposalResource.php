@@ -19,7 +19,7 @@ class ProposalResource extends JsonResource
             "title" => $this->title,
             "description" => $this->description,
             "target_hires" => $this->target_hires,
-            "total_hired" => $this->total_hired,
+            "total_hires" => $this->total_hires,
             "min_salary" => $this->min_salary,
             "max_salary" => $this->max_salary,
             "status" => $this->status,
