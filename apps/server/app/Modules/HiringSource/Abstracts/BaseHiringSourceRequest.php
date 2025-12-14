@@ -9,6 +9,15 @@ abstract class BaseHiringSourceRequest extends BaseFormRequest
 {
     protected ?HiringSource $hiringSource = null;
 
+    public function getQueriedHiringSourceOrFail(string $param = "id"): HiringSource
+    {
+        if ($this->hiringSource === null) {
+            $this->hiringSource = HiringSource::findOrFail($this->route($param));
+        }
+
+        return $this->hiringSource;
+    }
+
     public function rules(): array
     {
         return [
@@ -28,14 +37,5 @@ abstract class BaseHiringSourceRequest extends BaseFormRequest
              */
             "site_url" => ["nullable", "string"],
         ];
-    }
-
-    public function getHiringSourceOrFail(string $param = null): HiringSource
-    {
-        if ($this->hiringSource === null) {
-            $this->hiringSource = HiringSource::findOrFail($this->route($param ?? "id"));
-        }
-
-        return $this->hiringSource;
     }
 }

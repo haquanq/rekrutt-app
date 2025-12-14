@@ -124,7 +124,7 @@ class DepartmentController extends BaseController
      */
     public function update(DepartmentUpdateRequest $request)
     {
-        $request->getDepartmentOrFail()->update($request->validated());
+        $request->getQueriedDepartmentOrFail()->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -140,7 +140,7 @@ class DepartmentController extends BaseController
      */
     public function destroy(DepartmentDestroyRequest $request)
     {
-        $request->getDepartmentOrFail()->delete();
+        $request->getQueriedDepartmentOrFail()->delete();
         return $this->noContentResponse();
     }
 }

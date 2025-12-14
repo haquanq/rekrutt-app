@@ -101,7 +101,7 @@ class EducationLevelController extends BaseController
      */
     public function update(EducationLevelUpdateRequest $request)
     {
-        $request->getEducationLevelOrFail()->update($request->validated());
+        $request->getQueriedEducationLevelOrFail()->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -117,7 +117,7 @@ class EducationLevelController extends BaseController
      */
     public function destroy(EducationLevelDestroyRequest $request)
     {
-        $request->getEducationLevelOrFail()->delete();
+        $request->getQueriedEducationLevelOrFail()->delete();
         return $this->noContentResponse();
     }
 }

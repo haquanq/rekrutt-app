@@ -101,7 +101,7 @@ class ContractTypeController extends BaseController
      */
     public function update(ContractTypeUpdateRequest $request, int $id)
     {
-        $request->getContractTypeOrFail()->update($request->validated());
+        $request->getQueriedContractTypeOrFail()->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -117,7 +117,7 @@ class ContractTypeController extends BaseController
      */
     public function destroy(ContractTypeDestroyRequest $request)
     {
-        $request->getContractTypeOrFail()->delete();
+        $request->getQueriedContractTypeOrFail()->delete();
         return $this->noContentResponse();
     }
 }

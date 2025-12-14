@@ -9,6 +9,15 @@ abstract class BaseContractTypeRequest extends FormRequest
 {
     protected ?ContractType $contractType;
 
+    public function getQueriedContractTypeOrFail(string $param = "id"): ContractType
+    {
+        if ($this->contractType === null) {
+            $this->contractType = ContractType::findOrFail($this->route($param));
+        }
+
+        return $this->contractType;
+    }
+
     public function rules(): array
     {
         return [
@@ -23,14 +32,5 @@ abstract class BaseContractTypeRequest extends FormRequest
              */
             "description" => ["nullable", "string", "max:500"],
         ];
-    }
-
-    public function getContractTypeOrFail(string $param = null): ContractType
-    {
-        if ($this->contractType === null) {
-            $this->contractType = ContractType::findOrFail($this->route($param ?? "id"));
-        }
-
-        return $this->contractType;
     }
 }

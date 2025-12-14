@@ -9,6 +9,15 @@ abstract class BaseExperienceLevelRequest extends BaseFormRequest
 {
     protected ?ExperienceLevel $experienceLevel = null;
 
+    public function getQueriedExperienceLevelOrFail(string $param = "id"): ExperienceLevel
+    {
+        if ($this->experienceLevel === null) {
+            $this->experienceLevel = ExperienceLevel::findOrFail($this->route($param));
+        }
+
+        return $this->experienceLevel;
+    }
+
     public function rules(): array
     {
         return [
@@ -23,14 +32,5 @@ abstract class BaseExperienceLevelRequest extends BaseFormRequest
              */
             "description" => ["nullable", "string", "max:500"],
         ];
-    }
-
-    public function getExperienceLevelOrFail(): ExperienceLevel
-    {
-        if ($this->experienceLevel === null) {
-            $this->experienceLevel = ExperienceLevel::findOrFail($this->route("id"));
-        }
-
-        return $this->experienceLevel;
     }
 }

@@ -100,7 +100,7 @@ class ExperienceLevelController extends BaseController
      */
     public function update(ExperienceLevelUpdateRequest $request)
     {
-        $request->getExperienceLevelOrFail()->update($request->validated());
+        $request->getQueriedExperienceLevelOrFail()->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -116,7 +116,7 @@ class ExperienceLevelController extends BaseController
      */
     public function destroy(ExperienceLevelDestroyRequest $request)
     {
-        $request->getExperienceLevelOrFail()->delete();
+        $request->getQueriedExperienceLevelOrFail()->delete();
         return $this->noContentResponse();
     }
 }

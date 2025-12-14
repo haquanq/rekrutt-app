@@ -9,6 +9,15 @@ abstract class BaseDepartmentRequest extends BaseFormRequest
 {
     protected ?Department $department = null;
 
+    public function getQueriedDepartmentOrFail(string $param = "id"): Department
+    {
+        if ($this->department === null) {
+            $this->department = Department::findOrFail($this->route($param));
+        }
+
+        return $this->department;
+    }
+
     public function rules(): array
     {
         return [
@@ -23,14 +32,5 @@ abstract class BaseDepartmentRequest extends BaseFormRequest
              */
             "description" => ["nullable", "string", "max:500"],
         ];
-    }
-
-    public function getDepartmentOrFail(string $param = null): Department
-    {
-        if ($this->department === null) {
-            $this->department = Department::findOrFail($this->route($param ?? "id"));
-        }
-
-        return $this->department;
     }
 }

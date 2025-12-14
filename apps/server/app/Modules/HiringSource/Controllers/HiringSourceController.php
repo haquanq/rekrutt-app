@@ -101,7 +101,7 @@ class HiringSourceController extends BaseController
      */
     public function update(HiringSourceUpdateRequest $request)
     {
-        $request->getHiringSourceOrFail()->update($request->validated());
+        $request->getQueriedHiringSourceOrFail()->update($request->validated());
         return $this->noContentResponse();
     }
 
@@ -117,7 +117,7 @@ class HiringSourceController extends BaseController
      */
     public function destroy(HiringSourceDestroyRequest $request)
     {
-        $request->getHiringSourceOrFail()->delete();
+        $request->getQueriedHiringSourceOrFail()->delete();
         return $this->noContentResponse();
     }
 }
