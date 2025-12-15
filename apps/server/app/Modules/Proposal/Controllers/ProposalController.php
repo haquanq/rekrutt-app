@@ -50,7 +50,7 @@ class ProposalController extends BaseController
             name: "include",
             type: "string",
             description: "Include nested relations </br>" .
-                " Allow relations: position, contractType, educationLevel, experienceLevel, createdBy, reviewedBy </br>" .
+                " Allow relations: position, contractType, educationLevel, experienceLevel, createdBy, reviewedBy, documents, recruitments </br>" .
                 "Example: include=position,createdBy",
         ),
     ]
@@ -75,6 +75,8 @@ class ProposalController extends BaseController
                 "experienceLevel",
                 "createdBy",
                 "reviewedBy",
+                "documents",
+                "recruitments",
             ])
             ->allowedFilters([
                 AllowedFilter::exact("status"),
@@ -101,7 +103,7 @@ class ProposalController extends BaseController
             name: "include",
             type: "string",
             description: "Include nested relations </br>" .
-                " Allow relations: position, contractType, educationLevel, experienceLevel, createdBy, reviewedBy </br>" .
+                " Allow relations: position, contractType, educationLevel, experienceLevel, createdBy, reviewedBy, documents, recruitments </br>" .
                 "Example: include=position,createdBy",
         ),
     ]
@@ -117,6 +119,8 @@ class ProposalController extends BaseController
                 "experienceLevel",
                 "createdBy",
                 "reviewedBy",
+                "documents",
+                "recruitments",
             ])
             ->findOrFail($id);
 
