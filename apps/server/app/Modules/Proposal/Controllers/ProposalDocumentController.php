@@ -100,6 +100,22 @@ class ProposalDocumentController extends BaseController
     }
 
     /**
+     * Download proposal document file by Id
+     *
+     * Return file.
+     *
+     * Authorization
+     * - User must be hiring manager or recruiter.
+     * - User must be the creator of the related proposal.
+     */
+    public function download(int $id)
+    {
+        Gate::authorize("view", ProposalDocument::class);
+        $proposalDocument = ProposalDocument::findOrFail($id);
+        return Storage::download($proposalDocument->file_path, $proposalDocument->file_name);
+    }
+
+    /**
      * Create proposal document
      *
      * Return a unique proposal document.

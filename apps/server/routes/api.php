@@ -181,6 +181,7 @@ Route::middleware("auth:sanctum")->group(function () {
         ->group(function () {
             Route::get("", "index");
             Route::get("/{id}", "show");
+            Route::get("/{id}/file", "download")->name("proposal-documents.download");
             Route::post("", "store");
             Route::patch("/{id}", "update");
             Route::delete("/{id}", "destroy");
