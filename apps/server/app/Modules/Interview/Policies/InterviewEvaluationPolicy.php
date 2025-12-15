@@ -2,6 +2,7 @@
 
 namespace App\Modules\Interview\Policies;
 
+use App\Modules\Auth\Enums\UserRole;
 use App\Modules\Auth\Models\User;
 use App\Modules\Interview\Models\Interview;
 use App\Modules\Interview\Models\InterviewEvaluation;
@@ -21,7 +22,9 @@ class InterviewEvaluationPolicy
 
     public function create(User $user, ?Interview $interview): Response
     {
-        if ($interview && !$interview->hasParticipant($user)) {
+        if ($user->hasRole(UserRole::ADMIN)) {
+            return Response::deny("You are not allowed to create new interview evaluation.");
+        } elseif ($interview && !$interview->hasParticipant($user)) {
             return Response::deny("You are not participating in this interview");
         }
 
@@ -30,7 +33,9 @@ class InterviewEvaluationPolicy
 
     public function update(User $user, InterviewEvaluation $interviewEvaluation): Response
     {
-        if (!$interviewEvaluation->isCreatedBy($user)) {
+        if ($user->hasRole(UserRole::ADMIN)) {
+            return Response::deny("You are not allowed to update this interview evaluation.");
+        } elseif (!$interviewEvaluation->isCreatedBy($user)) {
             return Response::deny("You are not the creator of this interview evaluation");
         }
 
@@ -39,7 +44,9 @@ class InterviewEvaluationPolicy
 
     public function delete(User $user, InterviewEvaluation $interviewEvaluation): Response
     {
-        if (!$interviewEvaluation->isCreatedBy($user)) {
+        if ($user->hasRole(UserRole::ADMIN)) {
+            return Response::deny("You are not allowed to delete this interview evaluation.");
+        } elseif (!$interviewEvaluation->isCreatedBy($user)) {
             return Response::deny("You are not the creator of this interview evaluation");
         }
 

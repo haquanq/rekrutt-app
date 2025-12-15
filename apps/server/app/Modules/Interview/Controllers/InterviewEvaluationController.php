@@ -109,7 +109,7 @@ class InterviewEvaluationController extends BaseController
      * Return created interview evaluation.
      *
      * Authorization
-     * - User can be anyone
+     * - User can be anyone except administrator
      * - User must be participating in the interview.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -126,7 +126,7 @@ class InterviewEvaluationController extends BaseController
      * Return no content.
      *
      * Authorization
-     * - User can be anyone
+     * - User can be anyone except administrator
      * - User must be the creator of the interview evaluation.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -150,7 +150,7 @@ class InterviewEvaluationController extends BaseController
      * Permanently delete interview evaluation. * Return no content.
      *
      * Authorization
-     * - User can be anyone
+     * - User can be anyone except administrator
      * - User must be the creator of the interview evaluation.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
