@@ -2,6 +2,8 @@
 
 namespace App\Modules\Interview\Requests;
 
+use App\Modules\Auth\Enums\UserRole;
+use App\Modules\Auth\Models\User;
 use App\Modules\Interview\Rules\InterviewExistsWithStatusRule;
 use App\Modules\Interview\Abstracts\BaseInterviewParticipantRequest;
 use App\Modules\Interview\Enums\InterviewStatus;
@@ -48,6 +50,11 @@ class InterviewParticipantStoreRequest extends BaseInterviewParticipantRequest
 
             if ($this->interview->participants()->where("user_id", $this->input("user_id"))->exists()) {
                 $validator->errors()->add("user_id", "User is already scheduled for this interview.");
+                return;
+            }
+
+            if (User::query()->where("id", $this->input("user_id"))->where("role", UserRole::ADMIN->value)->exists()) {
+                $validator->errors()->add("user_id", "User with role of ADMIN cannot participate in an interview.");
                 return;
             }
 
