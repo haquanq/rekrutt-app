@@ -32,7 +32,7 @@ Route::prefix("auth")->group(function () {
         ->controller(AuthController::class)
         ->group(function () {
             Route::post("logout", "logout");
-            Route::post("me", "me");
+            Route::get("me", "me");
         });
 });
 
