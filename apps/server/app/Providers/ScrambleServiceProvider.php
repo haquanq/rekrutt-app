@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\Combined\AllOf;
-use Dedoc\Scramble\Support\Generator\Components;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\Operation;
 use Dedoc\Scramble\Support\Generator\Reference;
@@ -30,10 +29,13 @@ class ScrambleServiceProvider extends ServiceProvider
                 $this->updateDocumentSecurity($document);
                 $this->updateDocumentSchemas($document);
                 $this->updateDocumentResponse($document);
-            })
-            ->withOperationTransformers(function (Operation $operation) {
-                $this->updateOperationRequestBodies($operation);
-                $this->updateOperationResponses($operation);
+
+                foreach ($document->paths as $path) {
+                    foreach ($path->operations as $operation) {
+                        $this->updateOperationRequestBodies($operation);
+                        $this->updateOperationResponses($operation, $document);
+                    }
+                }
             });
     }
 
@@ -44,32 +46,11 @@ class ScrambleServiceProvider extends ServiceProvider
         return $name;
     }
 
-    public function createApiResponseMetadataSchema(): Schema
-    {
-        return Schema::fromType(
-            new ObjectType()
-                ->addProperty("success", new BooleanType()->setDescription("Success state")->example(true))
-                ->addProperty("status_code", new IntegerType()->setDescription("Status code")->example(200))
-                ->addProperty(
-                    "timestamp",
-                    new StringType()->setDescription("Timestamp")->format("date-time")->example("2050-01-01T00:00:00Z"),
-                )
-                ->addProperty(
-                    "request_id",
-                    new StringType()
-                        ->setDescription("Request id")
-                        ->format("uuid")
-                        ->example("00000000-0000-0000-0000-000000000000"),
-                )
-                ->setRequired(["success", "status_code", "timestamp", "request_id"]),
-        );
-    }
-
     public function updateDocumentSecurity(OpenApi $document): void
     {
         $document->secure(
             SecurityScheme::http("Bearer")->setDescription(
-                "For web browsers, the token is saved via Cookies and automatically sent for every request. </br>" .
+                "For web browsers, API token is saved via Cookies and automatically sent for every request. </br>" .
                     "For other clients, manually set this header will override the default behaviour.",
             ),
         );
@@ -103,7 +84,29 @@ class ScrambleServiceProvider extends ServiceProvider
             return;
         }
 
-        $document->components->addSchema("ApiResponseMetadata", $this->createApiResponseMetadataSchema());
+        $document->components->addSchema(
+            "ApiResponseMetadata",
+            Schema::fromType(
+                new ObjectType()
+                    ->addProperty("success", new BooleanType()->setDescription("Success state")->example(true))
+                    ->addProperty("status_code", new IntegerType()->setDescription("Status code")->example(200))
+                    ->addProperty(
+                        "timestamp",
+                        new StringType()
+                            ->setDescription("Timestamp")
+                            ->format("date-time")
+                            ->example("2050-01-01T00:00:00Z"),
+                    )
+                    ->addProperty(
+                        "request_id",
+                        new StringType()
+                            ->setDescription("Request id")
+                            ->format("uuid")
+                            ->example("00000000-0000-0000-0000-000000000000"),
+                    )
+                    ->setRequired(["success", "status_code", "timestamp", "request_id"]),
+            ),
+        );
 
         $newSchemas = [];
         foreach ($document->components->schemas as $schemaName => $schema) {
@@ -120,8 +123,68 @@ class ScrambleServiceProvider extends ServiceProvider
             return;
         }
 
+        $document->components->responses = [
+            ...$document->components->responses,
+
+            "BadRequestException" => new Response(400)
+                ->setDescription("Not Found")
+                ->setContent(
+                    "application/json",
+                    Schema::fromType(
+                        new ObjectType()
+                            ->addProperty("message", new StringType()->setDescription("Error message."))
+                            ->setRequired(["message"]),
+                    ),
+                ),
+
+            "NotFoundException" => new Response(404)
+                ->setDescription("Not Found")
+                ->setContent(
+                    "application/json",
+                    Schema::fromType(
+                        new ObjectType()
+                            ->addProperty("message", new StringType()->setDescription("Error message."))
+                            ->setRequired(["message"]),
+                    ),
+                ),
+
+            "ConflictException" => new Response(409)
+                ->setDescription("Conflict")
+                ->setContent(
+                    "application/json",
+                    Schema::fromType(
+                        new ObjectType()
+                            ->addProperty("message", new StringType()->setDescription("Error message."))
+                            ->setRequired(["message"]),
+                    ),
+                ),
+
+            "InternalServerErrorException" => new Response(500)
+                ->setDescription("Conflict")
+                ->setContent(
+                    "application/json",
+                    Schema::fromType(
+                        new ObjectType()
+                            ->addProperty("message", new StringType()->setDescription("Error message."))
+                            ->setRequired(["message"]),
+                    ),
+                ),
+
+            "\Illuminate\Validation\ValidationException" => new Response(422)
+                ->setDescription("Unprocessable Entity")
+                ->setContent(
+                    "application/json",
+                    Schema::fromType(
+                        new ObjectType()
+                            ->addProperty("message", new StringType()->setDescription("Error message."))
+                            ->addProperty("details", new ObjectType()->setDescription("Error details."))
+                            ->setRequired(["message", "details"]),
+                    ),
+                ),
+        ];
+
         foreach ($document->components->responses as $response) {
-            $this->updateResponse($response);
+            $this->updateResponse($response, $document);
         }
     }
 
@@ -138,37 +201,56 @@ class ScrambleServiceProvider extends ServiceProvider
         }
     }
 
-    public function updateOperationResponses(Operation $operation)
+    public function updateOperationResponses(Operation $operation, OpenApi $document)
     {
         if (!isset($operation->responses)) {
-            return;
+            $operation->responses = [];
         }
 
         foreach ($operation->responses as &$response) {
-            if ($response instanceof Reference) {
-                continue;
+            if ($response instanceof Response) {
+                if ($response->code === 409) {
+                    $response = new Reference("responses", "ConflictException", $document->components);
+                } else {
+                    $this->updateResponse($response, $document);
+                }
             }
 
-            $this->updateResponse($response);
+            if ($response instanceof Reference) {
+                logger($response->fullName);
+            }
         }
+
+        if (Str::contains($operation->path, "{id}")) {
+            array_push($operation->responses, new Reference("responses", "NotFoundException", $document->components));
+        }
+
+        if (collect($operation->parameters)->contains("in", "query")) {
+            array_push($operation->responses, new Reference("responses", "BadRequestException", $document->components));
+        }
+
+        array_push(
+            $operation->responses,
+            new Reference("responses", "InternalServerErrorException", $document->components),
+        );
     }
 
-    public function updateResponse(Response $response)
+    public function updateResponse(Response $response, OpenApi $document)
     {
         $response->description = $this->getStatusCodeDescription($response->code);
 
         foreach ($response->content as $contentTypeName => $content) {
-            if (
-                $content instanceof Schema &&
-                $content->type instanceof ObjectType &&
-                !isset($content->type->properties["data"])
-            ) {
-                $content->type = new ObjectType()->addProperty("data", $content->type);
+            if ($content instanceof Schema && $content->type instanceof ObjectType) {
+                if ($response->code < 400 && !isset($content->type->properties["data"])) {
+                    $content->type = new ObjectType()->addProperty("data", $content->type);
+                } elseif ($response->code >= 400 && !isset($content->type->properties["error"])) {
+                    $content->type = new ObjectType()->addProperty("error", $content->type);
+                }
             }
 
             $allOfType = new AllOf()->setItems([
                 $content->type,
-                new Reference("schemas", "ApiResponseMetadata", new Components()),
+                new Reference("schemas", "ApiResponseMetadata", $document->components),
             ]);
 
             foreach ($allOfType->items as $item) {
