@@ -29,7 +29,14 @@ class AuthController extends BaseController
         }
 
         $token = $user->createToken("api_token")->plainTextToken;
-        $cookie = cookie("api_token", $token, 0, sameSite: "strict", secure: true, httpOnly: true);
+        $cookie = cookie(
+            name: "api_token",
+            value: $token,
+            minutes: config("sanctum.expiration"),
+            sameSite: "strict",
+            secure: true,
+            httpOnly: true,
+        );
         Auth::setUser($user);
         return $this->okResponse(new UserResource(Auth::user()))->withCookie($cookie);
     }
