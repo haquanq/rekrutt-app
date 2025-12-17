@@ -12,6 +12,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Spatie\QueryBuilder\Exceptions\InvalidQuery as InvalidQueryException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withCommands([...glob(app_path("Modules/*/Commands"))])
@@ -78,12 +79,21 @@ return Application::configure(basePath: dirname(__DIR__))
                 );
             }
 
-            // return response()->json(
-            //     [
-            //         "message" => "Oops, something wrong happened!",
-            //     ],
-            //     Response::HTTP_INTERNAL_SERVER_ERROR,
-            // );
+            if ($exception instanceof TooManyRequestsHttpException) {
+                return response()->json(
+                    [
+                        "message" => "Too many requests, please try again later.",
+                    ],
+                    Response::HTTP_TOO_MANY_REQUESTS,
+                );
+            }
+
+            return response()->json(
+                [
+                    "message" => "Oops, something wrong happened!",
+                ],
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+            );
         });
     })
     ->create();
