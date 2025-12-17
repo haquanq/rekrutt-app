@@ -23,20 +23,22 @@ use App\Modules\Recruitment\Controllers\RecruitmentApplicationController;
 use App\Modules\Recruitment\Controllers\RecruitmentController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix("auth")->group(function () {
-    Route::controller(AuthController::class)->group(function () {
-        Route::post("login", "login")->name("login");
+Route::middleware("throttle:15,1")
+    ->prefix("auth")
+    ->group(function () {
+        Route::controller(AuthController::class)->group(function () {
+            Route::post("login", "login")->name("login");
+        });
+
+        Route::middleware("auth:sanctum")
+            ->controller(AuthController::class)
+            ->group(function () {
+                Route::post("logout", "logout");
+                Route::get("me", "me");
+            });
     });
 
-    Route::middleware("auth:sanctum")
-        ->controller(AuthController::class)
-        ->group(function () {
-            Route::post("logout", "logout");
-            Route::get("me", "me");
-        });
-});
-
-Route::middleware("auth:sanctum")->group(function () {
+Route::middleware(["throttle:60,1", "auth:sanctum"])->group(function () {
     Route::prefix("users")
         ->controller(UserController::class)
         ->group(function () {
