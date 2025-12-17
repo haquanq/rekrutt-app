@@ -43,3 +43,9 @@ This is a monorepo contains 2 projects
 
 - Backend: Laravel, Sanctum, Scramble (OpenApi), PostgreSQL
 - Frontend: Vue, Vue-router, PrimeVue, Pinia, TailwindCSS (work in progress)
+
+## Specifications
+
+### Database Diagram
+
+![](./docs/diagram.png)
