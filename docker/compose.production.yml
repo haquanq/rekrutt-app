@@ -5,6 +5,7 @@ services:
     build:
       context: ../
       dockerfile: ./docker/php-fpm/Dockerfile
+    image: rekrutt-prod-app
     restart: unless-stopped
     working_dir: /var/www
     environment:
@@ -20,6 +21,25 @@ services:
       - db
     mem_limit: 200m
 
+  app-cronjob:
+    image: rekrutt-prod-app
+    pull_policy: never
+    command: php artisan schedule:work
+    restart: unless-stopped
+    working_dir: /var/www
+    environment:
+      - DB_USERNAME=sa
+      - DB_PASSWORD=1234
+      - APP_NAME=Rekrutt
+      - APP_URL=https://api.rekrutt.space
+      - APP_ENV=production
+      - APP_DEBUG=false
+    networks:
+      - laravel
+    depends_on:
+      - app
+    mem_limit: 200m
+
   nginx:
     build:
       context: ../
@@ -27,6 +47,7 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     networks:
       - laravel
     volumes:
